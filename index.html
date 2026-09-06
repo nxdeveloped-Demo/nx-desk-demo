@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!--NXBUILD:today-center-20260906-145143-->
+<!--NXBUILD:acctpop-clamp-20260906-150047-->
 <!-- ===== NX Desk DEMO build: Firebase Realtime Database as the realtime channel ===== -->
 <script>window.NX_DEMO=true;</script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
@@ -21197,16 +21197,35 @@ function peProjectExport(){ var TH=(LANG==='th'); var L=pePMProjects(); var p=L.
     try{ if(typeof hmLayout==='function' && document.body.classList.contains('nx-home')) requestAnimationFrame(hmLayout); }catch(_){}
   }
   ready(function(){ setTimeout(build,600); setTimeout(build,1800); setTimeout(build,3500); });
+  /* account popup: move it onto <body> while open so no container (welcome card overflow /
+     transformed ancestor) can clip it; restore into the badge wrapper on close. A class
+     observer catches every open/close path (toggle, closeAcctPop, outside-click). */
   (function(){
-    if(typeof window.toggleAcctPop!=='function') return;
-    var _t=window.toggleAcctPop;
-    window.toggleAcctPop=function(e){ _t(e); setTimeout(function(){
-      var w=document.getElementById('acctWrap'), pop=document.getElementById('acctPop'), bd=document.getElementById('acctBadge'); if(!w||!pop||!bd) return;
-      if(w.classList.contains('open') && w.closest('.nx-tb-inwelcome')){
-        var r=bd.getBoundingClientRect(); pop.style.position='fixed'; pop.style.top=(r.bottom+8)+'px'; pop.style.left='auto';
-        pop.style.right=Math.max(8,Math.round(window.innerWidth-r.right))+'px'; pop.style.zIndex='4000';
-      } else { pop.style.position=''; pop.style.top=''; pop.style.left=''; pop.style.right=''; pop.style.zIndex=''; }
-    },0); };
+    function reposition(){
+      var w=document.getElementById('acctWrap'), pop=document.getElementById('acctPop'), bd=document.getElementById('acctBadge');
+      if(!w||!pop||!bd) return;
+      if(w.classList.contains('open')){
+        if(pop.parentNode!==document.body){ if(!pop._nxHome) pop._nxHome=pop.parentNode; document.body.appendChild(pop); }
+        /* show first so we can measure, then clamp fully inside the viewport */
+        pop.style.cssText='position:fixed;top:0;left:0;z-index:99999;opacity:1;transform:none;pointer-events:auto;visibility:hidden;';
+        var r=bd.getBoundingClientRect();
+        var popW=pop.offsetWidth||240, popH=pop.offsetHeight||150, m=8;
+        var left=Math.min(Math.max(m, Math.round(r.right-popW)), Math.max(m, window.innerWidth-popW-m));
+        var top=Math.min(Math.round(r.bottom+8), Math.max(m, window.innerHeight-popH-m));
+        pop.style.cssText='position:fixed;top:'+top+'px;left:'+left+'px;right:auto;z-index:99999;opacity:1;transform:translateY(0) scale(1);pointer-events:auto;';
+      } else {
+        if(pop._nxHome && pop.parentNode!==pop._nxHome){ pop._nxHome.appendChild(pop); }
+        pop.style.cssText='';
+      }
+    }
+    function init(){
+      var w=document.getElementById('acctWrap'); if(!w){ setTimeout(init,300); return; }
+      try{ new MutationObserver(reposition).observe(w,{attributes:true,attributeFilter:['class']}); }catch(_){}
+      window.addEventListener('resize',function(){ setTimeout(reposition,0); });
+      window.addEventListener('scroll',function(){ setTimeout(reposition,0); }, true);
+      reposition();
+    }
+    init();
   })();
 })();
 </script>
