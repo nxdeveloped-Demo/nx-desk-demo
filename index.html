@@ -20517,5 +20517,23 @@ function peProjectExport(){ var TH=(LANG==='th'); var L=pePMProjects(); var p=L.
 })();
 </script>
 
+<script>
+/* ===== NX Desk demo — auto version refresh (reloads when a new build is published) ===== */
+(function(){
+  var self=location.pathname; var mine=null, reloading=false;
+  function tag(r){ return r.headers.get('etag')||r.headers.get('last-modified')||''; }
+  function busy(){ try{ var a=document.activeElement; if(a&&(a.tagName==='INPUT'||a.tagName==='TEXTAREA'||a.tagName==='SELECT'||a.isContentEditable)) return true;
+    var ov=document.getElementById('overlay'); if(ov&&ov.classList.contains('show')) return true;
+    var pl=document.getElementById('pePlay'); if(pl&&pl.classList.contains('show')) return true;
+    if(document.getElementById('modal')&&document.getElementById('modal').classList.contains('show')) return true;
+  }catch(_){ } return false; }
+  function check(cb){ fetch(self+'?_v='+Date.now(),{method:'HEAD',cache:'no-store'}).then(function(r){ cb(tag(r)); }).catch(function(){ cb(null); }); }
+  setTimeout(function(){ check(function(t){ mine=t; }); }, 4000);
+  setInterval(function(){ if(reloading||!mine) return; check(function(t){ if(t && t!==mine){ if(busy()) return; reloading=true;
+    try{ if(typeof showToast==='function') showToast((typeof LANG!=='undefined'&&LANG==='th')?'มีเวอร์ชันใหม่ — กำลังรีเฟรช…':'New version available — refreshing…'); }catch(_){ }
+    setTimeout(function(){ try{ location.reload(); }catch(_){ location.href=location.href; } }, 1400); } }); }, 60000);
+})();
+</script>
+
 </body>
 </html>
