@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!--NXBUILD:desktop-submit-mobile-anytime-20260907-0500-->
+<!--NXBUILD:viewer-readonly-20260907-0600-->
 <!-- always fetch the latest build (the demo updates often) -->
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
@@ -11,7 +11,7 @@
 /* FORCE LOGIN ON A NEW UPLOAD: bump NX_BUILD every deploy. If the stored build differs from this
    one, the saved login is cleared so the user must sign in again on the fresh version (even with
    "remember me" on). Same version keeps them logged in. */
-window.NX_BUILD='2026-09-07-0500';
+window.NX_BUILD='2026-09-07-0600';
 try{ if(localStorage.getItem('nx_build')!==window.NX_BUILD){ localStorage.removeItem('nx_session'); localStorage.setItem('nx_build',window.NX_BUILD); } }catch(e){}
 </script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
@@ -14820,6 +14820,29 @@ function delPermPos(){
 /* =================== AUTH / LOGIN =================== */
 const DEV_ACCOUNT={user:'admin',pass:'admin',role:'Developer'};
 const DEV_HIDDEN={user:'developer',pass:'C005ca07'};   // hidden developer login — same admin access, hides the copyright credit
+const VIEWER_ACCOUNT={user:'Viewer',pass:'123456'};    // read-only demo account: sees every page like Developer, but cannot write/submit anything
+function nxIsViewer(){ try{ var s=(typeof DB!=='undefined'&&DB.session)?DB.session():null; return !!(s&&s.viewer); }catch(_){ return false; } }
+window.nxIsViewer=nxIsViewer;
+/* Viewer UX guard: the Viewer can open and browse everything, but the final write actions
+   (save / submit / delete / confirm / grant / approve / import / clock) are blocked with a toast.
+   Data safety itself is guaranteed by the localStorage write-block in the demo adapter; this only
+   stops misleading "saved" feedback. Verb list is intentionally write-only so viewing is never broken. */
+(function(){
+  var _roT=0;
+  function roToast(){ if(Date.now()-_roT>1500){ _roT=Date.now(); try{ if(typeof showToast==='function') showToast((typeof LANG!=='undefined'&&LANG==='th')?'👁 บัญชี Viewer ดูได้อย่างเดียว บันทึกข้อมูลไม่ได้':'👁 Viewer account is read-only — you can view but not save'); }catch(_){} } }
+  var WRITE=/(save|submit|delete|remove|confirm|grant|approve|reject|import|clockin|clockout|manualclock|payslip|issuepay|dopay)/i;
+  function guard(e){
+    if(!nxIsViewer()) return;
+    var el=e.target&&e.target.closest?e.target.closest('[onclick],button[type=submit],input[type=submit]'):null;
+    if(!el) return;
+    var oc=(el.getAttribute&&el.getAttribute('onclick'))||'';
+    if(el.type==='submit' || WRITE.test(oc)){
+      e.preventDefault(); e.stopImmediatePropagation(); roToast();
+    }
+  }
+  document.addEventListener('click',guard,true);
+  document.addEventListener('submit',function(e){ if(nxIsViewer()){ e.preventDefault(); e.stopImmediatePropagation(); roToast(); } },true);
+})();
 /* The developer credit always shows on Home & footer; it is simply never printed on the salary bill. */
 function applyCreditVisibility(){ document.querySelectorAll('[data-i18n="credit"]').forEach(el=>{ el.style.display=''; }); }
 function genPassword(){ const cs='ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789'; let s=''; for(let i=0;i<8;i++) s+=cs[Math.floor(Math.random()*cs.length)]; return s; }
@@ -15131,11 +15154,13 @@ function doLogin(){
   const u=(gv('lgUser')||'').trim(), pw=gv('lgPass')||''; const err=document.getElementById('lgErr');
   const activated=localStorage.getItem('nx_activated')==='1';
   const isDev = u.toLowerCase()===DEV_HIDDEN.user.toLowerCase() && pw===DEV_HIDDEN.pass;
+  const isViewer = u.toLowerCase()===VIEWER_ACCOUNT.user.toLowerCase() && pw===VIEWER_ACCOUNT.pass;
   const shakeErr=(msg)=>{ nxSound('fail'); if(err){ err.textContent=msg; err.style.display=''; } const c=document.querySelector('.lg-card'); if(c){ c.classList.remove('shake'); void c.offsetWidth; c.classList.add('shake'); } };
-  // First login after install must be the Developer account
-  if(!activated && !isDev){ shakeErr(t('lgDevFirst')); return; }
+  // First login after install must be the Developer account (Viewer is allowed too — read-only demo login)
+  if(!activated && !isDev && !isViewer){ shakeErr(t('lgDevFirst')); return; }
   let sess=null;
-  if(u.toLowerCase()===DEV_ACCOUNT.user.toLowerCase() && pw===DEV_ACCOUNT.pass){ sess={loggedIn:true,user:DEV_ACCOUNT.user,role:'Developer',empId:null}; }
+  if(isViewer){ sess={loggedIn:true,user:VIEWER_ACCOUNT.user,role:'Developer',empId:null,viewer:true}; }   // full read visibility (Developer-level), write-blocked below
+  else if(u.toLowerCase()===DEV_ACCOUNT.user.toLowerCase() && pw===DEV_ACCOUNT.pass){ sess={loggedIn:true,user:DEV_ACCOUNT.user,role:'Developer',empId:null}; }
   else if(isDev){ sess={loggedIn:true,user:DEV_HIDDEN.user,role:'Developer',empId:null,hideCredit:true}; }
   else { const e=DB.employees().find(x=>x.account && x.account.username && x.account.username.toLowerCase()===u.toLowerCase() && x.account.password===pw); if(e) sess={loggedIn:true,user:e.name,role:positionRole(e.positionId),empId:e.id}; }
   if(!sess){ shakeErr(t('lgError')); return; }
@@ -20015,7 +20040,16 @@ if(typeof window!=='undefined' && window.NX_DEMO===true){ try{ (function(){
 
   /* --- outbound: mirror synced stores to the cloud --- */
   var _lanSet=localStorage.setItem;   /* the LAN wrapper; it never POSTs because omsC.on stays false in the demo */
+  var _nxRoToast=0;
+  function _nxViewerBlocked(){
+    if(Date.now()-_nxRoToast>1500){ _nxRoToast=Date.now();
+      try{ if(typeof showToast==='function') showToast((typeof LANG!=='undefined'&&LANG==='th')?'👁 บัญชี Viewer ดูได้อย่างเดียว บันทึกข้อมูลไม่ได้':'👁 Viewer account is read-only — you can view but not save'); }catch(_){}
+    }
+  }
   localStorage.setItem=function(k,v){
+    /* Viewer = read-only: block every write to a synced store (local persist AND cloud push). Inbound
+       realtime sync still lands because it applies through native _lsSet, not this override. */
+    if(!nxDemo.applying && OMS_STORES.indexOf(k)>=0 && typeof nxIsViewer==='function' && nxIsViewer()){ _nxViewerBlocked(); return; }
     _lanSet.call(localStorage,k,v);
     if(nxDemo.root && !nxDemo.applying && OMS_STORES.indexOf(k)>=0){
       /* Desktop: push ONLY when this save follows a real user action (submit/input), so the desktop
