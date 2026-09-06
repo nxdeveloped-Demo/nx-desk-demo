@@ -4503,6 +4503,11 @@ body:has(#overlay.show .modal.pebg-fs) .asst-launch{opacity:0;pointer-events:non
 <style id="nxresp">
 /* ================= NX Desk demo — responsive (tablet + mobile) ================= */
 *{-webkit-tap-highlight-color:transparent}
+
+/* ===== DARK MODE FIX: top navigation bar stayed light because --n2-glass computed white ===== */
+:root[data-theme="dark"]{--n2-glass:rgba(17,23,38,.82)!important}
+:root[data-theme="dark"] header.topbar{background:var(--topbar-bg)!important}
+:root[data-theme="dark"] header.topbar::before{background:rgba(17,23,38,.86)!important;border-bottom:1px solid var(--n2-line2)!important}
 @media (max-width:1024px){ header.topbar .title .tech{display:none} }
 
 @media (max-width:860px){
@@ -4575,7 +4580,7 @@ body:has(#overlay.show .modal.pebg-fs) .asst-launch{opacity:0;pointer-events:non
   /* flip = flat readable panel (3D transforms fail on the flattened mobile deck) */
   #view-home #hmTrack .big-card.flipped .bc-face{opacity:0!important;pointer-events:none!important}
   #view-home #hmTrack .big-card.flipped .bc-wm{display:none!important}
-  #view-home #hmTrack .big-card .bc-back{position:absolute!important;inset:0!important;transform:none!important;-webkit-backface-visibility:visible!important;backface-visibility:visible!important;opacity:0!important;pointer-events:none!important;z-index:6!important;background:var(--n2-surface)!important;overflow:auto!important;-webkit-overflow-scrolling:touch!important}
+  #view-home #hmTrack .big-card .bc-back{position:absolute!important;inset:0!important;transform:none!important;-webkit-backface-visibility:visible!important;backface-visibility:visible!important;opacity:0!important;pointer-events:none!important;z-index:6!important;background:var(--n2-surface)!important;overflow:hidden!important;display:flex!important;flex-direction:column!important}
   #view-home #hmTrack .big-card.flipped .bc-back{opacity:1!important;pointer-events:auto!important}
   #view-home #hmTrack .big-card .bc-back::before,#view-home #hmTrack .big-card .bc-back::after{display:none!important}
   #view-home #hmTrack .big-card .bb-grid{display:grid!important;grid-template-columns:1fr!important;gap:8px!important}
@@ -4615,6 +4620,12 @@ body:has(#overlay.show .modal.pebg-fs) .asst-launch{opacity:0;pointer-events:non
   #view-home #hmTrack{padding:4px calc(7vw - 20px) 6px!important;transform:translateX(calc(var(--hmi,0) * (-86vw - 14px)))!important}
   #view-home #hmTrack .big-card{flex:0 0 86vw!important;width:86vw!important;max-width:86vw!important}
 }
+
+/* ============ card flip: module list scrolls with NO visible scrollbar (all platforms) ============ */
+#view-home .hm3-track .big-card .bc-back{display:flex;flex-direction:column}
+#view-home .hm3-track .big-card .bb-grid{flex:1 1 auto!important;min-height:0!important;overflow-y:auto!important;overflow-x:hidden!important;-webkit-overflow-scrolling:touch;
+  scrollbar-width:none!important;-ms-overflow-style:none!important;overscroll-behavior:contain}
+#view-home .hm3-track .big-card .bb-grid::-webkit-scrollbar{width:0!important;height:0!important;display:none!important}
 
 /* ================= LOGIN — minimal visionOS, centered, org logo (all sizes) ================= */
 /* FIX: fixed full-screen overlay so the home page can never show behind / below it */
@@ -4761,8 +4772,9 @@ html:has(#loginScreen.show),body:has(#loginScreen.show){overflow:hidden!importan
 /* draggable assistant / chat launch — default bottom-left; edge-snap applied inline */
 .asst-launch{touch-action:none}
 .asst-launch.nxn-drag{transition:none!important;cursor:grabbing;transform:scale(1.06)!important}
+/* default chat position bottom-left on mobile — NO !important, so drag (inline styles) can override it */
 @media (max-width:860px){
-  body.nx-home .asst-launch{left:16px!important;right:auto!important;bottom:calc(16px + env(safe-area-inset-bottom,0px))!important;top:auto!important}
+  body.nx-home .asst-launch{left:16px;right:auto;bottom:calc(18px + env(safe-area-inset-bottom,0px));top:auto}
 }
 
 </style>
@@ -20729,7 +20741,7 @@ function peProjectExport(){ var TH=(LANG==='th'); var L=pePMProjects(); var p=L.
     document.addEventListener('click',function(e){ if(!panel.classList.contains('open')) return; if(e.target.closest('#nxnPanel')||e.target.closest('#nxnFab')) return; closePanel(); });
     makeDraggable(fabBtn,'nx_notif_pos',togglePanel);
     var asst=document.getElementById('asstLaunch');
-    if(asst){ asst.onclick=null; makeDraggable(asst,'nx_chat_pos',function(){ try{ asstToggle(); }catch(_){} setTimeout(placeAsstPanel,10); }); }
+    if(asst){ asst.onclick=null; makeDraggable(asst,'nx_chat_pos',function(){ var r=asst.getBoundingClientRect(); try{ asstToggle(); }catch(_){} if(window.innerWidth>560){ setTimeout(function(){ placeAsstPanelAt(r); },10); } }); }
     restore(fabBtn,'nx_notif_pos',{side:'right',x:24,y:null,bottom:24});
     if(asst) restore(asst,'nx_chat_pos',{side:'left',x:16,y:null,bottom:24});
     nxNotifSync();
@@ -20771,11 +20783,14 @@ function peProjectExport(){ var TH=(LANG==='th'); var L=pePMProjects(); var p=L.
   function openPanel(){ renderPanel(); panel.classList.add('open'); placePanel(); }
   function closePanel(){ panel.classList.remove('open'); }
 
-  function placeAsstPanel(){ var asst=document.getElementById('asstLaunch'), ap=document.getElementById('asstPanel'); if(!asst||!ap||!ap.classList.contains('open')) return;
-    var r=asst.getBoundingClientRect(); var left=(r.left+r.width/2 < window.innerWidth/2);
+  function placeAsstPanelAt(r){ var ap=document.getElementById('asstPanel'); if(!ap||!ap.classList.contains('open')) return;
+    if(window.innerWidth<=560){ ap.style.left=''; ap.style.right=''; ap.style.top=''; ap.style.bottom=''; return; }  /* CSS handles full-screen on phones */
+    if(!r || (!r.width && !r.left)) return;   /* no valid rect — leave CSS defaults */
+    var left=(r.left+r.width/2 < window.innerWidth/2);
     if(left){ ap.style.left=Math.max(12,r.left)+'px'; ap.style.right='auto'; } else { ap.style.right=Math.max(12,window.innerWidth-r.right)+'px'; ap.style.left='auto'; }
     ap.style.bottom=Math.max(12,window.innerHeight-r.top+10)+'px'; ap.style.top='auto';
   }
+  function placeAsstPanel(){ var asst=document.getElementById('asstLaunch'); if(asst) placeAsstPanelAt(asst.getBoundingClientRect()); }
 
   /* ---- drag + edge-snap ---- */
   function makeDraggable(el,key,onClick){ if(el._nxDrag) return; el._nxDrag=1;
