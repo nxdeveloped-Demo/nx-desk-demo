@@ -1,9 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!--NXBUILD:acctpop-clamp-20260906-150047-->
+<!--NXBUILD:force-login-on-new-version-20260907-0300-->
+<!-- always fetch the latest build (the demo updates often) -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <!-- ===== NX Desk DEMO build: Firebase Realtime Database as the realtime channel ===== -->
-<script>window.NX_DEMO=true;</script>
+<script>window.NX_DEMO=true;
+/* FORCE LOGIN ON A NEW UPLOAD: bump NX_BUILD every deploy. If the stored build differs from this
+   one, the saved login is cleared so the user must sign in again on the fresh version (even with
+   "remember me" on). Same version keeps them logged in. */
+window.NX_BUILD='2026-09-07-0300';
+try{ if(localStorage.getItem('nx_build')!==window.NX_BUILD){ localStorage.removeItem('nx_session'); localStorage.setItem('nx_build',window.NX_BUILD); } }catch(e){}
+</script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-database-compat.js"></script>
 <script src="firebase-config.js"></script>
