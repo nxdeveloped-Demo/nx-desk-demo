@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!--NXBUILD:homefix-20260906-142600-->
 <!-- ===== NX Desk DEMO build: Firebase Realtime Database as the realtime channel ===== -->
 <script>window.NX_DEMO=true;</script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
@@ -8692,8 +8693,7 @@ function momBuildHtml(rec){ var org=momOrgName(); var loc=LANG==='th'?'th-TH':'e
    +'<h2>'+esc(t('momConclusions'))+'</h2><div class="sec">'+para(rec.conclusions)+'</div>'
    +'<h2>'+esc(t('momNext'))+'</h2><table><thead><tr><th>'+esc(t('momColTopic'))+'</th><th>'+esc(t('momColAttendant'))+'</th><th>'+esc(t('momColVenue'))+'</th><th>'+esc(t('momColWhen'))+'</th></tr></thead><tbody>'+nextRows+'</tbody></table>'
    +'<div class="foot"><span>'+esc(t('momByAuthor'))+': '+escapeHtml(rec.author||'—')+'</span><span>'+escapeHtml(new Date(rec.updatedAt||rec.createdAt||Date.now()).toLocaleString(loc))+'</span></div>'
-   +'</div><!--NXBUILD:brandtext-logout-20260906-140222-->
-</body></html>'; }
+   +'</div></body></html>'; }
 function momPreview(id){ var rec=DB.moms().find(function(x){return x.id===id;}); if(!rec) return; _momId=id; _momMeetingId=rec.meetingId||_momMeetingId;
   var html=momBuildHtml(rec);
   var body='<iframe id="momFrame" class="mom-frame" srcdoc="'+escapeAttr(html)+'"></iframe>';
@@ -21202,27 +21202,45 @@ function peProjectExport(){ var TH=(LANG==='th'); var L=pePMProjects(); var p=L.
 </script>
 
 <script>
-/* ===== NX Desk demo — small logout button in the header (far right, after the org text) ===== */
+/* ===== NX Desk demo — header logout button + reliable home layout on load ===== */
 (function(){
   var SVG='<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>';
-  function place(){
+  function placeLogout(){
     var tb=document.querySelector('header.topbar'); if(!tb) return;
     var b=tb.querySelector('.nx-logout-btn');
     if(!b){
       b=document.createElement('button');
       b.type='button'; b.className='nx-logout-btn'; b.title='Logout'; b.setAttribute('aria-label','Logout');
-      b.setAttribute('data-i18n-title','logout'); b.innerHTML=SVG;
+      b.innerHTML=SVG;
       b.addEventListener('click',function(e){ e.preventDefault(); e.stopPropagation();
-        try{ if(typeof logout==='function') logout(); }catch(_){} });
+        try{ if(typeof window.logout==='function') window.logout(); }catch(_){} });
     }
-    /* always keep it as the last child so it hugs the right edge of the header row */
-    if(tb.lastElementChild!==b) tb.appendChild(b);
+    if(tb.lastElementChild!==b) tb.appendChild(b);   /* keep it far-right */
+  }
+  /* The app relocates the header into the welcome card only via go('home'); on a remembered
+     session the app restores home AFTER the inline on-load relocation ran, so the header can be
+     left outside the welcome bar. Re-assert the home layout here (runs after checkSession). */
+  function ensureHomeLayout(){
+    var homeActive=!!document.querySelector('#view-home.active');
+    if(homeActive){
+      document.body.classList.add('nx-home');
+      var tb=document.querySelector('header.topbar');
+      var wel=document.querySelector('#view-home .hm3-welcome');
+      if(tb && wel && !tb.classList.contains('nx-tb-inwelcome')){
+        try{ if(typeof window.nxTopbarPlace==='function') window.nxTopbarPlace(true); }catch(_){}
+      }
+      try{ if(typeof window.nxMobileControls==='function') window.nxMobileControls(); }catch(_){}
+      try{ if(typeof window.nxWelToggle==='function') window.nxWelToggle(); }catch(_){}
+    }
+    placeLogout();
   }
   function ready(fn){ if(document.readyState!=='loading') fn(); else document.addEventListener('DOMContentLoaded',fn); }
-  ready(function(){ place(); setTimeout(place,600); setTimeout(place,1800); });
-  /* keep it present after view changes (the header gets relocated between home and other pages) */
-  if(typeof window.go==='function'){ var _g=window.go; window.go=function(){ var r=_g.apply(this,arguments); setTimeout(place,0); setTimeout(place,60); return r; }; }
-  window.addEventListener('resize',function(){ setTimeout(place,60); });
+  ready(function(){ ensureHomeLayout(); setTimeout(ensureHomeLayout,250); setTimeout(ensureHomeLayout,800); setTimeout(ensureHomeLayout,2000); });
+  /* keep it correct across view changes */
+  if(typeof window.go==='function'){ var _g=window.go; window.go=function(){ var r=_g.apply(this,arguments); setTimeout(placeLogout,0); setTimeout(placeLogout,60); return r; }; }
+  window.addEventListener('resize',function(){ setTimeout(placeLogout,60); });
+  /* the demo adapter may re-render home after connecting to the channel */
+  window.addEventListener('load',function(){ setTimeout(ensureHomeLayout,300); });
 })();
 </script>
 
