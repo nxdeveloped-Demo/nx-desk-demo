@@ -4500,8 +4500,7 @@ body.nx-sliding .hm-bg3d .hb3-blob,body.nx-sliding .hm-bg3d .hb3-ring{transition
 @media(prefers-reduced-motion:reduce){.mt-edit-btn{animation:none}}
 body:has(#overlay.show .modal.pebg-fs) .asst-launch{opacity:0;pointer-events:none}
 </style>
-<style id="nxresp">
-/* ================= NX Desk demo — responsive (tablet + mobile) ================= */
+<style id="nxresp">/* ================= NX Desk demo — responsive (tablet + mobile) ================= */
 *{-webkit-tap-highlight-color:transparent}
 
 /* ===== DARK MODE FIX: top navigation bar stayed light because --n2-glass computed white ===== */
@@ -4536,6 +4535,11 @@ header.topbar.nx-tb-inwelcome .spacer{display:block!important;flex:1 1 auto!impo
   header.topbar.nx-tb-inwelcome .oms-live{order:2!important}
   header.topbar.nx-tb-inwelcome .ta-quick-btn{display:none!important}   /* remove the green clock-in on mobile (Clock in/out is right below) */
   header.topbar.nx-tb-inwelcome .acct-badge{max-width:none!important}   /* show full account name */
+  /* show the org name + system line next to the logo (hidden below 900px by default) */
+  header.topbar.nx-tb-inwelcome .brand{gap:9px!important;align-items:center!important}
+  header.topbar.nx-tb-inwelcome .brand .title{display:block!important;font-size:13.5px!important;line-height:1.1!important;color:var(--n2-txt)!important;white-space:nowrap!important;max-width:none!important;overflow:visible!important}
+  header.topbar.nx-tb-inwelcome .brand .title .tech{display:inline!important;color:var(--n2-txt)!important}
+  header.topbar.nx-tb-inwelcome .brand .sub{display:block!important;font-size:8px!important;letter-spacing:.5px!important;color:var(--n2-muted)!important;white-space:nowrap!important;text-transform:uppercase!important;margin-top:1px!important;max-width:none!important;overflow:visible!important;text-overflow:clip!important}
 }
 /* Mobile: collapse the welcome bar — show only logo+account+greeting+status; expand for actions & settings */
 .hm-wel-toggle{display:none}
@@ -4566,11 +4570,12 @@ header.topbar.nx-tb-inwelcome .spacer{display:block!important;flex:1 1 auto!impo
 /* vertical rhythm between the home sections (welcome ↔ deck ↔ value widget) — ~3x spacing */
 body.nx-home .hm3{gap:clamp(18px,3vh,36px)!important}
 /* desktop: ~3x the original section spacing (welcome ↔ modules ↔ value widget) */
-@media (min-width:861px){ body.nx-home .hm3{gap:clamp(48px,8vh,100px)!important} body.nx-home .hm3-today{margin-top:clamp(16px,2.4vh,32px)!important} }
+@media (min-width:861px){ body.nx-home .hm3{gap:clamp(24px,4vh,56px)!important} }
 
 /* ===== LIVE CLOCK bar between the deck and the value widget (blink-cursor seconds + slow running border) ===== */
 .hm-clockbar{position:relative;overflow:hidden;display:flex!important;align-items:center;justify-content:center;width:max-content;max-width:92%;margin:0 auto;padding:8px 20px;border-radius:14px;background:var(--n2-surface2);border:1px solid var(--n2-line2);box-shadow:0 6px 18px color-mix(in srgb,var(--n2-a) 10%,transparent)}
-.hm-clockbar .hc-time{position:relative;z-index:1;display:inline-flex;align-items:baseline;font-family:'Orbitron',ui-monospace,monospace;font-weight:800;letter-spacing:3px;font-size:clamp(18px,2.6vh,28px);color:var(--n2-txt);line-height:1}
+.hm-clockbar{padding:5px 16px!important}
+.hm-clockbar .hc-time{position:relative;z-index:1;display:inline-flex;align-items:baseline;font-family:'Orbitron',ui-monospace,monospace;font-weight:800;letter-spacing:2px;font-size:clamp(13px,1.7vh,18px);color:var(--n2-txt);line-height:1}
 .hm-clockbar .hc-sec{color:var(--n2-a);animation:hcBlink 1s steps(1,end) infinite}
 .hm-clockbar .hc-cursor{margin-left:6px;color:var(--n2-a);font-weight:900;animation:hcBlink 1s steps(1,end) infinite}
 @keyframes hcBlink{0%,49%{opacity:1}50%,100%{opacity:.12}}
@@ -4901,6 +4906,22 @@ html:has(#loginScreen.show),body:has(#loginScreen.show){overflow:hidden!importan
   .modal .m-x{top:10px!important;right:10px!important}
 }
 
+/* ===== small LOGOUT button in the header (far right, after the org text) ===== */
+.nx-logout-btn{display:inline-flex!important;align-items:center;justify-content:center;flex:0 0 auto;width:34px;height:34px;padding:0;margin-left:8px;border-radius:11px;border:1px solid var(--n2-line2);background:var(--n2-surface2);color:var(--n2-muted);cursor:pointer;transition:background .16s,color .16s,border-color .16s,transform .12s}
+.nx-logout-btn:hover{background:color-mix(in srgb,#ef4444 12%,transparent);border-color:color-mix(in srgb,#ef4444 42%,transparent);color:#ef4444}
+.nx-logout-btn:active{transform:scale(.94)}
+.nx-logout-btn svg{display:block;pointer-events:none}
+:root[data-theme="dark"] .nx-logout-btn{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.14);color:#cdd6ea}
+:root[data-theme="dark"] .nx-logout-btn:hover{background:rgba(239,68,68,.20);border-color:rgba(239,68,68,.55);color:#fca5a5}
+/* desktop: pin to the far right edge of the header row */
+@media (min-width:861px){ header.topbar .nx-logout-btn{margin-left:6px} }
+/* mobile welcome header: keep it top-right, never disturbing the org text */
+@media (max-width:860px){
+  header.topbar.nx-tb-inwelcome .nx-logout-btn{order:3!important;margin-left:auto!important;width:32px!important;height:32px!important;align-self:flex-start!important}
+  /* a touch more room for the org sub line so the button never collides on narrow screens */
+  header.topbar.nx-tb-inwelcome .brand .sub{letter-spacing:.3px!important}
+}
+
 /* draggable assistant / chat launch — default bottom-left; edge-snap applied inline */
 .asst-launch{touch-action:none}
 .asst-launch.nxn-drag{transition:none!important;cursor:grabbing;transform:scale(1.06)!important}
@@ -4908,7 +4929,6 @@ html:has(#loginScreen.show),body:has(#loginScreen.show){overflow:hidden!importan
 @media (max-width:860px){
   body.nx-home .asst-launch{left:16px;right:auto;bottom:calc(18px + env(safe-area-inset-bottom,0px));top:auto}
 }
-
 </style>
 </head>
 <body>
@@ -8672,7 +8692,8 @@ function momBuildHtml(rec){ var org=momOrgName(); var loc=LANG==='th'?'th-TH':'e
    +'<h2>'+esc(t('momConclusions'))+'</h2><div class="sec">'+para(rec.conclusions)+'</div>'
    +'<h2>'+esc(t('momNext'))+'</h2><table><thead><tr><th>'+esc(t('momColTopic'))+'</th><th>'+esc(t('momColAttendant'))+'</th><th>'+esc(t('momColVenue'))+'</th><th>'+esc(t('momColWhen'))+'</th></tr></thead><tbody>'+nextRows+'</tbody></table>'
    +'<div class="foot"><span>'+esc(t('momByAuthor'))+': '+escapeHtml(rec.author||'—')+'</span><span>'+escapeHtml(new Date(rec.updatedAt||rec.createdAt||Date.now()).toLocaleString(loc))+'</span></div>'
-   +'</div></body></html>'; }
+   +'</div><!--NXBUILD:brandtext-logout-20260906-140222-->
+</body></html>'; }
 function momPreview(id){ var rec=DB.moms().find(function(x){return x.id===id;}); if(!rec) return; _momId=id; _momMeetingId=rec.meetingId||_momMeetingId;
   var html=momBuildHtml(rec);
   var body='<iframe id="momFrame" class="mom-frame" srcdoc="'+escapeAttr(html)+'"></iframe>';
@@ -21163,8 +21184,45 @@ function peProjectExport(){ var TH=(LANG==='th'); var L=pePMProjects(); var p=L.
     }
     tick();
     if(!window._nxClockIv) window._nxClockIv=setInterval(tick,1000);
+    try{ if(typeof hmLayout==='function' && document.body.classList.contains('nx-home')) requestAnimationFrame(hmLayout); }catch(_){}
   }
   ready(function(){ setTimeout(build,600); setTimeout(build,1800); setTimeout(build,3500); });
+  (function(){
+    if(typeof window.toggleAcctPop!=='function') return;
+    var _t=window.toggleAcctPop;
+    window.toggleAcctPop=function(e){ _t(e); setTimeout(function(){
+      var w=document.getElementById('acctWrap'), pop=document.getElementById('acctPop'), bd=document.getElementById('acctBadge'); if(!w||!pop||!bd) return;
+      if(w.classList.contains('open') && w.closest('.nx-tb-inwelcome')){
+        var r=bd.getBoundingClientRect(); pop.style.position='fixed'; pop.style.top=(r.bottom+8)+'px'; pop.style.left='auto';
+        pop.style.right=Math.max(8,Math.round(window.innerWidth-r.right))+'px'; pop.style.zIndex='4000';
+      } else { pop.style.position=''; pop.style.top=''; pop.style.left=''; pop.style.right=''; pop.style.zIndex=''; }
+    },0); };
+  })();
+})();
+</script>
+
+<script>
+/* ===== NX Desk demo — small logout button in the header (far right, after the org text) ===== */
+(function(){
+  var SVG='<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>';
+  function place(){
+    var tb=document.querySelector('header.topbar'); if(!tb) return;
+    var b=tb.querySelector('.nx-logout-btn');
+    if(!b){
+      b=document.createElement('button');
+      b.type='button'; b.className='nx-logout-btn'; b.title='Logout'; b.setAttribute('aria-label','Logout');
+      b.setAttribute('data-i18n-title','logout'); b.innerHTML=SVG;
+      b.addEventListener('click',function(e){ e.preventDefault(); e.stopPropagation();
+        try{ if(typeof logout==='function') logout(); }catch(_){} });
+    }
+    /* always keep it as the last child so it hugs the right edge of the header row */
+    if(tb.lastElementChild!==b) tb.appendChild(b);
+  }
+  function ready(fn){ if(document.readyState!=='loading') fn(); else document.addEventListener('DOMContentLoaded',fn); }
+  ready(function(){ place(); setTimeout(place,600); setTimeout(place,1800); });
+  /* keep it present after view changes (the header gets relocated between home and other pages) */
+  if(typeof window.go==='function'){ var _g=window.go; window.go=function(){ var r=_g.apply(this,arguments); setTimeout(place,0); setTimeout(place,60); return r; }; }
+  window.addEventListener('resize',function(){ setTimeout(place,60); });
 })();
 </script>
 
