@@ -4518,21 +4518,24 @@ body:has(#overlay.show .modal.pebg-fs) .asst-launch{opacity:0;pointer-events:non
 /* ===== HOME: no separate top bar — the header is relocated INTO the welcome card ===== */
 body.nx-home header .navmenu{display:none!important}   /* Menu toggle not needed on home */
 /* header sits as the welcome card's full-width top row */
-header.topbar.nx-tb-inwelcome{position:static!important;order:-1!important;grid-column:1 / -1!important;background:transparent!important;border:0!important;border-bottom:1px solid var(--n2-line)!important;box-shadow:none!important;border-radius:0!important;padding:0 2px 7px!important;margin:0 0 8px!important;z-index:3!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;flex:0 0 auto!important;width:auto!important}
+header.topbar.nx-tb-inwelcome{position:static!important;order:-1!important;grid-column:1 / -1!important;background:transparent!important;border:0!important;border-bottom:1px solid var(--n2-line)!important;box-shadow:none!important;border-radius:0!important;padding:0 2px 4px!important;margin:0 0 4px!important;z-index:3!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;flex:0 0 auto!important;width:auto!important}
 header.topbar.nx-tb-inwelcome::before{display:none!important}
 header.topbar.nx-tb-inwelcome .ta-quick-btn{display:none!important}   /* remove the green clock-in/out button (Clock in/out is in the quick actions) */
+/* show the full account name (was truncated to "develo…") */
+header.topbar.nx-tb-inwelcome .acct-badge{max-width:none!important}
+header.topbar.nx-tb-inwelcome .acct-badge .ab-name{max-width:none!important;overflow:visible!important;text-overflow:clip!important;white-space:nowrap!important}
 /* the Menu is hidden on home, so keep theme + language toggles visible in the welcome header (they are folded into Menu below 900px) */
 header.topbar.nx-tb-inwelcome #themeBtn,
 header.topbar.nx-tb-inwelcome #langBtn{display:inline-flex!important}
 header.topbar.nx-tb-inwelcome .spacer{display:block!important;flex:1 1 auto!important}
 @media (max-width:860px){
-  header.topbar.nx-tb-inwelcome{padding:0 0 10px!important;margin:0 0 10px!important;gap:8px!important;flex-wrap:wrap!important;align-items:center!important}
+  header.topbar.nx-tb-inwelcome{padding:0 0 5px!important;margin:0 0 5px!important;gap:8px!important;flex-wrap:wrap!important;align-items:center!important}
   header.topbar.nx-tb-inwelcome .spacer{display:none!important}
   header.topbar.nx-tb-inwelcome .brand{order:-1!important;flex:0 0 auto!important;margin-right:auto!important;justify-content:flex-start!important}   /* logo hard-left */
   header.topbar.nx-tb-inwelcome .acct-wrap{order:1!important;margin-right:0!important}
   header.topbar.nx-tb-inwelcome .oms-live{order:2!important}
   header.topbar.nx-tb-inwelcome .ta-quick-btn{display:none!important}   /* remove the green clock-in on mobile (Clock in/out is right below) */
-  header.topbar.nx-tb-inwelcome .acct-badge{max-width:56vw!important}
+  header.topbar.nx-tb-inwelcome .acct-badge{max-width:none!important}   /* show full account name */
 }
 /* Mobile: collapse the welcome bar — show only logo+account+greeting+status; expand for actions & settings */
 .hm-wel-toggle{display:none}
@@ -4552,6 +4555,8 @@ header.topbar.nx-tb-inwelcome .spacer{display:block!important;flex:1 1 auto!impo
 :root[data-theme="dark"] .hm-wel-toggle{background:rgba(255,255,255,.07)!important;border-color:rgba(255,255,255,.14)!important;color:#eaf2ff!important}
 @keyframes nxWelGlow{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--n2-a) 0%,transparent)}50%{box-shadow:0 0 14px 1px color-mix(in srgb,var(--n2-a) 45%,transparent),0 0 0 1px color-mix(in srgb,var(--n2-a) 35%,transparent)}}
 @keyframes nxSheenSweep{0%{left:-45%}55%{left:120%}100%{left:120%}}
+/* decorative idle float/rotate/pulse for each card's background icon watermark */
+@keyframes nxWmIdle{0%{transform:rotate(-10deg) translate(0,0) scale(1)}25%{transform:rotate(-2deg) translate(-3%,-5%) scale(1.07)}50%{transform:rotate(-14deg) translate(3%,-2%) scale(1.03)}75%{transform:rotate(-5deg) translate(-2%,4%) scale(1.08)}100%{transform:rotate(-10deg) translate(0,0) scale(1)}}
 @media (prefers-reduced-motion:reduce){ .hm-wel-toggle,.hm-wel-toggle::before,.hm-wel-toggle::after{animation:none!important} }
 
 /* theme / language / sound moved BELOW the quick actions on mobile — buttons fill the content width, matching the quick-action buttons' inset */
@@ -4560,6 +4565,8 @@ header.topbar.nx-tb-inwelcome .spacer{display:block!important;flex:1 1 auto!impo
 
 /* vertical rhythm between the home sections (welcome ↔ deck ↔ value widget) — ~3x spacing */
 body.nx-home .hm3{gap:clamp(18px,3vh,36px)!important}
+/* desktop: ~3x the original section spacing (welcome ↔ modules ↔ value widget) */
+@media (min-width:861px){ body.nx-home .hm3{gap:clamp(30px,5.4vh,64px)!important} }
 
 /* ===== WELCOME BAR — layered / depth design to match the rest of the layout ===== */
 body.nx-home .hm3-welcome{position:relative!important;overflow:hidden!important;
@@ -4659,10 +4666,12 @@ body.nx-home .hm3-welcome .hm-qa.primary{box-shadow:0 12px 26px color-mix(in srg
   #view-home #hmTrack .big-card .bc-pop{display:none!important}   /* the flip (.bc-back) is the module menu on mobile */
 
   /* each card shows its OWN icon as an animated idle background watermark (ALL cards) */
-  #view-home #hmTrack .big-card .bc-wm{display:grid!important;position:absolute!important;right:-6%!important;bottom:-10%!important;width:66%!important;z-index:0!important;opacity:.16!important;pointer-events:none!important;animation:bcWm 12s ease-in-out infinite!important}
-  #view-home #hmTrack .big-card.focus .bc-wm{opacity:.22!important}
-  #view-home #hmTrack .big-card:nth-child(2n) .bc-wm{animation-duration:13.5s!important;animation-delay:-3s!important}
-  #view-home #hmTrack .big-card:nth-child(3n) .bc-wm{animation-duration:11s!important;animation-delay:-6s!important}
+  #view-home #hmTrack .big-card .bc-wm{display:grid!important;position:absolute!important;right:-8%!important;bottom:-12%!important;width:72%!important;z-index:0!important;opacity:.42!important;pointer-events:none!important;color:var(--tc,var(--n2-a))!important;animation:nxWmIdle 7s ease-in-out infinite!important;will-change:transform}
+  #view-home #hmTrack .big-card .bc-wm svg,#view-home #hmTrack .big-card .bc-wm .nxi svg{stroke-width:2!important;width:100%!important;height:100%!important}
+  #view-home #hmTrack .big-card .bc-face{background:transparent!important}   /* let the icon watermark show through (card itself carries the surface color) */
+  #view-home #hmTrack .big-card.focus .bc-wm{opacity:.52!important}
+  #view-home #hmTrack .big-card:nth-child(2n) .bc-wm{animation-duration:8.5s!important;animation-delay:-2.5s!important}
+  #view-home #hmTrack .big-card:nth-child(3n) .bc-wm{animation-duration:6s!important;animation-delay:-4s!important}
 
   /* flip = flat readable panel (3D transforms fail on the flattened mobile deck) */
   #view-home #hmTrack .big-card.flipped .bc-face{opacity:0!important;pointer-events:none!important}
@@ -4690,7 +4699,7 @@ body.nx-home .hm3-welcome .hm-qa.primary{box-shadow:0 12px 26px color-mix(in srg
   *,*::before,*::after{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
   #view-home .hm-bg3d,#view-home #hmBg,#hmBg,.hb3-scene,#hbBokeh{display:none!important}
   #view-home .big-card,#view-home .big-card *,#view-home .hm3 *{animation:none!important}
-  #view-home #hmTrack .big-card .bc-wm{animation:bcWm 12s ease-in-out infinite!important}   /* idle watermark loop on every card */
+  #view-home #hmTrack .big-card .bc-wm{animation:nxWmIdle 7s ease-in-out infinite!important}   /* decorative idle watermark loop on every card */
   #view-home .big-card{transform-style:flat!important;filter:none!important;-webkit-backface-visibility:visible!important;backface-visibility:visible!important}
   #view-home .bc-shadow,#view-home .bc-preview,#view-home .bc-open,#view-home .bc-now,#view-home .bc-dim{display:none!important}
   header.topbar,#view-home .big-card,#view-home .big-card .bc-face,#view-home .big-card .bc-back,#view-home .hm3-welcome,#view-home .hm3-today,
