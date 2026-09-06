@@ -19454,7 +19454,7 @@ if(typeof window!=='undefined' && window.NX_DEMO===true){ try{ (function(){
   var _lanSet=localStorage.setItem;   /* the LAN wrapper; it never POSTs because omsC.on stays false in the demo */
   localStorage.setItem=function(k,v){
     _lanSet.call(localStorage,k,v);
-    if(nxDemo.on && !nxDemo.applying && nxDemo.root && OMS_STORES.indexOf(k)>=0){
+    if(nxDemo.root && !nxDemo.applying && OMS_STORES.indexOf(k)>=0){   /* push whenever the DB ref exists — Firebase queues offline writes & flushes on reconnect (fixes iOS Safari where .info/connected is unreliable) */
       try{ nxDemo._push[k]=true; nxDemo.root.child(k).set(v==null?null:JSON.parse(v)); }catch(e){}
     }
   };
