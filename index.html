@@ -4537,14 +4537,22 @@ header.topbar.nx-tb-inwelcome .spacer{display:block!important;flex:1 1 auto!impo
 /* Mobile: collapse the welcome bar — show only logo+account+greeting+status; expand for actions & settings */
 .hm-wel-toggle{display:none}
 @media (max-width:860px){
-  .hm-wel-toggle{display:flex!important;align-items:center;justify-content:center;gap:6px;width:100%;margin-top:10px;padding:10px 12px;border-radius:12px;border:1px solid var(--n2-line2);background:var(--n2-surface2);color:var(--n2-txt);font:800 12.5px var(--n2-font,system-ui);letter-spacing:.2px;cursor:pointer;transition:background .18s,border-color .18s}
+  .hm-wel-toggle{display:flex!important;align-items:center;justify-content:center;gap:6px;width:100%;margin-top:10px;padding:11px 12px;border-radius:12px;border:1px solid var(--n2-line2);background:var(--n2-surface2);color:var(--n2-txt);font:800 12.5px var(--n2-font,system-ui);letter-spacing:.2px;cursor:pointer;position:relative;overflow:hidden;isolation:isolate;transition:background .18s,border-color .18s;animation:nxWelGlow 1.7s ease-in-out infinite}
   .hm-wel-toggle:active{transform:scale(.99)}
+  /* running conic border */
+  .hm-wel-toggle::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:2px;background:conic-gradient(from var(--ang,0deg),transparent 0 55%,var(--n2-a) 72%,#6366f1 82%,transparent 94%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;animation:twRunLoop 2.4s linear infinite;z-index:1}
+  /* diagonal shine sweep */
+  .hm-wel-toggle::after{content:"";position:absolute;top:-20%;bottom:-20%;left:-45%;width:38%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent);transform:skewX(-18deg);pointer-events:none;animation:nxSheenSweep 2.6s ease-in-out infinite;z-index:2}
+  .hm-wel-toggle > *{position:relative;z-index:3}
   body.nx-home #view-home .hm3-welcome .hm-quick{display:none!important}
   body.nx-home #view-home .hm3-welcome #hmCtlFooter{display:none!important}
   body.nx-home #view-home .hm3-welcome.nx-wel-open .hm-quick{display:flex!important}
   body.nx-home #view-home .hm3-welcome.nx-wel-open #hmCtlFooter{display:flex!important}
 }
 :root[data-theme="dark"] .hm-wel-toggle{background:rgba(255,255,255,.07)!important;border-color:rgba(255,255,255,.14)!important;color:#eaf2ff!important}
+@keyframes nxWelGlow{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--n2-a) 0%,transparent)}50%{box-shadow:0 0 14px 1px color-mix(in srgb,var(--n2-a) 45%,transparent),0 0 0 1px color-mix(in srgb,var(--n2-a) 35%,transparent)}}
+@keyframes nxSheenSweep{0%{left:-45%}55%{left:120%}100%{left:120%}}
+@media (prefers-reduced-motion:reduce){ .hm-wel-toggle,.hm-wel-toggle::before,.hm-wel-toggle::after{animation:none!important} }
 
 /* theme / language / sound moved BELOW the quick actions on mobile — buttons fill the content width, matching the quick-action buttons' inset */
 .hm-ctl-footer{display:flex;align-items:stretch;gap:8px;margin-top:8px;padding-top:8px;border-top:1px solid var(--n2-line)}
@@ -19850,7 +19858,7 @@ function nxMobileControls(){
 }
 window.nxMobileControls=nxMobileControls;
 /* Mobile: collapse the welcome bar to logo+account+greeting+status; tap to reveal actions & settings */
-function nxWelToggleLabel(){ var wel=document.querySelector('#view-home .hm3-welcome'); var btn=document.getElementById('hmWelToggle'); if(!btn||!wel) return; var open=wel.classList.contains('nx-wel-open'); var TH=(typeof LANG!=='undefined'&&LANG==='th'); btn.innerHTML=open?((TH?'ซ่อน':'Hide')+' <span style="font-size:10px">▲</span>'):((TH?'ปุ่มลัด & ตั้งค่า':'Quick actions & settings')+' <span style="font-size:10px">▼</span>'); btn.setAttribute('aria-expanded',open?'true':'false'); }
+function nxWelToggleLabel(){ var wel=document.querySelector('#view-home .hm3-welcome'); var btn=document.getElementById('hmWelToggle'); if(!btn||!wel) return; var open=wel.classList.contains('nx-wel-open'); var TH=(typeof LANG!=='undefined'&&LANG==='th'); btn.innerHTML=open?('<span>'+(TH?'ซ่อน':'Hide')+'</span> <span style="font-size:10px">▲</span>'):('<span>'+(TH?'ปุ่มลัด & ตั้งค่า':'Quick actions & settings')+'</span> <span style="font-size:10px">▼</span>'); btn.setAttribute('aria-expanded',open?'true':'false'); }
 function nxWelToggle(){
   var wel=document.querySelector('#view-home .hm3-welcome'); if(!wel) return;
   var isMobile=window.matchMedia('(max-width:860px)').matches;
