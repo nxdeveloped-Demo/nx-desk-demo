@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!--NXBUILD:viewer2-20260906-163351-->
+<!--NXBUILD:sync-dedup-20260906-170913-->
 <!-- ===== NX Desk DEMO build: Firebase Realtime Database as the realtime channel ===== -->
 <script>window.NX_DEMO=true;</script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
@@ -19975,7 +19975,7 @@ window.addEventListener('resize',function(){ try{ nxMobileControls(); }catch(_){
    unchanged and never contain this block.
    Activated by  window.NX_DEMO === true  (set in the page <head>). */
 if(typeof window!=='undefined' && window.NX_DEMO===true){ try{ (function(){
-  var nxDemo={ on:false, ready:false, applying:false, root:null, _push:{}, _primed:{}, _err:'', seedTimer:null };
+  var nxDemo={ on:false, ready:false, applying:false, root:null, _push:{}, _primed:{}, _last:{}, _err:'', seedTimer:null };
   window.nxDemo=nxDemo;
 
   /* --- outbound: mirror every synced store to the cloud on save --- */
@@ -19996,14 +19996,22 @@ if(typeof window!=='undefined' && window.NX_DEMO===true){ try{ (function(){
     }
     _lanSet.call(localStorage,k,v);
     if(nxDemo.root && !nxDemo.applying && OMS_STORES.indexOf(k)>=0){   /* push whenever the DB ref exists — Firebase queues offline writes & flushes on reconnect (fixes iOS Safari where .info/connected is unreliable) */
-      try{ nxDemo._push[k]=true; nxDemo.root.child(k).set(v==null?null:JSON.parse(v)); }catch(e){}
+      /* ONLY send when the store actually changed — stops the continuous re-send / echo ping-pong
+         that was overwriting writes coming from other devices (e.g. the phone). */
+      if(nxDemo._last[k]===v) return;
+      nxDemo._last[k]=v;
+      nxDemo._push[k]=true;
+      try{ firebase.database().goOnline(); }catch(_){}   /* wake the socket so the write actually flushes (iOS Safari suspends it) */
+      try{ nxDemo.root.child(k).set(v==null?null:JSON.parse(v)); }catch(e){}
     }
   };
 
   function apply(store,val){
     if(val==null) return;
     nxDemo.applying=true;
-    try{ _lsSet(store,JSON.stringify(val)); }finally{ nxDemo.applying=false; }
+    var js=JSON.stringify(val);
+    nxDemo._last[store]=js;   /* remember what we received so a local re-save of the same data is NOT pushed back */
+    try{ _lsSet(store,js); }finally{ nxDemo.applying=false; }
   }
   /* --- inbound: cloud change -> local store -> live page refresh --- */
   function handle(store,snap){
