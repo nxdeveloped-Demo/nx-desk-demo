@@ -4518,8 +4518,9 @@ body:has(#overlay.show .modal.pebg-fs) .asst-launch{opacity:0;pointer-events:non
 /* ===== HOME: no separate top bar — the header is relocated INTO the welcome card ===== */
 body.nx-home header .navmenu{display:none!important}   /* Menu toggle not needed on home */
 /* header sits as the welcome card's full-width top row */
-header.topbar.nx-tb-inwelcome{position:static!important;order:-1!important;grid-column:1 / -1!important;background:transparent!important;border:0!important;border-bottom:1px solid var(--n2-line)!important;box-shadow:none!important;border-radius:0!important;padding:0 2px 12px!important;margin:0 0 clamp(10px,1.6vh,16px)!important;z-index:3!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;flex:0 0 auto!important;width:auto!important}
+header.topbar.nx-tb-inwelcome{position:static!important;order:-1!important;grid-column:1 / -1!important;background:transparent!important;border:0!important;border-bottom:1px solid var(--n2-line)!important;box-shadow:none!important;border-radius:0!important;padding:0 2px 7px!important;margin:0 0 8px!important;z-index:3!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;flex:0 0 auto!important;width:auto!important}
 header.topbar.nx-tb-inwelcome::before{display:none!important}
+header.topbar.nx-tb-inwelcome .ta-quick-btn{display:none!important}   /* remove the green clock-in/out button (Clock in/out is in the quick actions) */
 /* the Menu is hidden on home, so keep theme + language toggles visible in the welcome header (they are folded into Menu below 900px) */
 header.topbar.nx-tb-inwelcome #themeBtn,
 header.topbar.nx-tb-inwelcome #langBtn{display:inline-flex!important}
@@ -4533,16 +4534,31 @@ header.topbar.nx-tb-inwelcome .spacer{display:block!important;flex:1 1 auto!impo
   header.topbar.nx-tb-inwelcome .ta-quick-btn{display:none!important}   /* remove the green clock-in on mobile (Clock in/out is right below) */
   header.topbar.nx-tb-inwelcome .acct-badge{max-width:56vw!important}
 }
-/* theme / language / sound moved BELOW the quick actions on mobile */
-.hm-ctl-footer{display:flex;justify-content:center;align-items:center;gap:12px;margin-top:12px;padding-top:12px;border-top:1px solid var(--n2-line)}
-.hm-ctl-footer #themeBtn,.hm-ctl-footer #langBtn,.hm-ctl-footer #soundBtn{display:inline-flex!important;padding:9px 14px!important;flex:0 0 auto!important}
+/* Mobile: collapse the welcome bar — show only logo+account+greeting+status; expand for actions & settings */
+.hm-wel-toggle{display:none}
+@media (max-width:860px){
+  .hm-wel-toggle{display:flex!important;align-items:center;justify-content:center;gap:6px;width:100%;margin-top:10px;padding:10px 12px;border-radius:12px;border:1px solid var(--n2-line2);background:var(--n2-surface2);color:var(--n2-txt);font:800 12.5px var(--n2-font,system-ui);letter-spacing:.2px;cursor:pointer;transition:background .18s,border-color .18s}
+  .hm-wel-toggle:active{transform:scale(.99)}
+  body.nx-home #view-home .hm3-welcome .hm-quick{display:none!important}
+  body.nx-home #view-home .hm3-welcome #hmCtlFooter{display:none!important}
+  body.nx-home #view-home .hm3-welcome.nx-wel-open .hm-quick{display:flex!important}
+  body.nx-home #view-home .hm3-welcome.nx-wel-open #hmCtlFooter{display:flex!important}
+}
+:root[data-theme="dark"] .hm-wel-toggle{background:rgba(255,255,255,.07)!important;border-color:rgba(255,255,255,.14)!important;color:#eaf2ff!important}
+
+/* theme / language / sound moved BELOW the quick actions on mobile — buttons fill the content width, matching the quick-action buttons' inset */
+.hm-ctl-footer{display:flex;align-items:stretch;gap:8px;margin-top:8px;padding-top:8px;border-top:1px solid var(--n2-line)}
+.hm-ctl-footer #themeBtn,.hm-ctl-footer #langBtn,.hm-ctl-footer #soundBtn{display:inline-flex!important;align-items:center;justify-content:center;flex:1 1 0!important;min-width:0!important;padding:10px 8px!important;border-radius:12px!important}
+
+/* tighter vertical rhythm between the home sections (welcome ↔ deck ↔ value widget) */
+body.nx-home .hm3{gap:clamp(6px,1vh,12px)!important}
 
 /* ===== WELCOME BAR — layered / depth design to match the rest of the layout ===== */
 body.nx-home .hm3-welcome{position:relative!important;overflow:hidden!important;
   background:linear-gradient(155deg,var(--n2-surface) 0%,var(--n2-surface2) 62%,color-mix(in srgb,var(--n2-a) 7%,var(--n2-surface2)) 100%)!important;
   border:1px solid var(--n2-line2)!important;border-radius:clamp(20px,2.6vh,28px)!important;
   padding:clamp(16px,2.4vh,26px) clamp(20px,2.2vw,32px)!important;
-  column-gap:clamp(20px,2.8vw,44px)!important;row-gap:clamp(10px,1.4vh,18px)!important;
+  column-gap:clamp(20px,2.8vw,44px)!important;row-gap:clamp(4px,.8vh,10px)!important;
   box-shadow:0 20px 48px color-mix(in srgb,var(--n2-a) 13%,transparent),0 3px 8px rgba(15,23,42,.06),inset 0 1px 0 rgba(255,255,255,.6)!important}
 /* DARK MODE welcome card — clean elevated surface (was murky/near-black) */
 :root[data-theme="dark"] body.nx-home .hm3-welcome{
@@ -19833,8 +19849,25 @@ function nxMobileControls(){
   }
 }
 window.nxMobileControls=nxMobileControls;
-(function(){ var _tp=window.nxTopbarPlace; window.nxTopbarPlace=function(h){ _tp(h); try{ nxMobileControls(); }catch(_){} }; })();
-window.addEventListener('resize',function(){ try{ nxMobileControls(); }catch(_){} });
+/* Mobile: collapse the welcome bar to logo+account+greeting+status; tap to reveal actions & settings */
+function nxWelToggleLabel(){ var wel=document.querySelector('#view-home .hm3-welcome'); var btn=document.getElementById('hmWelToggle'); if(!btn||!wel) return; var open=wel.classList.contains('nx-wel-open'); var TH=(typeof LANG!=='undefined'&&LANG==='th'); btn.innerHTML=open?((TH?'ซ่อน':'Hide')+' <span style="font-size:10px">▲</span>'):((TH?'ปุ่มลัด & ตั้งค่า':'Quick actions & settings')+' <span style="font-size:10px">▼</span>'); btn.setAttribute('aria-expanded',open?'true':'false'); }
+function nxWelToggle(){
+  var wel=document.querySelector('#view-home .hm3-welcome'); if(!wel) return;
+  var isMobile=window.matchMedia('(max-width:860px)').matches;
+  var isHome=document.body.classList.contains('nx-home');
+  var btn=document.getElementById('hmWelToggle');
+  if(isHome && isMobile){
+    if(!btn){ btn=document.createElement('button'); btn.type='button'; btn.id='hmWelToggle'; btn.className='hm-wel-toggle';
+      btn.onclick=function(){ wel.classList.toggle('nx-wel-open'); nxWelToggleLabel(); };
+      var wl=wel.querySelector('.hm3-wl'); if(wl) wl.insertAdjacentElement('afterend',btn); else wel.appendChild(btn);
+    } else if(btn.parentNode!==wel){ var wl2=wel.querySelector('.hm3-wl'); if(wl2) wl2.insertAdjacentElement('afterend',btn); }
+    nxWelToggleLabel();
+  } else { if(btn) btn.remove(); wel.classList.remove('nx-wel-open'); }
+}
+window.nxWelToggle=nxWelToggle;
+
+(function(){ var _tp=window.nxTopbarPlace; window.nxTopbarPlace=function(h){ _tp(h); try{ nxMobileControls(); }catch(_){} try{ nxWelToggle(); }catch(_){} }; })();
+window.addEventListener('resize',function(){ try{ nxMobileControls(); }catch(_){} try{ nxWelToggle(); }catch(_){} });
 
 (function(){ const _g=go; go=function(v){ if(v!=='home') hmPopHide(true); const prevEl=document.querySelector('.view.active'); const prev=prevEl?prevEl.id.replace(/^view-/,''):''; _g(v); nxPageFx(prev,(v==='account'?'employees':v)); document.body.classList.toggle('nx-home',v==='home'); try{ nxTopbarPlace(v==='home'); }catch(_){} if(v==='home'){ hmBokehInit(); hmBindCards(); nxTodayWidget(); requestAnimationFrame(hmLayout); setTimeout(hmLayout,140); } }; window.go=go;
   const _aa=applyAccess; applyAccess=function(){ _aa(); if(document.body.classList.contains('nx-home')) hmLayout(); }; window.applyAccess=applyAccess;
