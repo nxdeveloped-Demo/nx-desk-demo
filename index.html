@@ -4508,6 +4508,20 @@ body:has(#overlay.show .modal.pebg-fs) .asst-launch{opacity:0;pointer-events:non
 :root[data-theme="dark"]{--n2-glass:rgba(17,23,38,.82)!important}
 :root[data-theme="dark"] header.topbar{background:var(--topbar-bg)!important}
 :root[data-theme="dark"] header.topbar::before{background:rgba(17,23,38,.86)!important;border-bottom:1px solid var(--n2-line2)!important}
+
+/* ===== DARK MODE: primary quick-action (Clock in/out) — white text on a colored pill ===== */
+:root[data-theme="dark"] .hm-qa.primary{background:linear-gradient(135deg,#4f46e5,#0891b2)!important;color:#fff!important;border-color:transparent!important}
+:root[data-theme="dark"] .hm-qa.primary small{color:rgba(255,255,255,.82)!important}
+:root[data-theme="dark"] .hm-qa.primary .qa-ic{background:rgba(255,255,255,.20)!important;color:#fff!important}
+:root[data-theme="dark"] .hm-qa.primary:hover{background:linear-gradient(135deg,#635bf0,#0aa5c9)!important;color:#fff!important}
+
+/* ===== HOME: no separate top bar — the header is relocated into the home content ===== */
+body.nx-home header .navmenu{display:none!important}   /* Menu toggle not needed on home */
+header.topbar.nx-tb-inwelcome{position:static!important;order:-1!important;background:transparent!important;border:0!important;border-bottom:1px solid var(--n2-line)!important;box-shadow:none!important;border-radius:0!important;padding:2px 6px 12px!important;margin:0 2px 6px!important;z-index:1!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;flex:0 0 auto!important}
+header.topbar.nx-tb-inwelcome::before{display:none!important}
+@media (max-width:860px){
+  header.topbar.nx-tb-inwelcome{padding:2px 2px 10px!important;margin:0 0 4px!important;gap:6px!important}
+}
 @media (max-width:1024px){ header.topbar .title .tech{display:none} }
 
 @media (max-width:860px){
@@ -4573,9 +4587,11 @@ body:has(#overlay.show .modal.pebg-fs) .asst-launch{opacity:0;pointer-events:non
   #view-home #hmTrack .big-card .bc-ic{flex:none!important}
   #view-home #hmTrack .big-card .bc-pop{display:none!important}   /* the flip (.bc-back) is the module menu on mobile */
 
-  /* each card shows its OWN icon as an animated idle background watermark */
-  #view-home #hmTrack .big-card .bc-wm{display:grid!important;position:absolute!important;right:-6%!important;bottom:-10%!important;width:66%!important;z-index:0!important;opacity:.14!important;pointer-events:none!important}
-  #view-home #hmTrack .big-card.focus .bc-wm{opacity:.20!important}
+  /* each card shows its OWN icon as an animated idle background watermark (ALL cards) */
+  #view-home #hmTrack .big-card .bc-wm{display:grid!important;position:absolute!important;right:-6%!important;bottom:-10%!important;width:66%!important;z-index:0!important;opacity:.16!important;pointer-events:none!important;animation:bcWm 12s ease-in-out infinite!important}
+  #view-home #hmTrack .big-card.focus .bc-wm{opacity:.22!important}
+  #view-home #hmTrack .big-card:nth-child(2n) .bc-wm{animation-duration:13.5s!important;animation-delay:-3s!important}
+  #view-home #hmTrack .big-card:nth-child(3n) .bc-wm{animation-duration:11s!important;animation-delay:-6s!important}
 
   /* flip = flat readable panel (3D transforms fail on the flattened mobile deck) */
   #view-home #hmTrack .big-card.flipped .bc-face{opacity:0!important;pointer-events:none!important}
@@ -4603,7 +4619,7 @@ body:has(#overlay.show .modal.pebg-fs) .asst-launch{opacity:0;pointer-events:non
   *,*::before,*::after{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
   #view-home .hm-bg3d,#view-home #hmBg,#hmBg,.hb3-scene,#hbBokeh{display:none!important}
   #view-home .big-card,#view-home .big-card *,#view-home .hm3 *{animation:none!important}
-  #view-home #hmTrack .big-card.focus .bc-wm{animation:bcWm 11s ease-in-out infinite!important}   /* one cheap idle watermark loop */
+  #view-home #hmTrack .big-card .bc-wm{animation:bcWm 12s ease-in-out infinite!important}   /* idle watermark loop on every card */
   #view-home .big-card{transform-style:flat!important;filter:none!important;-webkit-backface-visibility:visible!important;backface-visibility:visible!important}
   #view-home .bc-shadow,#view-home .bc-preview,#view-home .bc-open,#view-home .bc-now,#view-home .bc-dim{display:none!important}
   header.topbar,#view-home .big-card,#view-home .big-card .bc-face,#view-home .big-card .bc-back,#view-home .hm3-welcome,#view-home .hm3-today,
@@ -19595,6 +19611,12 @@ Object.assign(I18N,{
 var _hmIdx=0,_hmHold=null,_hmPopT=null,_hmPopCard=null;
 function hmCards(){ const t=document.getElementById('hmTrack'); return t?[...t.querySelectorAll('.big-card')].filter(c=>getComputedStyle(c).display!=='none'):[]; }
 function hmTopbarH(){ const h=document.querySelector('header.topbar'); const v=h?h.offsetHeight:72; document.documentElement.style.setProperty('--nx-tb',v+'px'); return v; }
+function hmNavGo(i){ try{ var cards=hmCards(); var c=cards[i]; if(!c) return; hmGo(i); if(typeof hmPopShow==='function') setTimeout(function(){ try{ hmPopShow(c,true); }catch(_){} },60); try{ nxSound('menu'); }catch(_){} }catch(_){} }
+function hmBuildNavRow(){ var row=document.getElementById('hmNavRow'); if(!row) return; var cards=hmCards();
+  function nameOf(c){ var h2=c.querySelector('.bc-info h2'); if(!h2) return ''; var k=h2.getAttribute('data-i18n'); if(k && typeof t==='function'){ var v=t(k); if(v && v!==k) return v; } return h2.textContent.trim(); }
+  var names=cards.map(nameOf); var sig=(typeof LANG!=='undefined'?LANG:'')+':'+names.join('|');
+  if(row.dataset.sig!==sig){ row.dataset.sig=sig; row.innerHTML=cards.map(function(c,i){ var ic=c.querySelector('.bc-ic'); var tc=(c.style.getPropertyValue('--tc')||'').trim()||'var(--n2-a)'; var name=names[i]||''; return '<button type="button" class="hm-navchip" style="--cc:'+tc+'" title="'+escapeAttr(name)+'" onclick="hmNavGo('+i+')"><span class="nc-ic">'+(ic?ic.innerHTML:'')+'</span><span class="nc-tx">'+escapeHtml(name)+'</span></button>'; }).join(''); }
+  var foc=(typeof _hmIdx!=='undefined')?_hmIdx:0; [].forEach.call(row.children,function(b,i){ b.classList.toggle('on',i===foc); }); }
 function hmLayout(){
   hmTopbarH();
   const td=document.getElementById('hmToday'); if(td) document.documentElement.style.setProperty('--nx-today-h',td.offsetHeight+'px');
@@ -19632,6 +19654,7 @@ function hmLayout(){
   { let h=''; for(let i=0;i<cards.length;i++) h+='<i class="'+(i===_hmIdx?'on':'')+'" onclick="hmGo('+i+')" title="'+escapeAttr((cards[i].querySelector('.bc-info h2')||{}).textContent||'')+'"></i>';
     const dots=document.getElementById('hmDots'); if(dots){ dots.innerHTML=h; dots.style.display=''; }
     let db=document.getElementById('hmDotsBtm'); if(!db){ const mod=track.closest('.hm3-mod'); if(mod){ db=document.createElement('div'); db.className='hm-dots hm-dots-btm'; db.id='hmDotsBtm'; mod.appendChild(db); } }
+    try{ hmBuildNavRow(); }catch(_){}
     if(db) db.innerHTML=h; }
   if(_hmPopCard&&document.getElementById('hmPop')&&document.getElementById('hmPop').classList.contains('show')) hmPopPlace(_hmPopCard);
 }
@@ -19728,7 +19751,21 @@ function lgLayout(){ const sc=document.getElementById('lgScene'); if(!sc) return
 function lgRememberInit(){ const cb=document.getElementById('lgRemember'); const on=localStorage.getItem('nx_remember')==='1'; if(cb) cb.checked=on; const u=document.getElementById('lgUser'); const ru=localStorage.getItem('nx_remember_user')||''; if(u&&!u.value&&ru) u.value=ru; }
 function nxNavOrder(){ const o=['home']; document.querySelectorAll('#dd .dd-item[data-nav]').forEach(a=>{ const k=a.getAttribute('data-nav'); if(k&&o.indexOf(k)<0) o.push(k); }); return o; }
 function nxPageFx(prev,next){ try{ if(!prev||!next||prev===next) return; const o=nxNavOrder(); const a=o.indexOf(prev), b=o.indexOf(next); if(a<0||b<0) return; const el=document.getElementById('view-'+next); if(!el) return; el.classList.remove('nx-rise','nx-drop'); void el.offsetWidth; el.classList.add(b>a?'nx-rise':'nx-drop'); clearTimeout(el._fx); el._fx=setTimeout(function(){ el.classList.remove('nx-rise','nx-drop'); },700); }catch(_){} }
-(function(){ const _g=go; go=function(v){ if(v!=='home') hmPopHide(true); const prevEl=document.querySelector('.view.active'); const prev=prevEl?prevEl.id.replace(/^view-/,''):''; _g(v); nxPageFx(prev,(v==='account'?'employees':v)); document.body.classList.toggle('nx-home',v==='home'); if(v==='home'){ hmBokehInit(); hmBindCards(); nxTodayWidget(); requestAnimationFrame(hmLayout); setTimeout(hmLayout,140); } }; window.go=go;
+/* Home = no separate top bar: relocate the whole header into the home content; restore it on other pages */
+var _nxTbOrigParent=null, _nxTbAnchor=null;
+function nxTopbarPlace(isHome){
+  var tb=document.querySelector('header.topbar'); if(!tb) return;
+  if(_nxTbOrigParent===null){ _nxTbOrigParent=tb.parentNode; _nxTbAnchor=tb.nextElementSibling; }
+  var hm=document.querySelector('#view-home .hm3');
+  if(isHome){
+    if(hm && tb.parentNode!==hm){ hm.insertBefore(tb, hm.firstChild); tb.classList.add('nx-tb-inwelcome'); }
+  } else {
+    if(tb.parentNode!==_nxTbOrigParent){ tb.classList.remove('nx-tb-inwelcome');
+      if(_nxTbAnchor && _nxTbAnchor.parentNode===_nxTbOrigParent) _nxTbOrigParent.insertBefore(tb,_nxTbAnchor); else _nxTbOrigParent.appendChild(tb); }
+  }
+}
+window.nxTopbarPlace=nxTopbarPlace;
+(function(){ const _g=go; go=function(v){ if(v!=='home') hmPopHide(true); const prevEl=document.querySelector('.view.active'); const prev=prevEl?prevEl.id.replace(/^view-/,''):''; _g(v); nxPageFx(prev,(v==='account'?'employees':v)); document.body.classList.toggle('nx-home',v==='home'); try{ nxTopbarPlace(v==='home'); }catch(_){} if(v==='home'){ hmBokehInit(); hmBindCards(); nxTodayWidget(); requestAnimationFrame(hmLayout); setTimeout(hmLayout,140); } }; window.go=go;
   const _aa=applyAccess; applyAccess=function(){ _aa(); if(document.body.classList.contains('nx-home')) hmLayout(); }; window.applyAccess=applyAccess;
   const _hr=nxHomeRefresh; nxHomeRefresh=function(){ _hr(); if(document.body.classList.contains('nx-home')){ nxTodayWidget(); hmLayout(); } }; window.nxHomeRefresh=nxHomeRefresh;
   const _tb=toggleBig; toggleBig=function(which){ const el=document.getElementById('bc-'+which); if(!el){ _tb(which); return; } }; window.toggleBig=toggleBig;
@@ -19737,7 +19774,7 @@ function nxPageFx(prev,next){ try{ if(!prev||!next||prev===next) return; const o
   /* start at the sign-in screen when the app is opened again — unless "Remember me" was ticked */
   try{ if(!sessionStorage.getItem('nx_boot')){ sessionStorage.setItem('nx_boot','1'); if(localStorage.getItem('nx_remember')!=='1') DB.clearSession(); } }catch(_){}
   lgRememberInit();
-  document.body.classList.toggle('nx-home', !!document.querySelector('#view-home.active')); hmBindCards(); nxTodayWidget(); setTimeout(hmLayout,50); setTimeout(lgLayout,30); setTimeout(lgLayout,400);
+  document.body.classList.toggle('nx-home', !!document.querySelector('#view-home.active')); try{ nxTopbarPlace(document.body.classList.contains('nx-home')); }catch(_){} hmBindCards(); nxTodayWidget(); setTimeout(hmLayout,50); setTimeout(lgLayout,30); setTimeout(lgLayout,400);
 })();
 
 /* --- NX DEMO ADAPTER (injected) --- */
