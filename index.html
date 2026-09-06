@@ -4504,20 +4504,20 @@ body:has(#overlay.show .modal.pebg-fs) .asst-launch{opacity:0;pointer-events:non
 
 @media (max-width:860px){
   html,body{overflow-x:hidden;max-width:100vw}
-  /* ---------- TOPBAR ---------- */
+  /* TOPBAR */
   header.topbar{padding:6px 10px!important;gap:6px!important;flex-wrap:nowrap!important}
   header.topbar .title .tech,header.topbar .clock,header.topbar .oms-live,header.topbar .ab-lbl,header.topbar .ab-pos,header.topbar .ab-sep{display:none!important}
   header.topbar .brand .title .ln{font-size:13px!important}
   header.topbar .nxmark-txt,header.topbar .logo{transform:scale(.9);transform-origin:left center}
   header.topbar .acct-badge .ab-name{max-width:64px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
   header.topbar .btn-theme,header.topbar .btn-lang,header.topbar .btn-sound,header.topbar .ta-quick-btn{padding:6px!important}
-  /* ---------- generic ---------- */
+  /* generic */
   main,.view{padding-left:10px!important;padding-right:10px!important}
   .view h1,.view .page-title{font-size:20px!important}
   table{max-width:100%}
   .wm-table-wrap,.tbl-wrap,.table-wrap,[class*="-table-wrap"]{overflow-x:auto!important;-webkit-overflow-scrolling:touch}
   #modal .modal-card,.modal-card,.cg-card,.customModal{max-width:96vw!important}
-  /* ---------- HOME welcome ---------- */
+  /* HOME welcome */
   body.nx-home main{overflow-x:hidden}
   #view-home .hm3{display:flex!important;flex-direction:column!important;padding:10px!important;gap:10px!important}
   #view-home .hm3>*{flex:0 0 auto!important}
@@ -4531,7 +4531,7 @@ body:has(#overlay.show .modal.pebg-fs) .asst-launch{opacity:0;pointer-events:non
   #view-home #hmHello{font-size:20px!important}
   #view-home .hm-quick{position:static!important;display:flex!important;flex-wrap:wrap!important;gap:8px!important;width:100%!important;margin-top:4px!important}
   #view-home .hm-quick .hm-qa{flex:1 1 46%!important;justify-content:center!important;min-width:0!important}
-  /* ---------- HOME deck → vertical list of all module cards ---------- */
+  /* HOME deck -> vertical list */
   #view-home .hm3-mod .hm3-sec,#view-home .hm3-sec{display:block!important;min-height:0!important;height:auto!important}
   #view-home .hm3-mod{min-height:auto!important;height:auto!important;padding:0!important;margin:0!important;justify-content:flex-start!important;overflow:visible!important}
   #view-home .hm-dots,#view-home .hm3-sec p[data-i18n="hm3Hint"]{display:none!important}
@@ -4542,18 +4542,18 @@ body:has(#overlay.show .modal.pebg-fs) .asst-launch{opacity:0;pointer-events:non
   #view-home #hmTrack .big-card .bc-face{transform:none!important;position:relative!important}
   #view-home .hm-arrow{display:none!important}
   #view-home .hm3-today{margin:8px auto 16px!important;max-width:96vw!important}
-  #view-home .hm-bg3d,#view-home #hmBg{opacity:.3!important}
-  /* ---------- LOGIN: data scene as background behind the card ---------- */
-  #loginScreen .lg-grid{display:block!important;position:relative!important;min-height:100vh}
-  #loginScreen .lg-stage{position:absolute!important;inset:0!important;z-index:0!important;padding:0!important;overflow:hidden!important}
-  #loginScreen .lg-stage-in{position:absolute!important;inset:0!important;display:block!important;padding:0!important}
-  #loginScreen .lg-brandrow{display:none!important}
-  #loginScreen .lg-head{display:none!important}
-  #loginScreen .lg-scene-wrap{position:absolute!important;inset:0!important;display:flex!important;align-items:center;justify-content:center;opacity:.22;filter:saturate(1.1)}
-  #loginScreen .lg-scene{transform:scale(1.2)!important}
-  #loginScreen .lg-card{position:relative!important;z-index:5!important;min-height:100vh;display:flex!important;align-items:center;justify-content:center;background:transparent!important;padding:16px!important}
-  #loginScreen .lg-card-in{width:min(92vw,400px)!important;margin:0 auto!important;background:rgba(255,255,255,.94)!important;backdrop-filter:blur(14px);box-shadow:0 20px 60px rgba(20,30,60,.28);border-radius:22px}
-  [data-theme="dark"] #loginScreen .lg-card-in{background:rgba(22,26,42,.92)!important}
+  /* PERFORMANCE — prevent iOS Safari WebContent crash */
+  *,*::before,*::after{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
+  #view-home .hm-bg3d,#view-home #hmBg,#hmBg,.hb3-scene,#hbBokeh{display:none!important}
+  #view-home .big-card,#view-home .big-card *,#view-home .hm3 *{animation:none!important}
+  #view-home .big-card{transform-style:flat!important;filter:none!important;-webkit-backface-visibility:visible!important;backface-visibility:visible!important;transition:none!important}
+  #view-home .bc-wm,#view-home .bc-shadow,#view-home .bc-preview,#view-home .bc-open{display:none!important}
+  header.topbar,#view-home .big-card,#view-home .big-card .bc-face,#view-home .hm3-welcome,#view-home .hm3-today,
+  .modal-card,#modal .modal-card,.cg-card,.nav-drawer,#navDrawer,.acct-pop{background:#ffffff!important;box-shadow:0 6px 18px rgba(20,30,60,.12)!important}
+  [data-theme="dark"] header.topbar,[data-theme="dark"] #view-home .big-card,[data-theme="dark"] #view-home .big-card .bc-face,
+  [data-theme="dark"] #view-home .hm3-welcome,[data-theme="dark"] #view-home .hm3-today,
+  [data-theme="dark"] .modal-card,[data-theme="dark"] #modal .modal-card,[data-theme="dark"] .cg-card,
+  [data-theme="dark"] .nav-drawer,[data-theme="dark"] #navDrawer,[data-theme="dark"] .acct-pop{background:#171b2b!important}
 }
 @media (max-width:430px){
   header.topbar .brand .title{max-width:110px;overflow:hidden}
@@ -4561,63 +4561,73 @@ body:has(#overlay.show .modal.pebg-fs) .asst-launch{opacity:0;pointer-events:non
   .view h1,.view .page-title{font-size:18px!important}
 }
 
-/* ================= iOS/mobile PERFORMANCE — prevent Safari WebContent crash ================= */
-@media (max-width:860px){
-  /* backdrop-filter (glass blur) is the #1 cause of iOS Safari crashes — disable everywhere on phones */
-  *,*::before,*::after{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
-  /* kill the animated 3D backgrounds */
-  #view-home .hm-bg3d,#view-home #hmBg,#hmBg,.hb3-scene,#hbBokeh{display:none!important}
-  #loginScreen .lg-fog,#loginScreen .lg-bg canvas,.lg-fog{display:none!important}
-  /* stop the many infinite animations on the home deck (each card had shine/pulse/watermark loops) */
-  #view-home .big-card,#view-home .big-card *,#view-home .hm3 *{animation:none!important}
-  #view-home .big-card{transform-style:flat!important;filter:none!important;-webkit-backface-visibility:visible!important;backface-visibility:visible!important;transition:none!important}
-  #view-home .bc-wm,#view-home .bc-shadow,#view-home .bc-preview,#view-home .bc-open{display:none!important}
-  /* glass panels lose blur → give them a solid background so text stays readable */
-  header.topbar,#view-home .big-card,#view-home .big-card .bc-face,#view-home .hm3-welcome,#view-home .hm3-today,
-  .modal-card,#modal .modal-card,.cg-card,.nav-drawer,#navDrawer,.acct-pop{background:#ffffff!important;box-shadow:0 6px 18px rgba(20,30,60,.12)!important}
-  [data-theme="dark"] header.topbar,[data-theme="dark"] #view-home .big-card,[data-theme="dark"] #view-home .big-card .bc-face,
-  [data-theme="dark"] #view-home .hm3-welcome,[data-theme="dark"] #view-home .hm3-today,
-  [data-theme="dark"] .modal-card,[data-theme="dark"] #modal .modal-card,[data-theme="dark"] .cg-card,
-  [data-theme="dark"] .nav-drawer,[data-theme="dark"] #navDrawer,[data-theme="dark"] .acct-pop{background:#171b2b!important}
-  /* trim login scene motion */
-  #loginScreen #lgScene *{animation:none!important}
+/* ================= LOGIN — minimal visionOS, centered, org logo (all sizes) ================= */
+#loginScreen{min-height:100dvh!important;position:relative!important;overflow:hidden!important;
+  background:
+    radial-gradient(120% 120% at 15% 10%, #e8f7ff 0%, transparent 45%),
+    radial-gradient(120% 120% at 85% 20%, #eef0ff 0%, transparent 50%),
+    radial-gradient(140% 120% at 50% 115%, #dff3ff 0%, transparent 55%),
+    linear-gradient(160deg,#f2f7fc 0%,#eaf1fb 50%,#eef2ff 100%)!important}
+:root[data-theme="dark"] #loginScreen{
+  background:
+    radial-gradient(120% 120% at 15% 10%, #12314a 0%, transparent 45%),
+    radial-gradient(120% 120% at 85% 20%, #1a1f3a 0%, transparent 50%),
+    radial-gradient(140% 120% at 50% 115%, #0e2a3d 0%, transparent 55%),
+    linear-gradient(160deg,#0b0f1c 0%,#0e1424 60%,#0b1120 100%)!important}
+/* ambient floating light blobs (static; visionOS depth) */
+#loginScreen::before,#loginScreen::after{content:"";position:absolute;border-radius:50%;pointer-events:none;z-index:0;filter:blur(50px);opacity:.6}
+#loginScreen::before{top:-120px;right:-80px;width:340px;height:340px;background:radial-gradient(circle,rgba(34,211,238,.55),transparent 70%)}
+#loginScreen::after{bottom:-140px;left:-90px;width:360px;height:360px;background:radial-gradient(circle,rgba(129,140,248,.45),transparent 70%)}
+#loginScreen .lg-bg,#loginScreen .lg-fog,#loginScreen .lg-scene-wrap,#loginScreen .lg-scene{display:none!important}
+/* center everything as one column */
+#loginScreen .lg-grid{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;min-height:100dvh!important;gap:0!important;position:relative!important;z-index:2!important;padding:20px!important}
+/* brand block = org logo + name only */
+#loginScreen .lg-stage{position:relative!important;inset:auto!important;flex:0 0 auto!important;width:auto!important;max-width:none!important;padding:0 0 14px!important;background:transparent!important;display:flex!important;align-items:center!important;justify-content:center!important;overflow:visible!important}
+#loginScreen .lg-stage-in{position:relative!important;inset:auto!important;display:flex!important;flex-direction:column!important;align-items:center!important;gap:10px!important;padding:0!important;text-align:center!important}
+#loginScreen .lg-brandrow{position:relative!important;top:auto!important;left:auto!important;right:auto!important;display:flex!important;flex-direction:column!important;align-items:center!important;gap:10px!important;justify-content:center!important}
+#loginScreen .lg-logo{transform:scale(1.25)!important;margin:2px 0 8px!important;filter:drop-shadow(0 12px 26px rgba(20,50,90,.22))}
+#loginScreen .lg-title{font-size:20px!important;letter-spacing:.3px!important}
+/* MINIMAL: hide extra text */
+#loginScreen .lg-sub,#loginScreen .lg-head,#loginScreen .lg-lead,#loginScreen .lg-kicker,#loginScreen .lg-form-sub{display:none!important}
+/* glass card, centered */
+#loginScreen .lg-card{position:relative!important;inset:auto!important;flex:0 0 auto!important;width:auto!important;background:transparent!important;box-shadow:none!important;padding:0!important;margin:0!important;min-height:auto!important;display:block!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+#loginScreen .lg-card-in{width:min(92vw,370px)!important;margin:0 auto!important;padding:24px 22px 22px!important;border-radius:28px!important;
+  background:rgba(255,255,255,.72)!important;
+  -webkit-backdrop-filter:blur(26px) saturate(160%);backdrop-filter:blur(26px) saturate(160%);
+  border:1px solid rgba(255,255,255,.7)!important;
+  box-shadow:0 30px 70px rgba(20,45,90,.22),inset 0 1px 0 rgba(255,255,255,.85)!important}
+:root[data-theme="dark"] #loginScreen .lg-card-in{background:rgba(26,31,48,.6)!important;border-color:rgba(255,255,255,.14)!important;box-shadow:0 30px 70px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.1)!important}
+#loginScreen .lg-form-title{font-size:20px!important;text-align:center!important;margin:0 0 16px!important}
+#loginScreen .lg-field{margin-bottom:12px!important}
+#loginScreen .lg-inwrap input,#loginScreen input.lg-in{font-size:16px!important}
+#loginScreen .lg-setup{font-size:11.5px!important;opacity:.85;padding:8px 10px!important;margin-bottom:12px!important}
+#loginScreen .lg-remember{margin:2px 0 12px!important}
+/* language + theme as compact ghost buttons */
+#loginScreen .lg-card-in .lg-foot,#loginScreen .lg-card-in .lg-actions2{gap:8px!important;flex-wrap:wrap!important;justify-content:center!important}
+/* tablet/desktop: a touch larger */
+@media (min-width:700px){
+  #loginScreen .lg-card-in{width:400px!important;padding:30px 28px 26px!important}
+  #loginScreen .lg-logo{transform:scale(1.4)!important}
+  #loginScreen .lg-title{font-size:22px!important}
 }
 
-/* ================= DEDICATED LOGIN — phone & tablet (own design) ================= */
-@media (max-width:1024px){
-  #loginScreen{min-height:100dvh!important;background:linear-gradient(165deg,#22d3ee 0%,#0891b2 34%,#0e7490 60%,#1e3a8a 100%)!important;overflow:hidden!important}
-  #loginScreen .lg-bg,#loginScreen .lg-fog{display:none!important}
-  #loginScreen .lg-grid{display:flex!important;flex-direction:column!important;min-height:100dvh!important;position:relative!important;gap:0!important}
-  /* soft decorative blobs (static, cheap) */
-  #loginScreen .lg-grid::before{content:"";position:absolute;top:-120px;right:-90px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.28),transparent 70%);pointer-events:none;z-index:0}
-  #loginScreen .lg-grid::after{content:"";position:absolute;bottom:34%;left:-110px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(129,230,217,.35),transparent 70%);pointer-events:none;z-index:0}
-  /* HERO (brand) on top */
-  #loginScreen .lg-stage{position:relative!important;inset:auto!important;flex:0 0 auto!important;z-index:2!important;padding:44px 24px 8px!important;display:flex!important;align-items:center!important;justify-content:center!important;background:transparent!important;overflow:visible!important}
-  #loginScreen .lg-stage-in{position:relative!important;inset:auto!important;display:flex!important;flex-direction:column!important;align-items:center!important;gap:12px!important;padding:0!important;text-align:center!important}
-  #loginScreen .lg-brandrow{position:relative!important;top:auto!important;left:auto!important;right:auto!important;display:flex!important;flex-direction:column!important;align-items:center!important;gap:12px!important;justify-content:center!important}
-  #loginScreen .lg-logo{transform:scale(1.35)!important;margin-bottom:6px!important;filter:drop-shadow(0 10px 24px rgba(0,0,0,.28))}
-  #loginScreen .lg-title,#loginScreen .lg-title *{color:#fff!important}
-  #loginScreen .lg-title{font-size:26px!important;letter-spacing:.5px!important}
-  #loginScreen .lg-sub,#loginScreen .lg-sub *{color:rgba(255,255,255,.82)!important;letter-spacing:3px!important}
-  #loginScreen .lg-head{display:block!important;text-align:center!important}
-  #loginScreen .lg-lead{color:rgba(255,255,255,.92)!important;font-size:14.5px!important;max-width:320px!important;margin:2px auto 0!important;line-height:1.5!important}
-  #loginScreen .lg-scene-wrap,#loginScreen .lg-scene{display:none!important}
-  /* FORM SHEET at the bottom */
-  #loginScreen .lg-card{position:relative!important;flex:1 1 auto!important;z-index:3!important;display:flex!important;align-items:flex-start!important;justify-content:center!important;background:var(--card,#fff)!important;border-radius:30px 30px 0 0!important;margin-top:20px!important;padding:26px 20px 34px!important;min-height:auto!important;box-shadow:0 -12px 44px rgba(6,24,44,.28)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
-  #loginScreen .lg-card::before{content:"";position:absolute;top:9px;left:50%;transform:translateX(-50%);width:44px;height:5px;border-radius:3px;background:rgba(120,140,170,.35)}
-  #loginScreen .lg-card-in{width:100%!important;max-width:440px!important;margin:0 auto!important;background:transparent!important;box-shadow:none!important;border:0!important;padding:6px 0 0!important;backdrop-filter:none!important}
-  #loginScreen .lg-form-title{font-size:22px!important}
-  #loginScreen .lg-inwrap input,#loginScreen input.lg-in{font-size:16px!important;padding:14px 14px 14px 42px!important}
-  #loginScreen .lg-card .lg-submit,#loginScreen .lg-card button[onclick*="doLogin"]{padding:15px!important;font-size:16px!important;border-radius:16px!important}
-  [data-theme="dark"] #loginScreen .lg-card{background:#12151f!important}
-}
-/* tablet: float a centered card instead of a full-width sheet */
-@media (min-width:601px) and (max-width:1024px){
-  #loginScreen .lg-stage{padding-top:8dvh!important}
-  #loginScreen .lg-card{flex:0 0 auto!important;margin:22px auto 0!important;border-radius:26px!important;max-width:520px!important;width:min(88vw,520px)!important;box-shadow:0 24px 70px rgba(6,24,44,.32)!important;padding:30px 30px 34px!important}
-  #loginScreen .lg-card::before{display:none}
-  #loginScreen .lg-grid{justify-content:center!important;padding-bottom:6dvh!important}
-}
+/* login brand block: fully transparent (no panel), readable title */
+#loginScreen .lg-stage,#loginScreen .lg-stage-in,#loginScreen .lg-brandrow,#loginScreen .lg-head{background:transparent!important;border:0!important;box-shadow:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+#loginScreen .lg-title,#loginScreen .lg-title *{color:#12314a!important;text-shadow:none!important}
+:root[data-theme="dark"] #loginScreen .lg-title,:root[data-theme="dark"] #loginScreen .lg-title *{color:#eaf2ff!important}
+#loginScreen .lg-grid{justify-content:center!important}
+#loginScreen .lg-stage{padding-bottom:8px!important}
+
+/* higher-specificity layout override (beats desktop two-column grid) */
+body #loginScreen .lg-grid{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;min-height:100dvh!important;grid-template-columns:none!important;padding:24px!important}
+body #loginScreen .lg-stage{position:relative!important;inset:auto!important;grid-column:auto!important;width:auto!important;max-width:none!important;flex:0 0 auto!important;display:flex!important;align-items:center!important;justify-content:center!important;padding:0 0 8px!important;background:transparent!important}
+body #loginScreen .lg-card{position:relative!important;inset:auto!important;grid-column:auto!important;width:auto!important;flex:0 0 auto!important;display:block!important;background:transparent!important;box-shadow:none!important;padding:0!important;margin:0!important;min-height:auto!important}
+body #loginScreen .lg-card-in{margin:0 auto!important}
+
+/* the real layout owner is #loginScreen (grid) — force centered column */
+body #loginScreen{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;grid-template-columns:none!important;grid-template-rows:none!important;gap:0!important}
+body #loginScreen>.lg-bg,body #loginScreen>.lg-grid:empty{display:none!important}
+body #loginScreen .lg-stage,body #loginScreen .lg-card{grid-column:auto!important;grid-row:auto!important;align-self:center!important;justify-self:center!important;max-width:100%!important}
 
 </style>
 </head>
