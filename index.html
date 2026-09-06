@@ -4583,6 +4583,42 @@ body:has(#overlay.show .modal.pebg-fs) .asst-launch{opacity:0;pointer-events:non
   #loginScreen #lgScene *{animation:none!important}
 }
 
+/* ================= DEDICATED LOGIN — phone & tablet (own design) ================= */
+@media (max-width:1024px){
+  #loginScreen{min-height:100dvh!important;background:linear-gradient(165deg,#22d3ee 0%,#0891b2 34%,#0e7490 60%,#1e3a8a 100%)!important;overflow:hidden!important}
+  #loginScreen .lg-bg,#loginScreen .lg-fog{display:none!important}
+  #loginScreen .lg-grid{display:flex!important;flex-direction:column!important;min-height:100dvh!important;position:relative!important;gap:0!important}
+  /* soft decorative blobs (static, cheap) */
+  #loginScreen .lg-grid::before{content:"";position:absolute;top:-120px;right:-90px;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.28),transparent 70%);pointer-events:none;z-index:0}
+  #loginScreen .lg-grid::after{content:"";position:absolute;bottom:34%;left:-110px;width:280px;height:280px;border-radius:50%;background:radial-gradient(circle,rgba(129,230,217,.35),transparent 70%);pointer-events:none;z-index:0}
+  /* HERO (brand) on top */
+  #loginScreen .lg-stage{position:relative!important;inset:auto!important;flex:0 0 auto!important;z-index:2!important;padding:44px 24px 8px!important;display:flex!important;align-items:center!important;justify-content:center!important;background:transparent!important;overflow:visible!important}
+  #loginScreen .lg-stage-in{position:relative!important;inset:auto!important;display:flex!important;flex-direction:column!important;align-items:center!important;gap:12px!important;padding:0!important;text-align:center!important}
+  #loginScreen .lg-brandrow{position:relative!important;top:auto!important;left:auto!important;right:auto!important;display:flex!important;flex-direction:column!important;align-items:center!important;gap:12px!important;justify-content:center!important}
+  #loginScreen .lg-logo{transform:scale(1.35)!important;margin-bottom:6px!important;filter:drop-shadow(0 10px 24px rgba(0,0,0,.28))}
+  #loginScreen .lg-title,#loginScreen .lg-title *{color:#fff!important}
+  #loginScreen .lg-title{font-size:26px!important;letter-spacing:.5px!important}
+  #loginScreen .lg-sub,#loginScreen .lg-sub *{color:rgba(255,255,255,.82)!important;letter-spacing:3px!important}
+  #loginScreen .lg-head{display:block!important;text-align:center!important}
+  #loginScreen .lg-lead{color:rgba(255,255,255,.92)!important;font-size:14.5px!important;max-width:320px!important;margin:2px auto 0!important;line-height:1.5!important}
+  #loginScreen .lg-scene-wrap,#loginScreen .lg-scene{display:none!important}
+  /* FORM SHEET at the bottom */
+  #loginScreen .lg-card{position:relative!important;flex:1 1 auto!important;z-index:3!important;display:flex!important;align-items:flex-start!important;justify-content:center!important;background:var(--card,#fff)!important;border-radius:30px 30px 0 0!important;margin-top:20px!important;padding:26px 20px 34px!important;min-height:auto!important;box-shadow:0 -12px 44px rgba(6,24,44,.28)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+  #loginScreen .lg-card::before{content:"";position:absolute;top:9px;left:50%;transform:translateX(-50%);width:44px;height:5px;border-radius:3px;background:rgba(120,140,170,.35)}
+  #loginScreen .lg-card-in{width:100%!important;max-width:440px!important;margin:0 auto!important;background:transparent!important;box-shadow:none!important;border:0!important;padding:6px 0 0!important;backdrop-filter:none!important}
+  #loginScreen .lg-form-title{font-size:22px!important}
+  #loginScreen .lg-inwrap input,#loginScreen input.lg-in{font-size:16px!important;padding:14px 14px 14px 42px!important}
+  #loginScreen .lg-card .lg-submit,#loginScreen .lg-card button[onclick*="doLogin"]{padding:15px!important;font-size:16px!important;border-radius:16px!important}
+  [data-theme="dark"] #loginScreen .lg-card{background:#12151f!important}
+}
+/* tablet: float a centered card instead of a full-width sheet */
+@media (min-width:601px) and (max-width:1024px){
+  #loginScreen .lg-stage{padding-top:8dvh!important}
+  #loginScreen .lg-card{flex:0 0 auto!important;margin:22px auto 0!important;border-radius:26px!important;max-width:520px!important;width:min(88vw,520px)!important;box-shadow:0 24px 70px rgba(6,24,44,.32)!important;padding:30px 30px 34px!important}
+  #loginScreen .lg-card::before{display:none}
+  #loginScreen .lg-grid{justify-content:center!important;padding-bottom:6dvh!important}
+}
+
 </style>
 </head>
 <body>
