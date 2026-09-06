@@ -10,7 +10,7 @@
 
 <script>/* apply saved theme before first paint — prevents any light/dark flash or partial-apply (e.g. in Electron) */try{document.documentElement.setAttribute('data-theme',(localStorage.getItem('nx_theme')||'light'));}catch(e){}</script>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>NX Desk</title>
 <link rel="icon" id="appFavicon" type="image/svg+xml" href="data:image/svg+xml;utf8,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2064%2064'%3E%3Crect%20x='4'%20y='4'%20width='56'%20height='56'%20rx='14'%20fill='%230891b2'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20875,6 +20875,26 @@ function peProjectExport(){ var TH=(LANG==='th'); var L=pePMProjects(); var p=L.
       }).catch(function(){});
     }catch(e){}
   }
+})();
+</script>
+
+<script>
+/* ===== NX Desk demo — lock page zoom (app-like) on tablet/mobile & desktop, keep scroll+swipe ===== */
+(function(){
+  try{
+    var st=document.createElement('style');
+    st.textContent='html,body{touch-action:manipulation;-ms-touch-action:manipulation}';  /* removes double-tap zoom + 300ms delay, keeps scrolling */
+    (document.head||document.documentElement).appendChild(st);
+  }catch(_){}
+  /* iOS Safari pinch-zoom (ignores user-scalable=no) */
+  ['gesturestart','gesturechange','gestureend'].forEach(function(ev){
+    document.addEventListener(ev,function(e){ e.preventDefault(); },{passive:false});
+  });
+  /* multi-finger pinch on Android/Chrome — block only 2+ touches (single-finger scroll/swipe untouched) */
+  document.addEventListener('touchmove',function(e){ if(e.touches && e.touches.length>1){ e.preventDefault(); } },{passive:false});
+  /* desktop trackpad pinch + Ctrl/Cmd +/- / 0 zoom */
+  document.addEventListener('wheel',function(e){ if(e.ctrlKey){ e.preventDefault(); } },{passive:false});
+  document.addEventListener('keydown',function(e){ if((e.ctrlKey||e.metaKey)&&['+','-','=','0'].indexOf(e.key)>=0){ e.preventDefault(); } });
 })();
 </script>
 
