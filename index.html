@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!--NXBUILD:homefix-20260906-142600-->
+<!--NXBUILD:desk-spacing2-20260906-144451-->
 <!-- ===== NX Desk DEMO build: Firebase Realtime Database as the realtime channel ===== -->
 <script>window.NX_DEMO=true;</script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
@@ -4907,20 +4907,30 @@ html:has(#loginScreen.show),body:has(#loginScreen.show){overflow:hidden!importan
   .modal .m-x{top:10px!important;right:10px!important}
 }
 
-/* ===== small LOGOUT button in the header (far right, after the org text) ===== */
-.nx-logout-btn{display:inline-flex!important;align-items:center;justify-content:center;flex:0 0 auto;width:34px;height:34px;padding:0;margin-left:8px;border-radius:11px;border:1px solid var(--n2-line2);background:var(--n2-surface2);color:var(--n2-muted);cursor:pointer;transition:background .16s,color .16s,border-color .16s,transform .12s}
-.nx-logout-btn:hover{background:color-mix(in srgb,#ef4444 12%,transparent);border-color:color-mix(in srgb,#ef4444 42%,transparent);color:#ef4444}
-.nx-logout-btn:active{transform:scale(.94)}
-.nx-logout-btn svg{display:block;pointer-events:none}
-:root[data-theme="dark"] .nx-logout-btn{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.14);color:#cdd6ea}
-:root[data-theme="dark"] .nx-logout-btn:hover{background:rgba(239,68,68,.20);border-color:rgba(239,68,68,.55);color:#fca5a5}
-/* desktop: pin to the far right edge of the header row */
-@media (min-width:861px){ header.topbar .nx-logout-btn{margin-left:6px} }
-/* mobile welcome header: keep it top-right, never disturbing the org text */
+/* a touch more room for the org sub line on narrow screens */
 @media (max-width:860px){
-  header.topbar.nx-tb-inwelcome .nx-logout-btn{order:3!important;margin-left:auto!important;width:32px!important;height:32px!important;align-self:flex-start!important}
-  /* a touch more room for the org sub line so the button never collides on narrow screens */
   header.topbar.nx-tb-inwelcome .brand .sub{letter-spacing:.3px!important}
+}
+
+/* ===== DESKTOP HOME: flow + scroll so sections have real margins and nothing overlaps ===== */
+@media (min-width:861px){
+  body.nx-home{overflow-y:auto!important}
+  body.nx-home main{height:auto!important;min-height:100dvh!important;max-height:none!important;overflow:visible!important;display:block!important}
+  body.nx-home #view-home.active{height:auto!important;min-height:0!important;display:block!important;flex:none!important}
+  body.nx-home #view-home .hm3{display:flex!important;flex-direction:column!important;flex:none!important;height:auto!important;min-height:0!important;gap:0!important}
+  /* clear margin between each section */
+  body.nx-home #view-home .hm3-top{flex:0 0 auto!important;margin:0 0 clamp(22px,3.2vh,46px)!important}
+  body.nx-home #view-home .hm3-mod{flex:0 0 auto!important;min-height:0!important;height:auto!important;justify-content:center!important;margin:0 0 clamp(4px,0.6vh,10px)!important}
+  /* deck viewport: contained height so the focused card can't spill into the welcome bar / timer */
+  body.nx-home #view-home #hmView,body.nx-home #view-home .hm-viewport{height:clamp(240px,42vh,360px)!important;min-height:240px!important;overflow-y:visible!important}
+  /* timer: centered with (near-)equal padding above (deck margin + deck slack) and below (this margin) */
+  body.nx-home #view-home #hmClockBar{flex:0 0 auto!important;margin:0 auto clamp(20px,2.6vh,38px)!important}
+  body.nx-home #view-home .hm3-today{flex:0 0 auto!important;margin:0!important}
+  /* account popup must sit above the coverflow cards */
+  #view-home .acct-wrap.open .acct-pop,#acctPop{z-index:9999!important}
+  /* account button: center its text/content */
+  header.topbar .acct-badge{justify-content:center!important;padding-left:12px!important;padding-right:12px!important}
+  header.topbar .acct-badge .ab-name{text-align:center!important}
 }
 
 /* draggable assistant / chat launch — default bottom-left; edge-snap applied inline */
@@ -21202,44 +21212,24 @@ function peProjectExport(){ var TH=(LANG==='th'); var L=pePMProjects(); var p=L.
 </script>
 
 <script>
-/* ===== NX Desk demo — header logout button + reliable home layout on load ===== */
+/* ===== NX Desk demo — reliable home layout on load (welcome-bar header relocation) ===== */
 (function(){
-  var SVG='<svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>';
-  function placeLogout(){
-    var tb=document.querySelector('header.topbar'); if(!tb) return;
-    var b=tb.querySelector('.nx-logout-btn');
-    if(!b){
-      b=document.createElement('button');
-      b.type='button'; b.className='nx-logout-btn'; b.title='Logout'; b.setAttribute('aria-label','Logout');
-      b.innerHTML=SVG;
-      b.addEventListener('click',function(e){ e.preventDefault(); e.stopPropagation();
-        try{ if(typeof window.logout==='function') window.logout(); }catch(_){} });
-    }
-    if(tb.lastElementChild!==b) tb.appendChild(b);   /* keep it far-right */
-  }
   /* The app relocates the header into the welcome card only via go('home'); on a remembered
      session the app restores home AFTER the inline on-load relocation ran, so the header can be
      left outside the welcome bar. Re-assert the home layout here (runs after checkSession). */
   function ensureHomeLayout(){
-    var homeActive=!!document.querySelector('#view-home.active');
-    if(homeActive){
-      document.body.classList.add('nx-home');
-      var tb=document.querySelector('header.topbar');
-      var wel=document.querySelector('#view-home .hm3-welcome');
-      if(tb && wel && !tb.classList.contains('nx-tb-inwelcome')){
-        try{ if(typeof window.nxTopbarPlace==='function') window.nxTopbarPlace(true); }catch(_){}
-      }
-      try{ if(typeof window.nxMobileControls==='function') window.nxMobileControls(); }catch(_){}
-      try{ if(typeof window.nxWelToggle==='function') window.nxWelToggle(); }catch(_){}
+    if(!document.querySelector('#view-home.active')) return;
+    document.body.classList.add('nx-home');
+    var tb=document.querySelector('header.topbar');
+    var wel=document.querySelector('#view-home .hm3-welcome');
+    if(tb && wel && !tb.classList.contains('nx-tb-inwelcome')){
+      try{ if(typeof window.nxTopbarPlace==='function') window.nxTopbarPlace(true); }catch(_){}
     }
-    placeLogout();
+    try{ if(typeof window.nxMobileControls==='function') window.nxMobileControls(); }catch(_){}
+    try{ if(typeof window.nxWelToggle==='function') window.nxWelToggle(); }catch(_){}
   }
   function ready(fn){ if(document.readyState!=='loading') fn(); else document.addEventListener('DOMContentLoaded',fn); }
   ready(function(){ ensureHomeLayout(); setTimeout(ensureHomeLayout,250); setTimeout(ensureHomeLayout,800); setTimeout(ensureHomeLayout,2000); });
-  /* keep it correct across view changes */
-  if(typeof window.go==='function'){ var _g=window.go; window.go=function(){ var r=_g.apply(this,arguments); setTimeout(placeLogout,0); setTimeout(placeLogout,60); return r; }; }
-  window.addEventListener('resize',function(){ setTimeout(placeLogout,60); });
-  /* the demo adapter may re-render home after connecting to the channel */
   window.addEventListener('load',function(){ setTimeout(ensureHomeLayout,300); });
 })();
 </script>
