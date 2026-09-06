@@ -4654,7 +4654,8 @@ body.nx-home .hm3-welcome .hm-qa.primary{box-shadow:0 12px 26px color-mix(in srg
     transform:scale(.92)!important;transform-origin:center center!important;
     transition:opacity .4s ease,transform .4s cubic-bezier(.22,.9,.28,1)!important}
   #view-home #hmTrack .big-card.focus{opacity:1!important;transform:scale(1)!important}
-  #view-home #hmTrack .big-card .bc-face{transform:none!important;position:relative!important;z-index:2!important;height:100%!important}
+  /* 3D flip on the card front — same transition as desktop (per-element perspective; works with overflow:hidden) */
+  #view-home #hmTrack .big-card .bc-face{transform:perspective(1100px) rotateY(var(--flip,0deg))!important;-webkit-backface-visibility:hidden!important;backface-visibility:hidden!important;transition:transform .8s cubic-bezier(.4,0,.2,1)!important;position:relative!important;z-index:2!important;height:100%!important}
   /* header (title + subtitle + count) always visible on the card front */
   #view-home #hmTrack .big-card .bc-head{display:flex!important;flex-direction:row!important;align-items:center!important;gap:12px!important;width:100%!important}
   #view-home #hmTrack .big-card .bc-info{min-width:0!important;display:block!important}
@@ -4673,11 +4674,10 @@ body.nx-home .hm3-welcome .hm-qa.primary{box-shadow:0 12px 26px color-mix(in srg
   #view-home #hmTrack .big-card:nth-child(2n) .bc-wm{animation-duration:8.5s!important;animation-delay:-2.5s!important}
   #view-home #hmTrack .big-card:nth-child(3n) .bc-wm{animation-duration:6s!important;animation-delay:-4s!important}
 
-  /* flip = flat readable panel (3D transforms fail on the flattened mobile deck) */
-  #view-home #hmTrack .big-card.flipped .bc-face{opacity:0!important;pointer-events:none!important}
+  /* flip = real 3D card flip, same as desktop (rotateY via --flip, backface hidden) */
   #view-home #hmTrack .big-card.flipped .bc-wm{display:none!important}
-  #view-home #hmTrack .big-card .bc-back{position:absolute!important;inset:0!important;transform:none!important;-webkit-backface-visibility:visible!important;backface-visibility:visible!important;opacity:0!important;pointer-events:none!important;z-index:6!important;background:var(--n2-surface)!important;overflow:hidden!important;display:flex!important;flex-direction:column!important}
-  #view-home #hmTrack .big-card.flipped .bc-back{opacity:1!important;pointer-events:auto!important}
+  #view-home #hmTrack .big-card .bc-back{position:absolute!important;inset:0!important;transform:perspective(1100px) rotateY(calc(var(--flip,0deg) - 180deg))!important;-webkit-backface-visibility:hidden!important;backface-visibility:hidden!important;transition:transform .8s cubic-bezier(.4,0,.2,1)!important;opacity:1!important;pointer-events:none!important;z-index:6!important;background:var(--n2-surface)!important;overflow:hidden!important;display:flex!important;flex-direction:column!important}
+  #view-home #hmTrack .big-card.flipped .bc-back{pointer-events:auto!important}
   #view-home #hmTrack .big-card .bc-back::before,#view-home #hmTrack .big-card .bc-back::after{display:none!important}
   #view-home #hmTrack .big-card .bb-grid{display:grid!important;grid-template-columns:1fr!important;gap:8px!important}
   #view-home #hmTrack .big-card .bb-item{opacity:1!important;transform:none!important;animation:none!important;display:flex!important;align-items:center!important;color:var(--n2-txt)!important;background:color-mix(in srgb,var(--n2-a) 6%,var(--n2-surface))!important;border:1px solid var(--n2-line)!important;border-radius:12px!important;padding:10px 12px!important}
