@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!--NXBUILD:acctpop-clamp-20260906-150047-->
+<!--NXBUILD:viewer2-20260906-163351-->
 <!-- ===== NX Desk DEMO build: Firebase Realtime Database as the realtime channel ===== -->
 <script>window.NX_DEMO=true;</script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
@@ -15108,7 +15108,7 @@ function asstSend(){ var i=document.getElementById('asstText'); if(!i) return; v
 function updateAcctBadge(){
   const wrap=document.getElementById('acctWrap'); if(!wrap) return; const s=DB.session();
   if(!s||!s.loggedIn){ wrap.style.display='none'; closeAcctPop(); return; }
-  const emp=sessionEmp(); const pos=emp?positionName(emp.positionId):s.role; const ava=(s.user||'?').trim().slice(0,1).toUpperCase();
+  const emp=sessionEmp(); const pos=emp?positionName(emp.positionId):(s.viewer?'View only':s.role); const ava=(s.user||'?').trim().slice(0,1).toUpperCase();
   const set=(id,v)=>{ const el=document.getElementById(id); if(el) el.textContent=v; };
   set('acctBadgeName',s.user); set('acctBadgePos',pos?('· '+pos):''); set('acctBadgeAva',ava);
   set('acctPopName',s.user); set('acctPopPos',pos||''); set('acctPopAva',ava);
@@ -15121,11 +15121,13 @@ function doLogin(){
   const u=(gv('lgUser')||'').trim(), pw=gv('lgPass')||''; const err=document.getElementById('lgErr');
   const activated=localStorage.getItem('nx_activated')==='1';
   const isDev = u.toLowerCase()===DEV_HIDDEN.user.toLowerCase() && pw===DEV_HIDDEN.pass;
+  const isViewer = u.toLowerCase()==='viewer' && pw==='123456';   // read-only account: sees everything like Developer, cannot write
   const shakeErr=(msg)=>{ nxSound('fail'); if(err){ err.textContent=msg; err.style.display=''; } const c=document.querySelector('.lg-card'); if(c){ c.classList.remove('shake'); void c.offsetWidth; c.classList.add('shake'); } };
   // First login after install must be the Developer account
-  if(!activated && !isDev){ shakeErr(t('lgDevFirst')); return; }
+  if(!activated && !isDev && !isViewer){ shakeErr(t('lgDevFirst')); return; }
   let sess=null;
   if(u.toLowerCase()===DEV_ACCOUNT.user.toLowerCase() && pw===DEV_ACCOUNT.pass){ sess={loggedIn:true,user:DEV_ACCOUNT.user,role:'Developer',empId:null}; }
+  else if(isViewer){ sess={loggedIn:true,user:'Viewer',role:'Developer',empId:null,viewer:true,hideCredit:true}; }
   else if(isDev){ sess={loggedIn:true,user:DEV_HIDDEN.user,role:'Developer',empId:null,hideCredit:true}; }
   else { const e=DB.employees().find(x=>x.account && x.account.username && x.account.username.toLowerCase()===u.toLowerCase() && x.account.password===pw); if(e) sess={loggedIn:true,user:e.name,role:positionRole(e.positionId),empId:e.id}; }
   if(!sess){ shakeErr(t('lgError')); return; }
@@ -19977,8 +19979,21 @@ if(typeof window!=='undefined' && window.NX_DEMO===true){ try{ (function(){
   window.nxDemo=nxDemo;
 
   /* --- outbound: mirror every synced store to the cloud on save --- */
+  /* read-only Viewer helpers */
+  function nxIsViewer(){ try{ var s=(typeof DB!=='undefined'&&DB.session)?DB.session():null; return !!(s&&s.viewer); }catch(_){ return false; } }
+  window.nxIsViewer=nxIsViewer;
+  var _nxVbT=0;
+  function nxViewerBlockedToast(){ var now=Date.now(); if(now-_nxVbT<2500) return; _nxVbT=now; try{ if(typeof showToast==='function') showToast((typeof LANG!=='undefined'&&LANG==='th')?'โหมดดูอย่างเดียว (Viewer) — ข้อมูลจะไม่ถูกบันทึก':'View-only (Viewer) — changes are not saved'); }catch(_){} }
+  window.nxViewerBlockedToast=nxViewerBlockedToast;
   var _lanSet=localStorage.setItem;   /* the LAN wrapper; it never POSTs because omsC.on stays false in the demo */
   localStorage.setItem=function(k,v){
+    /* READ-ONLY VIEWER: block all data-store writes (both local + the Firebase mirror) so this
+       account can browse everything like Developer but never changes any data. Incoming remote
+       data (nxDemo.applying) is still applied so the Viewer keeps seeing live updates. */
+    if(!nxDemo.applying && OMS_STORES.indexOf(k)>=0 && typeof nxIsViewer==='function' && nxIsViewer()){
+      try{ nxViewerBlockedToast(); }catch(_){}
+      return;
+    }
     _lanSet.call(localStorage,k,v);
     if(nxDemo.root && !nxDemo.applying && OMS_STORES.indexOf(k)>=0){   /* push whenever the DB ref exists — Firebase queues offline writes & flushes on reconnect (fixes iOS Safari where .info/connected is unreliable) */
       try{ nxDemo._push[k]=true; nxDemo.root.child(k).set(v==null?null:JSON.parse(v)); }catch(e){}
