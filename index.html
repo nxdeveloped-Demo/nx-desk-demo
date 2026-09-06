@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!--NXBUILD:sync-dedup-20260906-170913-->
+<!--NXBUILD:coop-20260906-174634-->
 <!-- ===== NX Desk DEMO build: Firebase Realtime Database as the realtime channel ===== -->
 <script>window.NX_DEMO=true;</script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
@@ -19975,7 +19975,7 @@ window.addEventListener('resize',function(){ try{ nxMobileControls(); }catch(_){
    unchanged and never contain this block.
    Activated by  window.NX_DEMO === true  (set in the page <head>). */
 if(typeof window!=='undefined' && window.NX_DEMO===true){ try{ (function(){
-  var nxDemo={ on:false, ready:false, applying:false, root:null, _push:{}, _primed:{}, _last:{}, _err:'', seedTimer:null };
+  var nxDemo={ on:false, ready:false, applying:false, root:null, _push:{}, _primed:{}, _last:{}, _lastMap:{}, _schema:null, _err:'', seedTimer:null };
   window.nxDemo=nxDemo;
 
   /* --- outbound: mirror every synced store to the cloud on save --- */
@@ -19985,6 +19985,28 @@ if(typeof window!=='undefined' && window.NX_DEMO===true){ try{ (function(){
   var _nxVbT=0;
   function nxViewerBlockedToast(){ var now=Date.now(); if(now-_nxVbT<2500) return; _nxVbT=now; try{ if(typeof showToast==='function') showToast((typeof LANG!=='undefined'&&LANG==='th')?'โหมดดูอย่างเดียว (Viewer) — ข้อมูลจะไม่ถูกบันทึก':'View-only (Viewer) — changes are not saved'); }catch(_){} }
   window.nxViewerBlockedToast=nxViewerBlockedToast;
+
+  /* ===================== CO-OP (per-record) SYNC HELPERS =====================
+     Instead of overwriting a whole store (which clobbers other devices), we write each
+     RECORD on its own keyed by its id. Two devices editing different records merge. */
+  function nxIsRecArray(a){ return Array.isArray(a) && a.length>0 && a.every(function(x){ return x && typeof x==='object' && x.id!=null; }); }
+  /* cloud value (id-keyed record map after migration, OR an old index-keyed array) -> local array */
+  function nxCloudToLocal(val){
+    if(val && typeof val==='object' && !Array.isArray(val)){
+      var keys=Object.keys(val).filter(function(k){ return k.charAt(0)!=='_'; });
+      var vals=keys.map(function(k){ return val[k]; });
+      if(vals.length && vals.every(function(x){ return x && typeof x==='object' && x.id!=null; })){
+        vals.sort(function(a,b){ var ao=(a._ord==null?1e9:a._ord), bo=(b._ord==null?1e9:b._ord); if(ao!==bo) return ao-bo; return String(a.id).localeCompare(String(b.id),undefined,{numeric:true}); });
+        return vals.map(function(r){ if(r && r._ord!=null){ var c={}; for(var kk in r){ if(kk!=='_ord') c[kk]=r[kk]; } return c; } return r; });
+      }
+    }
+    return val;
+  }
+  /* local array -> id-keyed map, tagging display order as _ord (stripped again on read) */
+  function nxArrToMap(arr){ var m={}; arr.forEach(function(r,i){ if(r && r.id!=null){ var c={}; for(var kk in r) c[kk]=r[kk]; c._ord=i; m[String(r.id)]=c; } }); return m; }
+  function nxMapJson(map){ var o={}; Object.keys(map).forEach(function(id){ o[id]=JSON.stringify(map[id]); }); return o; }
+  window.nxCloudToLocal=nxCloudToLocal; window.nxIsRecArray=nxIsRecArray; window.nxArrToMap=nxArrToMap; window.nxMapJson=nxMapJson;
+
   var _lanSet=localStorage.setItem;   /* the LAN wrapper; it never POSTs because omsC.on stays false in the demo */
   localStorage.setItem=function(k,v){
     /* READ-ONLY VIEWER: block all data-store writes (both local + the Firebase mirror) so this
@@ -19995,22 +20017,40 @@ if(typeof window!=='undefined' && window.NX_DEMO===true){ try{ (function(){
       return;
     }
     _lanSet.call(localStorage,k,v);
-    if(nxDemo.root && !nxDemo.applying && OMS_STORES.indexOf(k)>=0){   /* push whenever the DB ref exists — Firebase queues offline writes & flushes on reconnect (fixes iOS Safari where .info/connected is unreliable) */
-      /* ONLY send when the store actually changed — stops the continuous re-send / echo ping-pong
-         that was overwriting writes coming from other devices (e.g. the phone). */
-      if(nxDemo._last[k]===v) return;
-      nxDemo._last[k]=v;
-      nxDemo._push[k]=true;
+    if(nxDemo.root && !nxDemo.applying && OMS_STORES.indexOf(k)>=0){
       try{ firebase.database().goOnline(); }catch(_){}   /* wake the socket so the write actually flushes (iOS Safari suspends it) */
-      try{ nxDemo.root.child(k).set(v==null?null:JSON.parse(v)); }catch(e){}
+      var parsed; try{ parsed=(v==null?null:JSON.parse(v)); }catch(e){ parsed=null; }
+      if(nxIsRecArray(parsed)){
+        /* ===== CO-OP: write only the records that changed / were added / removed (merge, no clobber) ===== */
+        var newMap=nxArrToMap(parsed);
+        var newJson=nxMapJson(newMap);
+        var prev=nxDemo._lastMap[k]||{};
+        var upd={}, n=0;
+        Object.keys(newJson).forEach(function(id){ if(prev[id]!==newJson[id]){ upd[id]=newMap[id]; n++; } });   /* added / changed */
+        Object.keys(prev).forEach(function(id){ if(!(id in newJson)){ upd[id]=null; n++; } });                  /* removed */
+        nxDemo._lastMap[k]=newJson;
+        if(n){
+          try{
+            if(nxDemo._schema==='rec1'){ nxDemo.root.child(k).update(upd); }        /* merge only changed records */
+            else { nxDemo.root.child(k).set(newMap); }                              /* pre-migration: clean id-keyed set (drops old index keys) */
+          }catch(e){}
+        }
+      } else {
+        /* non-record store (config object / scalar): whole node, only when it actually changed */
+        if(nxDemo._last[k]===v) return;
+        nxDemo._last[k]=v;
+        try{ nxDemo.root.child(k).set(parsed); }catch(e){}
+      }
     }
   };
 
   function apply(store,val){
     if(val==null) return;
     nxDemo.applying=true;
-    var js=JSON.stringify(val);
-    nxDemo._last[store]=js;   /* remember what we received so a local re-save of the same data is NOT pushed back */
+    var local=nxCloudToLocal(val);           /* id-keyed record map -> array (config objects pass through) */
+    var js=JSON.stringify(local);
+    nxDemo._last[store]=js;                   /* remember what we received so a local re-save of the same data is NOT pushed back */
+    if(nxIsRecArray(local)) nxDemo._lastMap[store]=nxMapJson(nxArrToMap(local));   /* seed the per-record baseline for diffing */
     try{ _lsSet(store,js); }finally{ nxDemo.applying=false; }
   }
   /* --- inbound: cloud change -> local store -> live page refresh --- */
@@ -20022,7 +20062,8 @@ if(typeof window!=='undefined' && window.NX_DEMO===true){ try{ (function(){
       nxDemo.seedTimer=setTimeout(function(){ try{ omsRefreshFor(null); }catch(_){ } nxDemo.ready=true; },600);
       return;
     }
-    if(nxDemo._push[store]){ nxDemo._push[store]=false; return; }   /* echo of our own write */
+    /* co-op: always apply remote changes (per-record writes mean an event may carry another
+       device's edit alongside our own echo — never skip, or we'd drop their change) */
     apply(store,v);
     try{ omsRefreshFor(store); }catch(_){ }
   }
@@ -20036,6 +20077,26 @@ if(typeof window!=='undefined' && window.NX_DEMO===true){ try{ (function(){
         if(!firebase.apps || !firebase.apps.length) firebase.initializeApp(cfg);
         var db=firebase.database();
         nxDemo.root=db.ref('nx');
+        /* ===== one-time migration: convert whole-array stores to id-keyed record maps (co-op) ===== */
+        try{
+          nxDemo.root.child('_schema').once('value').then(function(s){
+            var sv=s.val(); nxDemo._schema=sv;
+            if(sv==='rec1') return;
+            nxDemo.root.once('value').then(function(all){
+              all=all.val()||{}; var updates={};
+              OMS_STORES.forEach(function(kk){
+                var vv=all[kk]; if(vv==null) return;
+                var arr=Array.isArray(vv)?vv:(typeof vv==='object'?Object.keys(vv).filter(function(x){return x.charAt(0)!=='_';}).map(function(x){return vv[x];}):null);
+                if(arr && arr.length && arr.every(function(x){return x&&typeof x==='object'&&x.id!=null;})){
+                  var m={}; arr.forEach(function(r,i){ if(r&&r.id!=null){ var c={}; for(var f in r) c[f]=r[f]; if(c._ord==null) c._ord=i; m[String(r.id)]=c; } });
+                  updates[kk]=m;
+                }
+              });
+              updates['_schema']='rec1';
+              try{ nxDemo.root.update(updates); nxDemo._schema='rec1'; }catch(_){}
+            }).catch(function(){});
+          }).catch(function(){});
+        }catch(_){}
         var done=false;
         function ok(){ if(done) return; done=true; nxDemo.on=true; try{ omsSetLive(true); }catch(_){ } try{ nxHomeStatus(); }catch(_){ } try{ nxDemoMarkUI(); }catch(_){ } resolve(true); }
         /* status only — do NOT gate connect on .info/connected (iOS Safari often never reports true even while data flows) */
@@ -21160,7 +21221,11 @@ function peProjectExport(){ var TH=(LANG==='th'); var L=pePMProjects(); var p=L.
     if(!all) return;
     try{
       if(window.nxDemo) nxDemo.applying=true;
-      OMS_STORES.forEach(function(k){ if(all[k]!=null){ try{ _lsSet(k,JSON.stringify(all[k])); }catch(_){} } });
+      OMS_STORES.forEach(function(k){ if(all[k]!=null){ try{
+        var loc=(typeof window.nxCloudToLocal==='function')?window.nxCloudToLocal(all[k]):all[k];
+        _lsSet(k,JSON.stringify(loc));
+        if(window.nxDemo && typeof window.nxIsRecArray==='function' && window.nxIsRecArray(loc)) nxDemo._lastMap[k]=window.nxMapJson(window.nxArrToMap(loc));
+      }catch(_){} } });
     } finally { if(window.nxDemo) nxDemo.applying=false; }
     try{ omsRefreshFor(null); }catch(_){}
     try{ if(typeof nxHomeStatus==='function') nxHomeStatus(); }catch(_){}
