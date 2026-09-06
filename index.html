@@ -19645,15 +19645,14 @@ if(typeof window!=='undefined' && window.NX_DEMO===true){ try{ (function(){
         if(!firebase.apps || !firebase.apps.length) firebase.initializeApp(cfg);
         var db=firebase.database();
         nxDemo.root=db.ref('nx');
-        db.ref('.info/connected').on('value',function(s){
-          var c=!!s.val(), was=nxDemo.on; nxDemo.on=c;
-          try{ omsSetLive(c); }catch(_){ }
-          try{ nxHomeStatus(); }catch(_){ }
-          if(c && !was){ nxDemoMarkUI(); resolve(true); }
-          else if(!c){ try{ syncState.status='searching'; if(typeof syncUpdateStatus==='function') syncUpdateStatus(); }catch(_){ } }
-        });
+        var done=false;
+        function ok(){ if(done) return; done=true; nxDemo.on=true; try{ omsSetLive(true); }catch(_){ } try{ nxHomeStatus(); }catch(_){ } try{ nxDemoMarkUI(); }catch(_){ } resolve(true); }
+        /* status only — do NOT gate connect on .info/connected (iOS Safari often never reports true even while data flows) */
+        db.ref('.info/connected').on('value',function(s){ if(!!s.val()){ nxDemo.on=true; ok(); } try{ omsSetLive(nxDemo.on); }catch(_){ } try{ nxHomeStatus(); }catch(_){ } });
+        /* resolve on a real data read — reliable on iOS */
+        try{ nxDemo.root.once('value').then(function(){ ok(); }).catch(function(){}); }catch(_){ }
         OMS_STORES.forEach(function(store){ nxDemo.root.child(store).on('value',function(snap){ handle(store,snap); }); });
-        setTimeout(function(){ if(!nxDemo.on){ nxDemo._err=nxDemo._err||'timeout'; reject(new Error('timeout')); } },9000);
+        setTimeout(function(){ if(!done){ nxDemo._err=nxDemo._err||'timeout'; reject(new Error('timeout')); } },9000);
       }catch(e){ nxDemo._err='init'; reject(e); }
     });
   };
