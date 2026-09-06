@@ -16187,7 +16187,7 @@ function bpReset(){
 /* =================== SOFTWARE SYNC (middleware finder — client side of Task 2) =================== */
 /* ===== Real sync client — talks to the middleware Server over REST + WebSocket.
         Pushes each localStorage store on save; applies the server's broadcasts back. ===== */
-const OMS_STORES=['nx_employees','nx_meetings','nx_events','nx_holidays','nx_crm_acts','nx_crm_opps','nx_crm_follows','nx_crm_quotes','nx_wm_tasks','nx_wm_projects','nx_moms','nx_departments','nx_ta_logs','nx_ta_devices','nx_ta_hours','nx_leaves','nx_ot','nx_otrates','nx_payslips','nx_pr','nx_returns','nx_stock','nx_vendors','nx_works','nx_details','nx_customers','nx_withdraws','nx_workswitch','nx_caldays','nx_positions','nx_defaults','nx_branding','nx_workpattern','nx_workanchor','nx_docgroups','nx_documents','nx_trash','nx_signatures'];
+const OMS_STORES=['nx_employees','nx_meetings','nx_events','nx_holidays','nx_crm_acts','nx_crm_opps','nx_crm_follows','nx_crm_quotes','nx_wm_tasks','nx_wm_projects','nx_worktimeline','nx_moms','nx_departments','nx_ta_logs','nx_ta_devices','nx_ta_hours','nx_leaves','nx_ot','nx_otrates','nx_payslips','nx_pr','nx_returns','nx_stock','nx_vendors','nx_works','nx_details','nx_customers','nx_withdraws','nx_workswitch','nx_caldays','nx_positions','nx_defaults','nx_branding','nx_workpattern','nx_workanchor','nx_docgroups','nx_documents','nx_trash','nx_signatures'];
 /* which currently-open page each store feeds — so a remote change refreshes exactly the right page, live, without disturbing an unrelated open modal */
 const OMS_VIEWS={
   nx_employees:['employees','attendance','timeattend','benefit','otmgmt','leaveconfirm','permission','salary','otreg','leave','calendar','wmboard','wmtodo','wmproject','meetings'],
@@ -20895,6 +20895,51 @@ function peProjectExport(){ var TH=(LANG==='th'); var L=pePMProjects(); var p=L.
   /* desktop trackpad pinch + Ctrl/Cmd +/- / 0 zoom */
   document.addEventListener('wheel',function(e){ if(e.ctrlKey){ e.preventDefault(); } },{passive:false});
   document.addEventListener('keydown',function(e){ if((e.ctrlKey||e.metaKey)&&['+','-','=','0'].indexOf(e.key)>=0){ e.preventDefault(); } });
+})();
+</script>
+
+<script>
+/* ===== NX Desk demo — iOS-safe realtime RESYNC =====
+   iOS Safari suspends/kills the Firebase WebSocket when the tab is backgrounded or
+   the phone is locked, and it does not always re-read on return — so data looks stale
+   or "won't read" on mobile. This force-pulls the whole /nx tree whenever the app comes
+   back to the foreground (and once shortly after load), then repaints the current view. */
+(function(){
+  if(window.NX_DEMO!==true) return;
+  var busy=false, lastPull=0;
+
+  function applyAll(all){
+    if(!all) return;
+    try{
+      if(window.nxDemo) nxDemo.applying=true;
+      OMS_STORES.forEach(function(k){ if(all[k]!=null){ try{ _lsSet(k,JSON.stringify(all[k])); }catch(_){} } });
+    } finally { if(window.nxDemo) nxDemo.applying=false; }
+    try{ omsRefreshFor(null); }catch(_){}
+    try{ if(typeof nxHomeStatus==='function') nxHomeStatus(); }catch(_){}
+  }
+
+  window.nxDemoResync=function(force){
+    var now=Date.now(); if(busy) return; if(!force && now-lastPull<1500) return; lastPull=now;
+    if(typeof firebase==='undefined'){ return; }
+    /* if we never connected, kick the normal connect flow */
+    if(!window.nxDemo || !nxDemo.root){ try{ if(typeof connGateAuto==='function') connGateAuto(); }catch(_){} return; }
+    busy=true;
+    try{ firebase.database().goOnline(); }catch(_){}
+    try{
+      nxDemo.root.once('value').then(function(snap){ busy=false; applyAll(snap.val()||{}); })
+        .catch(function(){ busy=false; });
+    }catch(_){ busy=false; }
+  };
+
+  function onResume(){ setTimeout(function(){ window.nxDemoResync(true); }, 180); }
+  document.addEventListener('visibilitychange',function(){ if(document.visibilityState==='visible') onResume(); });
+  window.addEventListener('pageshow', onResume);
+  window.addEventListener('focus', onResume);
+  window.addEventListener('online', onResume);
+
+  /* safety net: pull once after load in case the initial listeners didn't deliver on this device */
+  function ready(fn){ if(document.readyState!=='loading') fn(); else document.addEventListener('DOMContentLoaded',fn); }
+  ready(function(){ setTimeout(function(){ window.nxDemoResync(true); }, 3500); });
 })();
 </script>
 
