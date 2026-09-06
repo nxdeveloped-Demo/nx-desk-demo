@@ -4568,6 +4568,42 @@ body.nx-home .hm3{gap:clamp(18px,3vh,36px)!important}
 /* desktop: ~3x the original section spacing (welcome ↔ modules ↔ value widget) */
 @media (min-width:861px){ body.nx-home .hm3{gap:clamp(48px,8vh,100px)!important} body.nx-home .hm3-today{margin-top:clamp(16px,2.4vh,32px)!important} }
 
+/* ===== LIVE CLOCK bar between the deck and the value widget (blink-cursor seconds + slow running border) ===== */
+.hm-clockbar{position:relative;overflow:hidden;display:flex!important;align-items:center;justify-content:center;width:max-content;max-width:92%;margin:0 auto;padding:8px 20px;border-radius:14px;background:var(--n2-surface2);border:1px solid var(--n2-line2);box-shadow:0 6px 18px color-mix(in srgb,var(--n2-a) 10%,transparent)}
+.hm-clockbar .hc-time{position:relative;z-index:1;display:inline-flex;align-items:baseline;font-family:'Orbitron',ui-monospace,monospace;font-weight:800;letter-spacing:3px;font-size:clamp(18px,2.6vh,28px);color:var(--n2-txt);line-height:1}
+.hm-clockbar .hc-sec{color:var(--n2-a);animation:hcBlink 1s steps(1,end) infinite}
+.hm-clockbar .hc-cursor{margin-left:6px;color:var(--n2-a);font-weight:900;animation:hcBlink 1s steps(1,end) infinite}
+@keyframes hcBlink{0%,49%{opacity:1}50%,100%{opacity:.12}}
+/* slow running conic border */
+.hm-clockbar::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:2px;background:conic-gradient(from var(--ang,0deg),transparent 0 60%,var(--n2-a) 76%,#6366f1 88%,transparent 98%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;animation:twRunLoop 6.5s linear infinite;z-index:0}
+:root[data-theme="dark"] .hm-clockbar{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.12)}
+/* clock bar order: between deck and value widget on mobile */
+@media (max-width:860px){
+  body.nx-home #view-home .hm-clockbar{order:3!important}
+  body.nx-home #view-home .hm3-today{order:4!important}
+}
+
+/* ===== LAVA-LAMP + 3D DATA idle background (tablet & mobile) ===== */
+#hmLava{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;display:none;border-radius:0}
+@media (max-width:1024px){
+  #hmLava{display:block}
+  body.nx-home #view-home .hm3{position:relative;z-index:1}
+}
+#hmLava .lb{position:absolute;border-radius:50%;filter:blur(34px);opacity:.42;will-change:transform;mix-blend-mode:normal}
+#hmLava .lb1{width:58vw;height:58vw;left:-14vw;top:6vh;background:radial-gradient(circle at 35% 35%,#22d3ee,transparent 70%);animation:lava1 17s ease-in-out infinite}
+#hmLava .lb2{width:52vw;height:52vw;right:-16vw;top:26vh;background:radial-gradient(circle at 40% 40%,#6366f1,transparent 70%);animation:lava2 21s ease-in-out infinite}
+#hmLava .lb3{width:46vw;height:46vw;left:6vw;bottom:6vh;background:radial-gradient(circle at 45% 45%,#a855f7,transparent 70%);animation:lava3 19s ease-in-out infinite}
+#hmLava .lb4{width:40vw;height:40vw;right:2vw;bottom:16vh;background:radial-gradient(circle at 40% 40%,#22e0a1,transparent 72%);animation:lava4 23s ease-in-out infinite}
+[data-theme="dark"] #hmLava .lb{opacity:.34;filter:blur(38px)}
+@keyframes lava1{0%,100%{transform:translate(0,0) scale(1)}50%{transform:translate(16vw,20vh) scale(1.22)}}
+@keyframes lava2{0%,100%{transform:translate(0,0) scale(1.05)}50%{transform:translate(-14vw,14vh) scale(.85)}}
+@keyframes lava3{0%,100%{transform:translate(0,0) scale(.9)}50%{transform:translate(12vw,-16vh) scale(1.2)}}
+@keyframes lava4{0%,100%{transform:translate(0,0) scale(1.1)}50%{transform:translate(-12vw,-12vh) scale(.9)}}
+/* 3D data particle drift layer (combined with the lava) */
+#hmLava .dp{position:absolute;width:6px;height:6px;border-radius:50%;background:color-mix(in srgb,var(--n2-a) 80%,#fff);opacity:.35;box-shadow:0 0 8px color-mix(in srgb,var(--n2-a) 70%,transparent);will-change:transform;animation:dataDrift var(--dd,14s) linear infinite;animation-delay:var(--dl,0s)}
+@keyframes dataDrift{0%{transform:translate3d(0,10vh,0) scale(.6);opacity:0}12%{opacity:.5}88%{opacity:.5}100%{transform:translate3d(var(--dx,4vw),-90vh,0) scale(1.1);opacity:0}}
+@media (prefers-reduced-motion:reduce){ #hmLava .lb,#hmLava .dp{animation:none!important} }
+
 /* ===== WELCOME BAR — layered / depth design to match the rest of the layout ===== */
 body.nx-home .hm3-welcome{position:relative!important;overflow:hidden!important;
   background:linear-gradient(155deg,var(--n2-surface) 0%,var(--n2-surface2) 62%,color-mix(in srgb,var(--n2-a) 7%,var(--n2-surface2)) 100%)!important;
@@ -21098,6 +21134,37 @@ function peProjectExport(){ var TH=(LANG==='th'); var L=pePMProjects(); var p=L.
   /* safety net: pull once after load in case the initial listeners didn't deliver on this device */
   function ready(fn){ if(document.readyState!=='loading') fn(); else document.addEventListener('DOMContentLoaded',fn); }
   ready(function(){ setTimeout(function(){ window.nxDemoResync(true); }, 3500); });
+})();
+</script>
+
+<script>
+/* ===== NX Desk demo — home extras: live clock bar + lava-lamp/3D-data background ===== */
+(function(){
+  function ready(fn){ if(document.readyState!=='loading') fn(); else document.addEventListener('DOMContentLoaded',fn); }
+  function p(n){ return (n<10?'0':'')+n; }
+  function tick(){ var el=document.getElementById('hmClockBar'); if(!el) return; var d=new Date();
+    var hm=el.querySelector('.hc-hm'), sc=el.querySelector('.hc-sec'); if(hm) hm.textContent=p(d.getHours())+':'+p(d.getMinutes()); if(sc) sc.textContent=p(d.getSeconds()); }
+  function build(){
+    var view=document.getElementById('view-home'); if(!view) return;
+    /* lava-lamp + data particles background */
+    if(!document.getElementById('hmLava')){
+      var lava=document.createElement('div'); lava.id='hmLava'; lava.setAttribute('aria-hidden','true');
+      var h='<span class="lb lb1"></span><span class="lb lb2"></span><span class="lb lb3"></span><span class="lb lb4"></span>';
+      for(var i=0;i<11;i++){ var x=(6+i*8.5)%96; var dd=(11+((i*13)%11)); var dl=-((i*1.9)%14); var dx=((i*17)%12)-6;
+        h+='<span class="dp" style="left:'+x.toFixed(1)+'%;--dd:'+dd+'s;--dl:'+dl.toFixed(1)+'s;--dx:'+dx+'vw"></span>'; }
+      lava.innerHTML=h; view.insertBefore(lava, view.firstChild);
+    }
+    /* live clock bar between the deck and the value widget */
+    var hm3=view.querySelector('.hm3');
+    if(hm3 && !document.getElementById('hmClockBar')){
+      var cb=document.createElement('div'); cb.id='hmClockBar'; cb.className='hm-clockbar';
+      cb.innerHTML='<span class="hc-time"><span class="hc-hm">--:--</span><span class="hc-sep">:</span><span class="hc-sec">--</span><span class="hc-cursor">▋</span></span>';
+      var today=hm3.querySelector('.hm3-today'); if(today) hm3.insertBefore(cb, today); else hm3.appendChild(cb);
+    }
+    tick();
+    if(!window._nxClockIv) window._nxClockIv=setInterval(tick,1000);
+  }
+  ready(function(){ setTimeout(build,600); setTimeout(build,1800); setTimeout(build,3500); });
 })();
 </script>
 
