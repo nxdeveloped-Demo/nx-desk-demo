@@ -2493,6 +2493,9 @@ tr.lc-row:hover>td{background:var(--hover)}
 .modal.ocr-wide{max-width:min(1040px,96vw);}
 .modal.modal-big #mBody{overflow:auto}
 .modal .m-head{padding:22px 26px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:12px}
+.modal .m-head{position:relative}
+.modal .m-x{position:absolute;top:12px;right:12px;width:34px;height:34px;border-radius:50%;border:1px solid var(--line2);background:var(--chip-bg,rgba(120,130,160,.12));color:var(--txt);font-size:16px;line-height:1;cursor:pointer;display:grid;place-items:center;z-index:3;padding:0;transition:.15s}
+.modal .m-x:hover{background:#e5484d;color:#fff;border-color:#e5484d}
 .modal .m-head .mi{width:40px;height:40px;border-radius:11px;background:var(--grad);display:grid;place-items:center;font-size:20px;color:var(--on-grad)}
 .modal .m-head h3{margin:0;font-family:'Orbitron';font-size:18px;letter-spacing:.5px}
 .modal .m-head p{margin:2px 0 0;color:var(--muted);font-size:13px}
@@ -4517,8 +4520,10 @@ body:has(#overlay.show .modal.pebg-fs) .asst-launch{opacity:0;pointer-events:non
   table{max-width:100%}
   .wm-table-wrap,.tbl-wrap,.table-wrap,[class*="-table-wrap"]{overflow-x:auto!important;-webkit-overflow-scrolling:touch}
   #modal .modal-card,.modal-card,.cg-card,.customModal{max-width:96vw!important}
-  /* HOME welcome */
-  body.nx-home main{overflow-x:hidden}
+  /* HOME welcome — use natural document flow on mobile (desktop keeps the fixed app-shell) */
+  body.nx-home{overflow:auto!important}
+  body.nx-home main{overflow:visible!important;overflow-x:hidden!important;height:auto!important;min-height:0!important;max-height:none!important;display:block!important;padding-bottom:92px!important}
+  body.nx-home #view-home.active{display:block!important;height:auto!important;min-height:0!important;flex:none!important}
   #view-home .hm3{display:flex!important;flex-direction:column!important;padding:10px!important;gap:10px!important}
   #view-home .hm3>*{flex:0 0 auto!important}
   #view-home .hm3-mod{order:1!important}
@@ -4531,32 +4536,74 @@ body:has(#overlay.show .modal.pebg-fs) .asst-launch{opacity:0;pointer-events:non
   #view-home #hmHello{font-size:20px!important}
   #view-home .hm-quick{position:static!important;display:flex!important;flex-wrap:wrap!important;gap:8px!important;width:100%!important;margin-top:4px!important}
   #view-home .hm-quick .hm-qa{flex:1 1 46%!important;justify-content:center!important;min-width:0!important}
-  /* HOME deck -> vertical list */
-  #view-home .hm3-mod .hm3-sec,#view-home .hm3-sec{display:block!important;min-height:0!important;height:auto!important}
-  #view-home .hm3-mod{min-height:auto!important;height:auto!important;padding:0!important;margin:0!important;justify-content:flex-start!important;overflow:visible!important}
+
+  /* ===== HOME DECK — real slide carousel (translate track, swipe only) ===== */
+  #view-home .hm3-mod{min-height:auto!important;height:auto!important;padding:0!important;margin:0!important;justify-content:flex-start!important;overflow:visible!important;display:flex!important;flex-direction:column!important}
+  #view-home .hm3-mod .hm3-sec,#view-home .hm3-sec{display:flex!important;align-items:center!important;justify-content:space-between!important;min-height:0!important;height:auto!important;padding:0 4px!important;margin-bottom:6px!important}
   #view-home .hm3-sec p[data-i18n="hm3Hint"]{display:none!important}
-  #view-home .hm-carousel{display:block!important;position:relative!important;min-height:0!important;height:auto!important;padding:0 6px!important;grid-template-columns:1fr!important}
-  #view-home #hmView,#view-home .hm-viewport{height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;perspective:none!important;-webkit-perspective:none!important}
-  #view-home #hmTrack{display:block!important;position:relative!important;transform:none!important;height:auto!important;width:100%!important;min-height:220px!important;transform-style:flat!important;text-align:center!important}
-  /* non-focused cards stay in the DOM (so hmCards/hmLayout keep working) but are hidden & zero-size */
-  #view-home #hmTrack .big-card{display:block!important;position:absolute!important;top:0!important;left:0!important;right:auto!important;width:0!important;height:0!important;min-height:0!important;margin:0!important;opacity:0!important;visibility:hidden!important;overflow:hidden!important;pointer-events:none!important;transform:none!important;filter:none!important}
-  #view-home #hmTrack .big-card.focus{position:relative!important;top:auto!important;left:auto!important;width:min(86vw,430px)!important;max-width:86vw!important;height:auto!important;min-height:210px!important;margin:0 auto!important;opacity:1!important;visibility:visible!important;overflow:visible!important;pointer-events:auto!important;display:inline-block!important}
-  #view-home #hmTrack .big-card.focus .bc-face{transform:none!important;position:relative!important}
-  /* visible slide arrows overlaid on the card */
-  #view-home .hm-arrow{display:flex!important;position:absolute!important;top:50%!important;transform:translateY(-50%)!important;z-index:9!important;width:40px!important;height:40px!important;border-radius:50%!important;background:#fff!important;color:#0891b2!important;box-shadow:0 6px 16px rgba(20,30,60,.20)!important;align-items:center!important;justify-content:center!important;opacity:1!important;border:1px solid rgba(8,145,178,.18)!important}
-  #view-home .hm-arrow.left{left:0!important}
-  #view-home .hm-arrow.right{right:0!important}
-  #view-home .hm-dots{display:flex!important;justify-content:center!important;gap:7px!important;margin:10px auto 0!important}
-  #view-home .hm3-today{margin:8px auto 16px!important;max-width:96vw!important}
+  #view-home .hm3-sec .hm-dots{display:none!important}   /* header dots hidden on mobile — moved below */
+  #view-home .hm-carousel{display:block!important;position:relative!important;min-height:0!important;height:auto!important;padding:0!important;margin:0!important;grid-template-columns:1fr!important;overflow:visible!important}
+  /* swipe-only: no arrow buttons on tablet/mobile */
+  #view-home .hm-arrow{display:none!important}
+  #view-home #hmView,#view-home .hm-viewport{height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;width:100%!important;perspective:none!important;-webkit-perspective:none!important;touch-action:pan-y!important}
+  #view-home #hmTrack{display:flex!important;flex-wrap:nowrap!important;position:relative!important;height:auto!important;min-height:0!important;width:auto!important;gap:14px!important;padding:4px calc(8vw - 20px) 6px!important;
+    transform:translateX(calc(var(--hmi,0) * (-84vw - 14px)))!important;
+    transition:transform .5s cubic-bezier(.22,.9,.28,1)!important;
+    transform-style:flat!important;will-change:transform;text-align:left!important}
+  /* every card is a real, visible flex item (no absolute/hidden hack) */
+  #view-home #hmTrack .big-card{display:flex!important;flex-direction:column!important;position:relative!important;top:auto!important;left:auto!important;right:auto!important;
+    flex:0 0 84vw!important;width:84vw!important;max-width:84vw!important;height:auto!important;min-height:180px!important;margin:0!important;
+    opacity:.5!important;visibility:visible!important;overflow:hidden!important;pointer-events:auto!important;filter:none!important;
+    transform:scale(.92)!important;transform-origin:center center!important;
+    transition:opacity .4s ease,transform .4s cubic-bezier(.22,.9,.28,1)!important}
+  #view-home #hmTrack .big-card.focus{opacity:1!important;transform:scale(1)!important}
+  #view-home #hmTrack .big-card .bc-face{transform:none!important;position:relative!important;z-index:2!important;height:100%!important}
+  /* header (title + subtitle + count) always visible on the card front */
+  #view-home #hmTrack .big-card .bc-head{display:flex!important;flex-direction:row!important;align-items:center!important;gap:12px!important;width:100%!important}
+  #view-home #hmTrack .big-card .bc-info{min-width:0!important;display:block!important}
+  #view-home #hmTrack .big-card .bc-info h2{display:block!important;font-size:16px!important;font-weight:800!important;color:var(--n2-txt)!important;margin:0!important;white-space:normal!important;line-height:1.2!important}
+  #view-home #hmTrack .big-card .bc-info p{display:block!important;font-size:11.5px!important;color:var(--n2-muted)!important;margin:2px 0 0!important}
+  #view-home #hmTrack .big-card .bc-count{display:inline-block!important;margin-top:6px!important}
+  #view-home #hmTrack .big-card .bc-chev{display:none!important}
+  #view-home #hmTrack .big-card .bc-ic{flex:none!important}
+  #view-home #hmTrack .big-card .bc-pop{display:none!important}   /* the flip (.bc-back) is the module menu on mobile */
+
+  /* each card shows its OWN icon as an animated idle background watermark */
+  #view-home #hmTrack .big-card .bc-wm{display:grid!important;position:absolute!important;right:-6%!important;bottom:-10%!important;width:66%!important;z-index:0!important;opacity:.14!important;pointer-events:none!important}
+  #view-home #hmTrack .big-card.focus .bc-wm{opacity:.20!important}
+
+  /* flip = flat readable panel (3D transforms fail on the flattened mobile deck) */
+  #view-home #hmTrack .big-card.flipped .bc-face{opacity:0!important;pointer-events:none!important}
+  #view-home #hmTrack .big-card.flipped .bc-wm{display:none!important}
+  #view-home #hmTrack .big-card .bc-back{position:absolute!important;inset:0!important;transform:none!important;-webkit-backface-visibility:visible!important;backface-visibility:visible!important;opacity:0!important;pointer-events:none!important;z-index:6!important;background:var(--n2-surface)!important;overflow:auto!important;-webkit-overflow-scrolling:touch!important}
+  #view-home #hmTrack .big-card.flipped .bc-back{opacity:1!important;pointer-events:auto!important}
+  #view-home #hmTrack .big-card .bc-back::before,#view-home #hmTrack .big-card .bc-back::after{display:none!important}
+  #view-home #hmTrack .big-card .bb-grid{display:grid!important;grid-template-columns:1fr!important;gap:8px!important}
+  #view-home #hmTrack .big-card .bb-item{opacity:1!important;transform:none!important;animation:none!important;display:flex!important;align-items:center!important;color:var(--n2-txt)!important;background:color-mix(in srgb,var(--n2-a) 6%,var(--n2-surface))!important;border:1px solid var(--n2-line)!important;border-radius:12px!important;padding:10px 12px!important}
+  #view-home #hmTrack .big-card .bb-item .bb-in{opacity:1!important;transform:none!important;color:var(--n2-txt)!important;display:flex!important;align-items:center!important;gap:10px!important}
+  #view-home #hmTrack .big-card .bb-item .bb-in *{color:var(--n2-txt)!important}
+  #view-home #hmTrack .big-card .bb-head .bb-title{color:var(--n2-txt)!important}
+  #view-home #hmTrack .big-card .bb-head .bb-sub{color:var(--n2-muted)!important}
+
+  /* slide-position dots BELOW the card slide */
+  #view-home .hm-dots-btm{display:flex!important;justify-content:center!important;align-items:center!important;gap:7px!important;margin:12px auto 2px!important;order:3!important}
+  #view-home .hm-dots-btm i{width:8px;height:8px;border-radius:999px;background:var(--n2-line2);cursor:pointer;transition:.25s}
+  #view-home .hm-dots-btm i.on{width:24px;background:var(--n2-grad)}
+
+  /* value widget: full width to match the other cards + credit sits right below it */
+  #view-home .hm3-today{margin:8px auto 6px!important;width:100%!important;max-width:100%!important;box-sizing:border-box!important;grid-template-columns:1fr!important}
+  body.nx-home .footer-note{order:4!important;display:block!important;text-align:center!important;margin:6px auto 18px!important;padding:0 8px!important;font-size:11px!important;line-height:1.5!important;white-space:normal!important;opacity:.85}
+
   /* PERFORMANCE — prevent iOS Safari WebContent crash */
   *,*::before,*::after{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
   #view-home .hm-bg3d,#view-home #hmBg,#hmBg,.hb3-scene,#hbBokeh{display:none!important}
   #view-home .big-card,#view-home .big-card *,#view-home .hm3 *{animation:none!important}
-  #view-home .big-card{transform-style:flat!important;filter:none!important;-webkit-backface-visibility:visible!important;backface-visibility:visible!important;transition:none!important}
-  #view-home .bc-wm,#view-home .bc-shadow,#view-home .bc-preview,#view-home .bc-open{display:none!important}
-  header.topbar,#view-home .big-card,#view-home .big-card .bc-face,#view-home .hm3-welcome,#view-home .hm3-today,
+  #view-home #hmTrack .big-card.focus .bc-wm{animation:bcWm 11s ease-in-out infinite!important}   /* one cheap idle watermark loop */
+  #view-home .big-card{transform-style:flat!important;filter:none!important;-webkit-backface-visibility:visible!important;backface-visibility:visible!important}
+  #view-home .bc-shadow,#view-home .bc-preview,#view-home .bc-open,#view-home .bc-now,#view-home .bc-dim{display:none!important}
+  header.topbar,#view-home .big-card,#view-home .big-card .bc-face,#view-home .big-card .bc-back,#view-home .hm3-welcome,#view-home .hm3-today,
   .modal-card,#modal .modal-card,.cg-card,.nav-drawer,#navDrawer,.acct-pop{background:#ffffff!important;box-shadow:0 6px 18px rgba(20,30,60,.12)!important}
-  [data-theme="dark"] header.topbar,[data-theme="dark"] #view-home .big-card,[data-theme="dark"] #view-home .big-card .bc-face,
+  [data-theme="dark"] header.topbar,[data-theme="dark"] #view-home .big-card,[data-theme="dark"] #view-home .big-card .bc-face,[data-theme="dark"] #view-home .big-card .bc-back,
   [data-theme="dark"] #view-home .hm3-welcome,[data-theme="dark"] #view-home .hm3-today,
   [data-theme="dark"] .modal-card,[data-theme="dark"] #modal .modal-card,[data-theme="dark"] .cg-card,
   [data-theme="dark"] .nav-drawer,[data-theme="dark"] #navDrawer,[data-theme="dark"] .acct-pop{background:#171b2b!important}
@@ -4565,10 +4612,13 @@ body:has(#overlay.show .modal.pebg-fs) .asst-launch{opacity:0;pointer-events:non
   header.topbar .brand .title{max-width:110px;overflow:hidden}
   #view-home .hm-quick .hm-qa{flex:1 1 100%!important}
   .view h1,.view .page-title{font-size:18px!important}
+  #view-home #hmTrack{padding:4px calc(7vw - 20px) 6px!important;transform:translateX(calc(var(--hmi,0) * (-86vw - 14px)))!important}
+  #view-home #hmTrack .big-card{flex:0 0 86vw!important;width:86vw!important;max-width:86vw!important}
 }
 
 /* ================= LOGIN — minimal visionOS, centered, org logo (all sizes) ================= */
-#loginScreen{min-height:100dvh!important;position:relative!important;overflow:hidden!important;
+/* FIX: fixed full-screen overlay so the home page can never show behind / below it */
+#loginScreen{position:fixed!important;inset:0!important;z-index:2000!important;min-height:100dvh!important;overflow-y:auto!important;overflow-x:hidden!important;
   background:
     radial-gradient(120% 120% at 15% 10%, #e8f7ff 0%, transparent 45%),
     radial-gradient(120% 120% at 85% 20%, #eef0ff 0%, transparent 50%),
@@ -4630,8 +4680,8 @@ body #loginScreen .lg-stage{position:relative!important;inset:auto!important;gri
 body #loginScreen .lg-card{position:relative!important;inset:auto!important;grid-column:auto!important;width:auto!important;flex:0 0 auto!important;display:block!important;background:transparent!important;box-shadow:none!important;padding:0!important;margin:0!important;min-height:auto!important}
 body #loginScreen .lg-card-in{margin:0 auto!important}
 
-/* the real layout owner is #loginScreen (grid) — force centered column */
-body #loginScreen.show{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;grid-template-columns:none!important;grid-template-rows:none!important;gap:0!important}
+/* the real layout owner is #loginScreen (grid) — force centered column, fixed overlay */
+body #loginScreen.show{position:fixed!important;inset:0!important;z-index:2000!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;grid-template-columns:none!important;grid-template-rows:none!important;gap:0!important}
 body #loginScreen>.lg-bg,body #loginScreen>.lg-grid:empty{display:none!important}
 body #loginScreen .lg-stage,body #loginScreen .lg-card{grid-column:auto!important;grid-row:auto!important;align-self:center!important;justify-self:center!important;max-width:100%!important}
 
@@ -4653,6 +4703,67 @@ body #loginScreen .lg-stage,body #loginScreen .lg-card{grid-column:auto!importan
 }
 
 body #loginScreen:not(.show){display:none!important}
+/* lock background scroll while the login overlay is up (belt-and-suspenders with position:fixed) */
+html:has(#loginScreen.show),body:has(#loginScreen.show){overflow:hidden!important}
+
+/* ================= UNIFIED NOTIFICATION BUTTON (all platforms) ================= */
+.fab-stack{display:none!important}   /* originals kept in DOM for state; hidden visually */
+.nxn-fab{position:fixed;right:24px;bottom:24px;z-index:190;width:56px;height:56px;border-radius:50%;border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;color:#fff;background:linear-gradient(135deg,#0891b2,#6366f1);
+  box-shadow:0 12px 30px rgba(59,70,180,.42);font-size:23px;touch-action:none;transition:transform .14s,box-shadow .14s}
+.nxn-fab:hover{transform:translateY(-2px);box-shadow:0 16px 40px rgba(59,70,180,.55)}
+.nxn-fab.nxn-drag{transition:none;cursor:grabbing;transform:scale(1.06)}
+.nxn-fab .nxn-bell{pointer-events:none}
+.nxn-fab.has-alerts .nxn-bell{animation:swing .9s ease-in-out infinite}
+.nxn-fab .nxn-count{position:absolute;top:-4px;right:-4px;min-width:22px;height:22px;padding:0 5px;border-radius:999px;background:#ef4444;color:#fff;
+  font:800 12px var(--n2-font,system-ui);display:none;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.3);border:2px solid #fff}
+.nxn-fab.has-alerts .nxn-count{display:flex}
+.nxn-fab.has-alerts{animation:fabpulse 1.3s ease-in-out infinite}
+.nxn-panel{position:fixed;z-index:191;width:min(340px,calc(100vw - 28px));max-height:min(70vh,520px);overflow:auto;-webkit-overflow-scrolling:touch;
+  background:var(--n2-surface,#fff);border:1px solid var(--n2-line,rgba(120,130,160,.25));border-radius:18px;
+  box-shadow:0 26px 70px rgba(30,25,70,.3);padding:8px;display:none;animation:asstPop .18s cubic-bezier(.34,1.4,.64,1) both}
+.nxn-panel.open{display:block}
+.nxn-panel .nxn-h{display:flex;align-items:center;justify-content:space-between;padding:8px 10px 10px;border-bottom:1px solid var(--n2-line,rgba(120,130,160,.18));margin-bottom:6px}
+.nxn-panel .nxn-h b{font:800 15px var(--n2-font,system-ui);color:var(--n2-txt,#1a2233)}
+.nxn-panel .nxn-x{border:none;background:transparent;font-size:18px;cursor:pointer;color:var(--n2-muted,#889);padding:2px 6px;border-radius:8px}
+.nxn-panel .nxn-x:hover{background:var(--n2-line,rgba(120,130,160,.15))}
+.nxn-item{display:flex;align-items:center;gap:12px;width:100%;text-align:left;border:none;background:transparent;cursor:pointer;
+  padding:11px 12px;border-radius:12px;color:var(--n2-txt,#1a2233);font-family:var(--n2-font,system-ui);transition:background .15s}
+.nxn-item:hover{background:color-mix(in srgb,var(--n2-a,#6366f1) 8%,transparent)}
+.nxn-item .nxn-ic{width:38px;height:38px;flex:none;border-radius:11px;display:grid;place-items:center;font-size:19px;background:color-mix(in srgb,var(--kc,#6366f1) 15%,transparent);color:var(--kc,#6366f1)}
+.nxn-item .nxn-tx{flex:1 1 auto;min-width:0}
+.nxn-item .nxn-tx b{display:block;font-size:13.5px;font-weight:700}
+.nxn-item .nxn-tx small{display:block;font-size:11.5px;color:var(--n2-muted,#889);margin-top:1px}
+.nxn-item .nxn-n{flex:none;min-width:24px;height:24px;padding:0 7px;border-radius:999px;background:var(--kc,#6366f1);color:#fff;font:800 12.5px var(--n2-font,system-ui);display:grid;place-items:center}
+.nxn-empty{padding:26px 14px;text-align:center;color:var(--n2-muted,#889);font:600 13px var(--n2-font,system-ui)}
+[data-theme="dark"] .nxn-panel{background:#171a2e;border-color:rgba(255,255,255,.1)}
+
+/* ================= DOCUMENT LIST — responsive filters + category buttons ================= */
+@media (max-width:820px){
+  #view-doclist .dl-filters{grid-template-columns:1fr 1fr!important;gap:10px!important}
+  #view-doclist .dl-filters input,#view-doclist .dl-filters select{box-sizing:border-box!important;max-width:100%!important;min-width:0!important}
+  #view-doclist .dl-cats{display:flex!important;flex-wrap:nowrap!important;overflow-x:auto!important;-webkit-overflow-scrolling:touch!important;gap:8px!important;padding-bottom:6px!important;scrollbar-width:none}
+  #view-doclist .dl-cats::-webkit-scrollbar{display:none}
+  #view-doclist .dl-cat{flex:0 0 auto!important;white-space:nowrap!important}
+}
+@media (max-width:520px){
+  #view-doclist .dl-filters{grid-template-columns:1fr!important}
+}
+/* file-preview overlay close button always reachable */
+#docFull > div:first-child button{min-width:0}
+@media (max-width:600px){
+  #docFull > div:first-child{flex-wrap:wrap!important;gap:8px!important;padding:10px 12px!important}
+  #docFull > div:first-child b{flex:1 1 100%!important;order:-1}
+  #docFull > div:first-child button{padding:8px 12px!important;font-size:13px!important}
+  .modal .m-x{top:10px!important;right:10px!important}
+}
+
+/* draggable assistant / chat launch — default bottom-left; edge-snap applied inline */
+.asst-launch{touch-action:none}
+.asst-launch.nxn-drag{transition:none!important;cursor:grabbing;transform:scale(1.06)!important}
+@media (max-width:860px){
+  body.nx-home .asst-launch{left:16px!important;right:auto!important;bottom:calc(16px + env(safe-area-inset-bottom,0px))!important;top:auto!important}
+}
 
 </style>
 </head>
@@ -8024,7 +8135,7 @@ body #loginScreen:not(.show){display:none!important}
 <!-- Modal -->
 <div class="overlay" id="overlay">
   <div class="modal" id="modal">
-    <div class="m-head"><div class="mi" id="mIcon">?</div><div><h3 id="mTitle">Confirm</h3><p id="mDesc"></p></div></div>
+    <div class="m-head"><div class="mi" id="mIcon">?</div><div><h3 id="mTitle">Confirm</h3><p id="mDesc"></p></div><button type="button" class="m-x" aria-label="Close" onclick="try{docBlobFree&&docBlobFree()}catch(_){} closeModal()">✕</button></div>
     <div class="m-body" id="mBody"></div>
     <div class="m-foot" id="mFoot"></div>
   </div>
@@ -16464,6 +16575,21 @@ var _docBlobUrls=[];
 function docBlobUrl(dataUrl){ try{ var i=dataUrl.indexOf(','); var meta=dataUrl.slice(5,i); var mime=(meta.split(';')[0])||'application/pdf'; var bin=atob(dataUrl.slice(i+1)); var u=new Uint8Array(bin.length); for(var k=0;k<bin.length;k++) u[k]=bin.charCodeAt(k); var url=URL.createObjectURL(new Blob([u],{type:mime})); _docBlobUrls.push(url); return url; }catch(e){ return dataUrl; } }
 function docBlobFree(){ _docBlobUrls.forEach(function(u){ try{ URL.revokeObjectURL(u); }catch(_){}} ); _docBlobUrls=[]; }
 /* full-screen in-app PDF viewer (all pages) — an iframe, so it works in Electron without opening a blank window */
+function nxRenderPdf(dataUrl, host, opts){ opts=opts||{}; if(!host) return; host.innerHTML='<div style="color:var(--muted);font-size:12px;padding:14px;text-align:center">'+((typeof t==='function')?t('dvLoading'):'Loading…')+'</div>';
+  try{
+    if(typeof pdfjsLib==='undefined'){ host.innerHTML='<div style="padding:16px;color:var(--muted);text-align:center">PDF viewer unavailable</div>'; return; }
+    var i=dataUrl.indexOf(','); var bin=atob(dataUrl.slice(i+1)); var u=new Uint8Array(bin.length); for(var k=0;k<bin.length;k++) u[k]=bin.charCodeAt(k);
+    pdfjsLib.getDocument({data:u}).promise.then(function(pdf){
+      host.innerHTML=''; var max=opts.all?pdf.numPages:Math.min(1,pdf.numPages);
+      var W=host.clientWidth||host.offsetWidth||600; if(W<40) W=600;
+      function page(n){ pdf.getPage(n).then(function(pg){ var vp0=pg.getViewport({scale:1}); var scale=Math.min(2,(W-4)/vp0.width); var vp=pg.getViewport({scale:scale});
+        var cv=document.createElement('canvas'); cv.width=vp.width; cv.height=vp.height; cv.style.cssText='width:100%;height:auto;display:block;margin:0 auto 10px;border-radius:8px;background:#fff;box-shadow:0 2px 10px rgba(0,0,0,.18)';
+        host.appendChild(cv); pg.render({canvasContext:cv.getContext('2d'),viewport:vp}); if(n<max) page(n+1);
+      }); }
+      page(1);
+    }).catch(function(e){ host.innerHTML='<div style="padding:16px;color:var(--muted);text-align:center">'+((typeof t==='function')?t('dvOther'):'Cannot preview this file')+'</div>'; });
+  }catch(e){ host.innerHTML='<div style="padding:16px;color:var(--muted);text-align:center">Cannot preview</div>'; }
+}
 function docFullView(id){ var d=docs().find(function(x){return x.id===id;}); if(!d) return; docFullClose();
   var src=docBlobUrl(d.dataUrl);
   var ov=document.createElement('div'); ov.id='docFull'; ov.style.cssText='position:fixed;inset:0;z-index:1200;background:rgba(8,10,20,.94);display:flex;flex-direction:column';
@@ -16471,15 +16597,16 @@ function docFullView(id){ var d=docs().find(function(x){return x.id===id;}); if(
     +'<span style="font-size:18px">📄</span><b style="flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">'+escapeHtml(d.name)+'</b>'
     +'<button onclick="dlDownload(\''+id+'\')" style="background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);color:#fff;border-radius:9px;padding:8px 14px;font-weight:700;cursor:pointer;font-family:inherit">⬇ '+t('dvDownload')+'</button>'
     +'<button onclick="docFullClose()" style="background:#e5484d;border:none;color:#fff;border-radius:9px;padding:8px 14px;font-weight:700;cursor:pointer;font-family:inherit">✕ '+t('dvClose')+'</button></div>'
-    +'<iframe src="'+src+'" style="flex:1;border:0;width:100%;background:#525659"></iframe>';
+    +'<div id="docFullBody" style="flex:1;overflow:auto;-webkit-overflow-scrolling:touch;width:100%;background:#525659;padding:14px 10px"></div>';
   document.body.appendChild(ov);
+  try{ var host=document.getElementById('docFullBody'); if((d.ext||'').toLowerCase()==='pdf'){ nxRenderPdf(d.dataUrl,host,{all:true}); } else { host.innerHTML='<iframe src="'+src+'" style="width:100%;height:100%;min-height:80vh;border:0;background:#525659"></iframe>'; } }catch(_){}
   document.addEventListener('keydown',docFullEsc);
 }
 function docFullClose(){ var o=document.getElementById('docFull'); if(o) o.remove(); document.removeEventListener('keydown',docFullEsc); docBlobFree(); }
 function docFullEsc(e){ if(e.key==='Escape') docFullClose(); }
 function dlView(id){ const d=docs().find(x=>x.id===id); if(!d) return; const kind=docPreviewKind(d.ext); let prev='';
   if(kind==='img') prev='<img src="'+d.dataUrl+'" style="max-width:100%;max-height:300px;border-radius:10px;display:block;margin:0 auto">';
-  else if(kind==='pdf') prev='<iframe id="dv_pdf" style="width:100%;height:340px;border:1px solid var(--line2);border-radius:10px;background:#525659"></iframe>';
+  else if(kind==='pdf') prev='<div id="dv_pdf" style="width:100%;max-height:360px;overflow:auto;-webkit-overflow-scrolling:touch;border:1px solid var(--line2);border-radius:10px;background:#525659;padding:8px"></div>';
   else if(kind==='sheet') prev='<div id="dv_sheet"><div style="color:var(--muted);font-size:12px;padding:8px">'+t('dvLoading')+'</div></div>';
   else if(kind==='text') prev='<div class="mono" id="dv_txt" style="max-height:300px;overflow:auto;background:var(--inset-bg);border:1px solid var(--line);border-radius:10px;padding:12px;font-size:12px;white-space:pre-wrap">…</div>';
   else if(kind==='office') prev='<div style="text-align:center;padding:28px;color:var(--muted)"><div style="font-size:44px">📄</div><div style="margin-top:10px;font-weight:700;color:var(--txt)">'+escapeHtml(d.name)+'</div><div style="font-size:12.5px;margin-top:6px">'+t('dvOffice')+'</div></div>';
@@ -16493,7 +16620,7 @@ function dlView(id){ const d=docs().find(x=>x.id===id); if(!d) return; const kin
   ]});
   if(kind==='text'){ try{ fetch(d.dataUrl).then(r=>r.text()).then(tx=>{ const el=document.getElementById('dv_txt'); if(el) el.textContent=tx.slice(0,6000); }); }catch(e){} }
   if(kind==='sheet'){ docSheetHtml(d,false).then(html=>{ const el=document.getElementById('dv_sheet'); if(el) el.innerHTML=html; }); }
-  if(kind==='pdf'){ setTimeout(function(){ var fr=document.getElementById('dv_pdf'); if(fr) fr.src=docBlobUrl(d.dataUrl); }, 40); }
+  if(kind==='pdf'){ setTimeout(function(){ var fr=document.getElementById('dv_pdf'); if(fr) nxRenderPdf(d.dataUrl,fr,{all:false}); }, 60); }
 }
 function dlPreview(id){ const d=docs().find(x=>x.id===id); if(!d) return; const kind=docPreviewKind(d.ext);
   if(kind==='pdf'){ try{ closeModal&&closeModal(); }catch(_){}; docFullView(id); return; }
@@ -19489,7 +19616,11 @@ function hmLayout(){
     c.classList.toggle('focus',d===0); c.classList.toggle('side',ad===1); c.classList.toggle('far',ad>=2); c.setAttribute('aria-hidden',d===0?'false':'true'); });
   const L=document.getElementById('hmArrL'), R=document.getElementById('hmArrR');
   if(L) L.classList.remove('dis'); if(R) R.classList.remove('dis');
-  const dots=document.getElementById('hmDots'); if(dots){ let h=''; for(let i=0;i<cards.length;i++) h+='<i class="'+(i===_hmIdx?'on':'')+'" onclick="hmGo('+i+')" title="'+escapeAttr((cards[i].querySelector('.bc-info h2')||{}).textContent||'')+'"></i>'; dots.innerHTML=h; dots.style.display=''; }
+  try{ track.style.setProperty('--hmi',_hmIdx); }catch(_){}
+  { let h=''; for(let i=0;i<cards.length;i++) h+='<i class="'+(i===_hmIdx?'on':'')+'" onclick="hmGo('+i+')" title="'+escapeAttr((cards[i].querySelector('.bc-info h2')||{}).textContent||'')+'"></i>';
+    const dots=document.getElementById('hmDots'); if(dots){ dots.innerHTML=h; dots.style.display=''; }
+    let db=document.getElementById('hmDotsBtm'); if(!db){ const mod=track.closest('.hm3-mod'); if(mod){ db=document.createElement('div'); db.className='hm-dots hm-dots-btm'; db.id='hmDotsBtm'; mod.appendChild(db); } }
+    if(db) db.innerHTML=h; }
   if(_hmPopCard&&document.getElementById('hmPop')&&document.getElementById('hmPop').classList.contains('show')) hmPopPlace(_hmPopCard);
 }
 
@@ -20264,6 +20395,8 @@ function pePMShowEditor(){ var pm=document.getElementById('pe_pm'),w=document.ge
   var top=document.querySelector('#view-presed .pe-top'); if(top&&!top._panelInit){ top._panelInit=1; top.classList.add('pe-side-off'); var pb=document.getElementById('pe_panelbtn'); if(pb) pb.classList.add('off'); var tab=document.getElementById('pe_sidetab'); if(tab){ tab.textContent='‹'; tab.title='Show the side panel'; } setTimeout(function(){ try{ peFitWrap(); peLayoutStage(); pePlaceTab(); }catch(_){}},40); } }
 function pePMShow(){ var pm=document.getElementById('pe_pm'),w=document.getElementById('pe_wrap'); if(w)w.style.display='none'; if(pm){ pm.style.display='flex'; pePMRender(); } }
 function pePMFmtUp(ts){ if(!ts) return ''; var d=new Date(ts); return d.toLocaleDateString()+' '+d.toLocaleTimeString().slice(0,5); }
+var _pePMShown=5;
+function pePMExtend(){ _pePMShown+=5; pePMRender(); }
 function pePMRender(){ var pm=document.getElementById('pe_pm'); if(!pm) return; var TH=(LANG==='th'); var L=pePMProjects().slice().sort(function(a,b){return (b.up||0)-(a.up||0);});
   var h='<div class="pe-pm-head">🗂 '+(TH?'โปรเจกต์งานนำเสนอ':'Presentation projects')+'</div>';
   h+='<div class="pe-pm-actions">'
@@ -20272,7 +20405,7 @@ function pePMRender(){ var pm=document.getElementById('pe_pm'); if(!pm) return; 
     +'</div>';
   h+='<div class="pe-pm-head">🕘 '+(TH?'โปรเจกต์ก่อนหน้า':'Previous projects')+'</div>';
   if(!L.length) h+='<div class="pe-pm-empty">'+(TH?'ยังไม่มีโปรเจกต์ — สร้างใหม่ หรืออัปโหลดไฟล์':'No projects yet — create a new one or upload a file')+'</div>';
-  else h+='<div class="pe-pm-grid">'+L.map(function(p){ var n=(p.deck&&p.deck.slides)?p.deck.slides.length:0; return '<div class="pe-pm-card" onclick="pePMOpen(\''+p.id+'\')"><canvas data-pmid="'+p.id+'" width="336" height="189"></canvas><div class="pe-pm-tools"><button class="pe-pm-tb" title="'+(TH?'เปลี่ยนชื่อ':'Rename')+'" onclick="event.stopPropagation();pePMRename(\''+p.id+'\')">✏️</button><button class="pe-pm-tb" title="'+(TH?'ทำสำเนา':'Duplicate')+'" onclick="event.stopPropagation();pePMDup(\''+p.id+'\')">⧉</button><button class="pe-pm-tb del" title="'+(TH?'ลบ':'Delete')+'" onclick="event.stopPropagation();pePMDelete(\''+p.id+'\')">🗑</button></div><div class="pe-pm-meta"><div class="pe-pm-name">'+esc(p.name||'—')+'</div><div class="pe-pm-sub">'+n+' '+(TH?'สไลด์':'slide'+(n===1?'':'s'))+' · '+pePMFmtUp(p.up)+'</div></div></div>'; }).join('')+'</div>';
+  else { var _shown=Math.min(_pePMShown,L.length); var _more=L.length-_shown; h+='<div class="pe-pm-grid">'+L.slice(0,_shown).map(function(p){ var n=(p.deck&&p.deck.slides)?p.deck.slides.length:0; return '<div class="pe-pm-card" onclick="pePMOpen(\''+p.id+'\')"><canvas data-pmid="'+p.id+'" width="336" height="189"></canvas><div class="pe-pm-tools"><button class="pe-pm-tb" title="'+(TH?'เปลี่ยนชื่อ':'Rename')+'" onclick="event.stopPropagation();pePMRename(\''+p.id+'\')">✏️</button><button class="pe-pm-tb" title="'+(TH?'ทำสำเนา':'Duplicate')+'" onclick="event.stopPropagation();pePMDup(\''+p.id+'\')">⧉</button><button class="pe-pm-tb del" title="'+(TH?'ลบ':'Delete')+'" onclick="event.stopPropagation();pePMDelete(\''+p.id+'\')">🗑</button></div><div class="pe-pm-meta"><div class="pe-pm-name">'+esc(p.name||'—')+'</div><div class="pe-pm-sub">'+n+' '+(TH?'สไลด์':'slide'+(n===1?'':'s'))+' · '+pePMFmtUp(p.up)+'</div></div></div>'; }).join('')+'</div>'; if(_more>0){ h+='<div style="margin:12px 0 4px"><button class="pe-pm-doc" style="justify-content:center;font-weight:800;color:var(--primary)" onclick="pePMExtend()">▾ '+(TH?('ดูเพิ่มเติม ('+_more+')'):('Show more ('+_more+')'))+'</button></div>'; } }
   var pdocs=docs().filter(function(d){ return /\.pres\.json$/i.test(d.name||'')||(d.ext||'').toLowerCase()==='pptx'; });
   h+='<div class="pe-pm-head">📁 '+(TH?'เลือกจากเอกสาร':'Choose from Documents')+'</div>';
   if(!pdocs.length) h+='<div class="pe-pm-empty">'+(TH?'ไม่มีไฟล์โปรเจกต์ในเอกสาร — บันทึกได้จากเมนู 💾 Save → Project file':'No project files in Documents — save one via 💾 Save → Project file')+'</div>';
@@ -20566,6 +20699,167 @@ function peProjectExport(){ var TH=(LANG==='th'); var L=pePMProjects(); var p=L.
   setInterval(function(){ if(reloading||!mine) return; check(function(t){ if(t && t!==mine){ if(busy()) return; reloading=true;
     try{ if(typeof showToast==='function') showToast((typeof LANG!=='undefined'&&LANG==='th')?'มีเวอร์ชันใหม่ — กำลังรีเฟรช…':'New version available — refreshing…'); }catch(_){ }
     setTimeout(function(){ try{ location.reload(); }catch(_){ location.href=location.href; } }, 1400); } }); }, 60000);
+})();
+</script>
+
+<script>
+/* ===== NX Desk demo — unified notification button + draggable/edge-snap FABs ===== */
+(function(){
+  function ready(fn){ if(document.readyState!=='loading') fn(); else document.addEventListener('DOMContentLoaded',fn); }
+  function T(k,fb){ try{ if(typeof t==='function'){ var v=t(k); if(v&&v!==k) return v; } }catch(_){}
+    try{ var el=document.querySelector('[data-i18n="'+k+'"]'); if(el) return el.textContent.trim(); }catch(_){} return fb; }
+
+  var NXN=[
+    {id:'otFab',   cnt:'otFabCount',   fn:'otFabClick',   ic:'📝', kc:'#e8590c', tk:'otFabTitle',   tf:'OT Approval Requests', sk:'otFabSub',   sf:'Review OT to confirm'},
+    {id:'prFab',   cnt:'prFabCount',   fn:'prFabClick',   ic:'🧾', kc:'#6d28d9', tk:'prFabTitle',   tf:'Purchase Request',     sk:'prFabSub',   sf:'Review & approve'},
+    {id:'leaveFab',cnt:'leaveFabCount',fn:'leaveFabClick',ic:'🗓', kc:'#0891b2', tk:'leaveFabTitle',tf:'Leave Confirmation',   sk:'leaveFabSub',sf:'Review leave requests'},
+    {id:'fab',     cnt:'fabCount',     fn:'fabClick',     ic:'🔔', kc:'#6366f1', tk:'fabTitle',     tf:'Delivery Alert',       sk:'fabSub',     sf:'Review urgent deliveries'}
+  ];
+
+  var fabBtn, panel;
+  function build(){
+    if(document.getElementById('nxnFab')) return;
+    fabBtn=document.createElement('button');
+    fabBtn.id='nxnFab'; fabBtn.className='nxn-fab'; fabBtn.type='button'; fabBtn.setAttribute('aria-label','Notifications');
+    fabBtn.innerHTML='<span class="nxn-bell">🔔</span><span class="nxn-count" id="nxnCount">0</span>';
+    document.body.appendChild(fabBtn);
+    panel=document.createElement('div');
+    panel.id='nxnPanel'; panel.className='nxn-panel';
+    document.body.appendChild(panel);
+    document.addEventListener('click',function(e){ if(!panel.classList.contains('open')) return; if(e.target.closest('#nxnPanel')||e.target.closest('#nxnFab')) return; closePanel(); });
+    makeDraggable(fabBtn,'nx_notif_pos',togglePanel);
+    var asst=document.getElementById('asstLaunch');
+    if(asst){ asst.onclick=null; makeDraggable(asst,'nx_chat_pos',function(){ try{ asstToggle(); }catch(_){} setTimeout(placeAsstPanel,10); }); }
+    restore(fabBtn,'nx_notif_pos',{side:'right',x:24,y:null,bottom:24});
+    if(asst) restore(asst,'nx_chat_pos',{side:'left',x:16,y:null,bottom:24});
+    nxNotifSync();
+  }
+
+  function activeList(){ var out=[]; NXN.forEach(function(c){ var el=document.getElementById(c.id); if(!el) return;
+    var shown=el.classList.contains('show'); var n=parseInt((document.getElementById(c.cnt)||{}).textContent||'0',10)||0;
+    if(shown && n>0) out.push({c:c,n:n}); }); return out; }
+
+  window.nxNotifSync=function(){ if(!fabBtn) return; var list=activeList();
+    var total=list.reduce(function(a,b){return a+b.n;},0);
+    var cEl=document.getElementById('nxnCount'); if(cEl) cEl.textContent=total>99?'99+':total;
+    fabBtn.classList.toggle('has-alerts',total>0);
+    if(!panel.classList.contains('open')) return; renderPanel(list);
+  };
+  function renderPanel(list){ list=list||activeList();
+    var h='<div class="nxn-h"><b>'+T('navNotif',T('fabTitle','Notifications'))+'</b><button class="nxn-x" type="button" aria-label="Close">✕</button></div>';
+    if(!list.length){ h+='<div class="nxn-empty">'+T('nxnEmpty','No new notifications')+' 🎉</div>'; }
+    else { list.forEach(function(o){ h+='<button class="nxn-item" type="button" data-fn="'+o.c.fn+'" style="--kc:'+o.c.kc+'">'
+        +'<span class="nxn-ic">'+o.c.ic+'</span>'
+        +'<span class="nxn-tx"><b>'+esc(T(o.c.tk,o.c.tf))+'</b><small>'+esc(T(o.c.sk,o.c.sf))+'</small></span>'
+        +'<span class="nxn-n">'+o.n+'</span></button>'; }); }
+    panel.innerHTML=h;
+    panel.querySelector('.nxn-x').addEventListener('click',function(e){ e.stopPropagation(); closePanel(); });
+    [].forEach.call(panel.querySelectorAll('.nxn-item'),function(b){ b.addEventListener('click',function(e){ e.stopPropagation(); var fn=b.getAttribute('data-fn'); closePanel(); try{ if(typeof window[fn]==='function') window[fn](); }catch(_){} }); });
+  }
+  function esc(x){ return (''+x).replace(/[&<>"]/g,function(m){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m];}); }
+
+  function placePanel(){ var r=fabBtn.getBoundingClientRect(); var pw=Math.min(340,window.innerWidth-28);
+    panel.style.width=pw+'px';
+    var left=(r.left+r.width/2 < window.innerWidth/2);
+    if(left){ panel.style.left=Math.max(10,r.left)+'px'; panel.style.right='auto'; }
+    else { panel.style.right=Math.max(10,window.innerWidth-r.right)+'px'; panel.style.left='auto'; }
+    var below=(r.top < window.innerHeight*0.4);
+    if(below){ panel.style.top=(r.bottom+10)+'px'; panel.style.bottom='auto'; }
+    else { panel.style.bottom=(window.innerHeight-r.top+10)+'px'; panel.style.top='auto'; }
+  }
+  function togglePanel(){ if(panel.classList.contains('open')) closePanel(); else openPanel(); }
+  function openPanel(){ renderPanel(); panel.classList.add('open'); placePanel(); }
+  function closePanel(){ panel.classList.remove('open'); }
+
+  function placeAsstPanel(){ var asst=document.getElementById('asstLaunch'), ap=document.getElementById('asstPanel'); if(!asst||!ap||!ap.classList.contains('open')) return;
+    var r=asst.getBoundingClientRect(); var left=(r.left+r.width/2 < window.innerWidth/2);
+    if(left){ ap.style.left=Math.max(12,r.left)+'px'; ap.style.right='auto'; } else { ap.style.right=Math.max(12,window.innerWidth-r.right)+'px'; ap.style.left='auto'; }
+    ap.style.bottom=Math.max(12,window.innerHeight-r.top+10)+'px'; ap.style.top='auto';
+  }
+
+  /* ---- drag + edge-snap ---- */
+  function makeDraggable(el,key,onClick){ if(el._nxDrag) return; el._nxDrag=1;
+    var sx,sy,ox,oy,moved,dragging,pid;
+    el.addEventListener('pointerdown',function(e){ if(e.button&&e.button!==0) return; dragging=true; moved=false; pid=e.pointerId;
+      var r=el.getBoundingClientRect(); ox=e.clientX-r.left; oy=e.clientY-r.top; sx=e.clientX; sy=e.clientY;
+      try{ el.setPointerCapture(pid); }catch(_){}
+    });
+    el.addEventListener('pointermove',function(e){ if(!dragging) return; var dx=e.clientX-sx, dy=e.clientY-sy;
+      if(!moved && (Math.abs(dx)>6||Math.abs(dy)>6)){ moved=true; el.classList.add('nxn-drag'); if(el.id==='nxnFab') closePanel(); }
+      if(!moved) return; e.preventDefault();
+      var w=el.offsetWidth, h=el.offsetHeight;
+      var x=Math.max(4,Math.min(window.innerWidth-w-4, e.clientX-ox));
+      var y=Math.max(4,Math.min(window.innerHeight-h-4, e.clientY-oy));
+      el.style.left=x+'px'; el.style.top=y+'px'; el.style.right='auto'; el.style.bottom='auto';
+    });
+    function up(e){ if(!dragging) return; dragging=false; try{ el.releasePointerCapture(pid); }catch(_){}
+      if(!moved){ if(typeof onClick==='function') onClick(); return; }
+      el.classList.remove('nxn-drag');
+      var r=el.getBoundingClientRect(); var h=el.offsetHeight;
+      var side=(r.left+r.width/2 < window.innerWidth/2)?'left':'right';
+      var y=Math.max(8,Math.min(window.innerHeight-h-8, r.top));
+      applyPos(el,{side:side,y:y}); save(key,{side:side,y:y});
+    }
+    el.addEventListener('pointerup',up); el.addEventListener('pointercancel',up);
+  }
+  function applyPos(el,p){ el.style.top=p.y+'px'; el.style.bottom='auto';
+    if(p.side==='left'){ el.style.left='14px'; el.style.right='auto'; } else { el.style.right='14px'; el.style.left='auto'; }
+  }
+  function save(key,p){ try{ localStorage.setItem(key,JSON.stringify(p)); }catch(_){} }
+  function restore(el,key,def){ var p=null; try{ p=JSON.parse(localStorage.getItem(key)||'null'); }catch(_){}
+    if(p&&p.side&&typeof p.y==='number'){ applyPos(el,p); }
+  }
+  window.addEventListener('resize',function(){ if(panel&&panel.classList.contains('open')) placePanel(); placeAsstPanel();
+    [['nxnFab','nx_notif_pos'],['asstLaunch','nx_chat_pos']].forEach(function(a){ var el=document.getElementById(a[0]); if(!el) return; var p=null; try{p=JSON.parse(localStorage.getItem(a[1])||'null');}catch(_){} if(p&&p.side){ var h=el.offsetHeight; var y=Math.max(8,Math.min(window.innerHeight-h-8,p.y)); applyPos(el,{side:p.side,y:y}); } });
+  });
+
+  /* keep the unified badge in sync with every alert recompute */
+  ready(function(){ setTimeout(function(){ build();
+    if(typeof window.nxFabChanged==='function' && !window._nxFabWrapped){ window._nxFabWrapped=1; var _o=window.nxFabChanged;
+      window.nxFabChanged=function(){ var r=_o.apply(this,arguments); try{ nxNotifSync(); }catch(_){} return r; }; }
+    try{ nxNotifSync(); }catch(_){}
+  },700); });
+
+  /* ---- demo cloud: ensure two-way write even if root wasn't set yet ---- */
+  ready(function(){ setTimeout(function(){ try{
+    if(window.NX_DEMO===true && window.nxDemo && !window.nxDemo.root && typeof firebase!=='undefined' && firebase.apps && firebase.apps.length){
+      window.nxDemo.root=firebase.database().ref('nx');
+    }
+  }catch(_){} },1500); });
+})();
+</script>
+
+<script>
+/* ===== NX Desk demo — seed example presentations into the built-in editor (once) ===== */
+(function(){
+  function ready(fn){ if(document.readyState!=='loading') fn(); else document.addEventListener('DOMContentLoaded',fn); }
+  ready(function(){ setTimeout(seed, 1800); });
+  function seed(){
+    try{
+      if(typeof pePMLoadAll!=='function' || typeof peTplDeck!=='function' || typeof PE_TPLS==='undefined') return;
+      if(localStorage.getItem('nx_presed_seeded')==='1') return;
+      pePMLoadAll().then(function(){
+        try{
+          if(typeof pePMProjects==='function' && pePMProjects().length>0){ localStorage.setItem('nx_presed_seeded','1'); return; }
+          var picks=[0,3,6,9,12,16,21,26].filter(function(i){return i<PE_TPLS.length;});
+          var TH=(typeof LANG!=='undefined'&&LANG==='th');
+          var L=[];
+          picks.forEach(function(idx,i){
+            try{ var deck=JSON.parse(JSON.stringify(peTplDeck(idx))); var tp=PE_TPLS[idx];
+              var nm=(TH?tp.nt:tp.n)+(TH?' — งานนำเสนอ':' — Presentation');
+              L.push({id:peUID(), name:nm, up:Date.now()-i*5400000, deck:deck});
+            }catch(e){}
+          });
+          if(L.length){
+            if(typeof pePMSaveList==='function') pePMSaveList(L);
+            if(typeof pePMPut==='function') L.forEach(function(p){ pePMPut(p); });
+            var pm=document.getElementById('pe_pm'); if(pm && pm.style.display!=='none' && typeof pePMRender==='function') pePMRender();
+          }
+          localStorage.setItem('nx_presed_seeded','1');
+        }catch(e){}
+      }).catch(function(){});
+    }catch(e){}
+  }
 })();
 </script>
 
