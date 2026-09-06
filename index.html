@@ -4506,8 +4506,8 @@ body:has(#overlay.show .modal.pebg-fs) .asst-launch{opacity:0;pointer-events:non
 
 /* ===== DARK MODE FIX: top navigation bar stayed light because --n2-glass computed white ===== */
 :root[data-theme="dark"]{--n2-glass:rgba(17,23,38,.82)!important}
-:root[data-theme="dark"] header.topbar{background:var(--topbar-bg)!important}
-:root[data-theme="dark"] header.topbar::before{background:rgba(17,23,38,.86)!important;border-bottom:1px solid var(--n2-line2)!important}
+:root[data-theme="dark"] header.topbar:not(.nx-tb-inwelcome){background:var(--topbar-bg)!important}
+:root[data-theme="dark"] header.topbar:not(.nx-tb-inwelcome)::before{background:rgba(17,23,38,.86)!important;border-bottom:1px solid var(--n2-line2)!important}
 
 /* ===== DARK MODE: primary quick-action (Clock in/out) — white text on a colored pill ===== */
 :root[data-theme="dark"] .hm-qa.primary{background:linear-gradient(135deg,#4f46e5,#0891b2)!important;color:#fff!important;border-color:transparent!important}
@@ -4527,19 +4527,15 @@ header.topbar.nx-tb-inwelcome .spacer{display:block!important;flex:1 1 auto!impo
 @media (max-width:860px){
   header.topbar.nx-tb-inwelcome{padding:0 0 10px!important;margin:0 0 10px!important;gap:8px!important;flex-wrap:wrap!important;align-items:center!important}
   header.topbar.nx-tb-inwelcome .spacer{display:none!important}
-  header.topbar.nx-tb-inwelcome .brand{order:-1!important;flex:0 0 auto!important;margin-right:auto!important;justify-content:flex-start!important}   /* logo hard-left; controls flow to the right */
+  header.topbar.nx-tb-inwelcome .brand{order:-1!important;flex:0 0 auto!important;margin-right:auto!important;justify-content:flex-start!important}   /* logo hard-left */
   header.topbar.nx-tb-inwelcome .acct-wrap{order:1!important;margin-right:0!important}
   header.topbar.nx-tb-inwelcome .oms-live{order:2!important}
-  header.topbar.nx-tb-inwelcome .ta-quick-btn{order:3!important}
-  header.topbar.nx-tb-inwelcome #themeBtn{order:4!important}
-  header.topbar.nx-tb-inwelcome #langBtn{order:5!important}
-  header.topbar.nx-tb-inwelcome #soundBtn{order:6!important}
-  header.topbar.nx-tb-inwelcome #themeBtn,
-  header.topbar.nx-tb-inwelcome #langBtn,
-  header.topbar.nx-tb-inwelcome #soundBtn,
-  header.topbar.nx-tb-inwelcome .ta-quick-btn{padding:6px!important;flex:0 0 auto!important}
-  header.topbar.nx-tb-inwelcome .acct-badge{max-width:44vw!important}
+  header.topbar.nx-tb-inwelcome .ta-quick-btn{display:none!important}   /* remove the green clock-in on mobile (Clock in/out is right below) */
+  header.topbar.nx-tb-inwelcome .acct-badge{max-width:56vw!important}
 }
+/* theme / language / sound moved BELOW the quick actions on mobile */
+.hm-ctl-footer{display:flex;justify-content:center;align-items:center;gap:12px;margin-top:12px;padding-top:12px;border-top:1px solid var(--n2-line)}
+.hm-ctl-footer #themeBtn,.hm-ctl-footer #langBtn,.hm-ctl-footer #soundBtn{display:inline-flex!important;padding:9px 14px!important;flex:0 0 auto!important}
 
 /* ===== WELCOME BAR — layered / depth design to match the rest of the layout ===== */
 body.nx-home .hm3-welcome{position:relative!important;overflow:hidden!important;
@@ -4548,7 +4544,23 @@ body.nx-home .hm3-welcome{position:relative!important;overflow:hidden!important;
   padding:clamp(16px,2.4vh,26px) clamp(20px,2.2vw,32px)!important;
   column-gap:clamp(20px,2.8vw,44px)!important;row-gap:clamp(10px,1.4vh,18px)!important;
   box-shadow:0 20px 48px color-mix(in srgb,var(--n2-a) 13%,transparent),0 3px 8px rgba(15,23,42,.06),inset 0 1px 0 rgba(255,255,255,.6)!important}
-:root[data-theme="dark"] body.nx-home .hm3-welcome{box-shadow:0 22px 50px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.06)!important}
+/* DARK MODE welcome card — clean elevated surface (was murky/near-black) */
+:root[data-theme="dark"] body.nx-home .hm3-welcome{
+  background:linear-gradient(160deg,#20293f 0%,#1a2135 100%)!important;
+  border:1px solid rgba(255,255,255,.12)!important;
+  box-shadow:0 24px 54px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.07)!important}
+:root[data-theme="dark"] body.nx-home .hm3-welcome header.topbar.nx-tb-inwelcome{background:transparent!important}
+:root[data-theme="dark"] body.nx-home .hm3-welcome::after{opacity:.5!important;background:radial-gradient(circle,rgba(56,189,248,.16),transparent 68%)!important}
+:root[data-theme="dark"] body.nx-home .hm3-welcome header.topbar.nx-tb-inwelcome{border-bottom-color:rgba(255,255,255,.12)!important}
+/* header control pills inside the dark card: subtle translucent, not black boxes */
+:root[data-theme="dark"] .hm3-welcome header.topbar .acct-badge,
+:root[data-theme="dark"] .hm3-welcome header.topbar #themeBtn,
+:root[data-theme="dark"] .hm3-welcome header.topbar #langBtn,
+:root[data-theme="dark"] .hm3-welcome header.topbar #soundBtn,
+:root[data-theme="dark"] .hm-ctl-footer #themeBtn,
+:root[data-theme="dark"] .hm-ctl-footer #langBtn,
+:root[data-theme="dark"] .hm-ctl-footer #soundBtn{background:rgba(255,255,255,.08)!important;border:1px solid rgba(255,255,255,.14)!important;color:#eaf2ff!important}
+:root[data-theme="dark"] .hm-ctl-footer{border-top-color:rgba(255,255,255,.12)!important}
 /* thin brand-gradient accent along the very top edge */
 body.nx-home .hm3-welcome::before{content:""!important;position:absolute!important;inset:0 0 auto 0!important;height:4px!important;background:var(--n2-grad)!important;opacity:.95!important;z-index:4!important;display:block!important}
 /* soft depth glow in the corner (a lower layer behind content) */
@@ -19801,6 +19813,29 @@ function nxTopbarPlace(isHome){
   }
 }
 window.nxTopbarPlace=nxTopbarPlace;
+/* On mobile home: drop the green clock-in and move theme/language/sound BELOW the quick actions */
+function nxMobileControls(){
+  var ids=['themeBtn','langBtn','soundBtn'];
+  var isHome=document.body.classList.contains('nx-home');
+  var isMobile=window.matchMedia('(max-width:860px)').matches;
+  var wel=document.querySelector('#view-home .hm3-welcome');
+  var tb=document.querySelector('header.topbar');
+  if(isHome && isMobile && wel){
+    var f=document.getElementById('hmCtlFooter');
+    if(!f){ f=document.createElement('div'); f.id='hmCtlFooter'; f.className='hm-ctl-footer'; }
+    var quick=wel.querySelector('.hm-quick');
+    if(quick){ if(f.parentNode!==wel || quick.nextElementSibling!==f) quick.insertAdjacentElement('afterend', f); }
+    else if(f.parentNode!==wel){ wel.appendChild(f); }
+    ids.forEach(function(id){ var el=document.getElementById(id); if(el && el.parentNode!==f) f.appendChild(el); });
+  } else {
+    if(tb){ var nav=tb.querySelector('#navmenu'); ids.forEach(function(id){ var el=document.getElementById(id); if(el && el.parentNode!==tb){ if(nav) tb.insertBefore(el,nav); else tb.appendChild(el); } }); }
+    var f=document.getElementById('hmCtlFooter'); if(f) f.remove();
+  }
+}
+window.nxMobileControls=nxMobileControls;
+(function(){ var _tp=window.nxTopbarPlace; window.nxTopbarPlace=function(h){ _tp(h); try{ nxMobileControls(); }catch(_){} }; })();
+window.addEventListener('resize',function(){ try{ nxMobileControls(); }catch(_){} });
+
 (function(){ const _g=go; go=function(v){ if(v!=='home') hmPopHide(true); const prevEl=document.querySelector('.view.active'); const prev=prevEl?prevEl.id.replace(/^view-/,''):''; _g(v); nxPageFx(prev,(v==='account'?'employees':v)); document.body.classList.toggle('nx-home',v==='home'); try{ nxTopbarPlace(v==='home'); }catch(_){} if(v==='home'){ hmBokehInit(); hmBindCards(); nxTodayWidget(); requestAnimationFrame(hmLayout); setTimeout(hmLayout,140); } }; window.go=go;
   const _aa=applyAccess; applyAccess=function(){ _aa(); if(document.body.classList.contains('nx-home')) hmLayout(); }; window.applyAccess=applyAccess;
   const _hr=nxHomeRefresh; nxHomeRefresh=function(){ _hr(); if(document.body.classList.contains('nx-home')){ nxTodayWidget(); hmLayout(); } }; window.nxHomeRefresh=nxHomeRefresh;
