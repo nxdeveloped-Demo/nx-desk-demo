@@ -1,13 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!--NXBUILD:killgate-20260906-185544-->
-<!-- always fetch the latest build (the demo updates often) — stops the browser serving a stale page -->
-<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-<meta http-equiv="Pragma" content="no-cache">
-<meta http-equiv="Expires" content="0">
-<!-- DEMO: hard-hide the LAN connect gate (Firebase demo connects in the background) -->
-<style>#connGate{display:none!important;visibility:hidden!important;pointer-events:none!important}</style>
+<!--NXBUILD:acctpop-clamp-20260906-150047-->
 <!-- ===== NX Desk DEMO build: Firebase Realtime Database as the realtime channel ===== -->
 <script>window.NX_DEMO=true;</script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
@@ -15114,7 +15108,7 @@ function asstSend(){ var i=document.getElementById('asstText'); if(!i) return; v
 function updateAcctBadge(){
   const wrap=document.getElementById('acctWrap'); if(!wrap) return; const s=DB.session();
   if(!s||!s.loggedIn){ wrap.style.display='none'; closeAcctPop(); return; }
-  const emp=sessionEmp(); const pos=emp?positionName(emp.positionId):(s.viewer?'View only':s.role); const ava=(s.user||'?').trim().slice(0,1).toUpperCase();
+  const emp=sessionEmp(); const pos=emp?positionName(emp.positionId):s.role; const ava=(s.user||'?').trim().slice(0,1).toUpperCase();
   const set=(id,v)=>{ const el=document.getElementById(id); if(el) el.textContent=v; };
   set('acctBadgeName',s.user); set('acctBadgePos',pos?('· '+pos):''); set('acctBadgeAva',ava);
   set('acctPopName',s.user); set('acctPopPos',pos||''); set('acctPopAva',ava);
@@ -15127,13 +15121,11 @@ function doLogin(){
   const u=(gv('lgUser')||'').trim(), pw=gv('lgPass')||''; const err=document.getElementById('lgErr');
   const activated=localStorage.getItem('nx_activated')==='1';
   const isDev = u.toLowerCase()===DEV_HIDDEN.user.toLowerCase() && pw===DEV_HIDDEN.pass;
-  const isViewer = u.toLowerCase()==='viewer' && pw==='123456';   // read-only account: sees everything like Developer, cannot write
   const shakeErr=(msg)=>{ nxSound('fail'); if(err){ err.textContent=msg; err.style.display=''; } const c=document.querySelector('.lg-card'); if(c){ c.classList.remove('shake'); void c.offsetWidth; c.classList.add('shake'); } };
   // First login after install must be the Developer account
-  if(!activated && !isDev && !isViewer){ shakeErr(t('lgDevFirst')); return; }
+  if(!activated && !isDev){ shakeErr(t('lgDevFirst')); return; }
   let sess=null;
   if(u.toLowerCase()===DEV_ACCOUNT.user.toLowerCase() && pw===DEV_ACCOUNT.pass){ sess={loggedIn:true,user:DEV_ACCOUNT.user,role:'Developer',empId:null}; }
-  else if(isViewer){ sess={loggedIn:true,user:'Viewer',role:'Developer',empId:null,viewer:true,hideCredit:true}; }
   else if(isDev){ sess={loggedIn:true,user:DEV_HIDDEN.user,role:'Developer',empId:null,hideCredit:true}; }
   else { const e=DB.employees().find(x=>x.account && x.account.username && x.account.username.toLowerCase()===u.toLowerCase() && x.account.password===pw); if(e) sess={loggedIn:true,user:e.name,role:positionRole(e.positionId),empId:e.id}; }
   if(!sess){ shakeErr(t('lgError')); return; }
@@ -19981,83 +19973,22 @@ window.addEventListener('resize',function(){ try{ nxMobileControls(); }catch(_){
    unchanged and never contain this block.
    Activated by  window.NX_DEMO === true  (set in the page <head>). */
 if(typeof window!=='undefined' && window.NX_DEMO===true){ try{ (function(){
-  var nxDemo={ on:false, ready:false, applying:false, root:null, _push:{}, _primed:{}, _last:{}, _lastMap:{}, _schema:null, _err:'', seedTimer:null };
+  var nxDemo={ on:false, ready:false, applying:false, root:null, _push:{}, _primed:{}, _err:'', seedTimer:null };
   window.nxDemo=nxDemo;
 
   /* --- outbound: mirror every synced store to the cloud on save --- */
-  /* read-only Viewer helpers */
-  function nxIsViewer(){ try{ var s=(typeof DB!=='undefined'&&DB.session)?DB.session():null; return !!(s&&s.viewer); }catch(_){ return false; } }
-  window.nxIsViewer=nxIsViewer;
-  var _nxVbT=0;
-  function nxViewerBlockedToast(){ var now=Date.now(); if(now-_nxVbT<2500) return; _nxVbT=now; try{ if(typeof showToast==='function') showToast((typeof LANG!=='undefined'&&LANG==='th')?'โหมดดูอย่างเดียว (Viewer) — ข้อมูลจะไม่ถูกบันทึก':'View-only (Viewer) — changes are not saved'); }catch(_){} }
-  window.nxViewerBlockedToast=nxViewerBlockedToast;
-
-  /* ===================== CO-OP (per-record) SYNC HELPERS =====================
-     Instead of overwriting a whole store (which clobbers other devices), we write each
-     RECORD on its own keyed by its id. Two devices editing different records merge. */
-  function nxIsRecArray(a){ return Array.isArray(a) && a.length>0 && a.every(function(x){ return x && typeof x==='object' && x.id!=null; }); }
-  /* cloud value (id-keyed record map after migration, OR an old index-keyed array) -> local array */
-  function nxCloudToLocal(val){
-    if(val && typeof val==='object' && !Array.isArray(val)){
-      var keys=Object.keys(val).filter(function(k){ return k.charAt(0)!=='_'; });
-      var vals=keys.map(function(k){ return val[k]; });
-      if(vals.length && vals.every(function(x){ return x && typeof x==='object' && x.id!=null; })){
-        vals.sort(function(a,b){ var ao=(a._ord==null?1e9:a._ord), bo=(b._ord==null?1e9:b._ord); if(ao!==bo) return ao-bo; return String(a.id).localeCompare(String(b.id),undefined,{numeric:true}); });
-        return vals.map(function(r){ if(r && r._ord!=null){ var c={}; for(var kk in r){ if(kk!=='_ord') c[kk]=r[kk]; } return c; } return r; });
-      }
-    }
-    return val;
-  }
-  /* local array -> id-keyed map, tagging display order as _ord (stripped again on read) */
-  function nxArrToMap(arr){ var m={}; arr.forEach(function(r,i){ if(r && r.id!=null){ var c={}; for(var kk in r) c[kk]=r[kk]; c._ord=i; m[String(r.id)]=c; } }); return m; }
-  function nxMapJson(map){ var o={}; Object.keys(map).forEach(function(id){ o[id]=JSON.stringify(map[id]); }); return o; }
-  window.nxCloudToLocal=nxCloudToLocal; window.nxIsRecArray=nxIsRecArray; window.nxArrToMap=nxArrToMap; window.nxMapJson=nxMapJson;
-
   var _lanSet=localStorage.setItem;   /* the LAN wrapper; it never POSTs because omsC.on stays false in the demo */
   localStorage.setItem=function(k,v){
-    /* READ-ONLY VIEWER: block all data-store writes (both local + the Firebase mirror) so this
-       account can browse everything like Developer but never changes any data. Incoming remote
-       data (nxDemo.applying) is still applied so the Viewer keeps seeing live updates. */
-    if(!nxDemo.applying && OMS_STORES.indexOf(k)>=0 && typeof nxIsViewer==='function' && nxIsViewer()){
-      try{ nxViewerBlockedToast(); }catch(_){}
-      return;
-    }
     _lanSet.call(localStorage,k,v);
-    if(nxDemo.root && !nxDemo.applying && OMS_STORES.indexOf(k)>=0){
-      try{ firebase.database().goOnline(); }catch(_){}   /* wake the socket so the write actually flushes (iOS Safari suspends it) */
-      var parsed; try{ parsed=(v==null?null:JSON.parse(v)); }catch(e){ parsed=null; }
-      if(nxIsRecArray(parsed)){
-        /* ===== CO-OP: write only the records that changed / were added / removed (merge, no clobber) ===== */
-        var newMap=nxArrToMap(parsed);
-        var newJson=nxMapJson(newMap);
-        var prev=nxDemo._lastMap[k]||{};
-        var upd={}, n=0;
-        Object.keys(newJson).forEach(function(id){ if(prev[id]!==newJson[id]){ upd[id]=newMap[id]; n++; } });   /* added / changed */
-        Object.keys(prev).forEach(function(id){ if(!(id in newJson)){ upd[id]=null; n++; } });                  /* removed */
-        nxDemo._lastMap[k]=newJson;
-        if(n){
-          try{
-            if(nxDemo._schema==='rec1'){ nxDemo.root.child(k).update(upd); }        /* merge only changed records */
-            else { nxDemo.root.child(k).set(newMap); }                              /* pre-migration: clean id-keyed set (drops old index keys) */
-          }catch(e){}
-        }
-      } else {
-        /* non-record store (config object / scalar): whole node, only when it actually changed */
-        if(nxDemo._last[k]===v) return;
-        nxDemo._last[k]=v;
-        try{ nxDemo.root.child(k).set(parsed); }catch(e){}
-      }
+    if(nxDemo.root && !nxDemo.applying && OMS_STORES.indexOf(k)>=0){   /* push whenever the DB ref exists — Firebase queues offline writes & flushes on reconnect (fixes iOS Safari where .info/connected is unreliable) */
+      try{ nxDemo._push[k]=true; nxDemo.root.child(k).set(v==null?null:JSON.parse(v)); }catch(e){}
     }
   };
 
   function apply(store,val){
     if(val==null) return;
     nxDemo.applying=true;
-    var local=nxCloudToLocal(val);           /* id-keyed record map -> array (config objects pass through) */
-    var js=JSON.stringify(local);
-    nxDemo._last[store]=js;                   /* remember what we received so a local re-save of the same data is NOT pushed back */
-    if(nxIsRecArray(local)) nxDemo._lastMap[store]=nxMapJson(nxArrToMap(local));   /* seed the per-record baseline for diffing */
-    try{ _lsSet(store,js); }finally{ nxDemo.applying=false; }
+    try{ _lsSet(store,JSON.stringify(val)); }finally{ nxDemo.applying=false; }
   }
   /* --- inbound: cloud change -> local store -> live page refresh --- */
   function handle(store,snap){
@@ -20068,8 +19999,7 @@ if(typeof window!=='undefined' && window.NX_DEMO===true){ try{ (function(){
       nxDemo.seedTimer=setTimeout(function(){ try{ omsRefreshFor(null); }catch(_){ } nxDemo.ready=true; },600);
       return;
     }
-    /* co-op: always apply remote changes (per-record writes mean an event may carry another
-       device's edit alongside our own echo — never skip, or we'd drop their change) */
+    if(nxDemo._push[store]){ nxDemo._push[store]=false; return; }   /* echo of our own write */
     apply(store,v);
     try{ omsRefreshFor(store); }catch(_){ }
   }
@@ -20083,26 +20013,6 @@ if(typeof window!=='undefined' && window.NX_DEMO===true){ try{ (function(){
         if(!firebase.apps || !firebase.apps.length) firebase.initializeApp(cfg);
         var db=firebase.database();
         nxDemo.root=db.ref('nx');
-        /* ===== one-time migration: convert whole-array stores to id-keyed record maps (co-op) ===== */
-        try{
-          nxDemo.root.child('_schema').once('value').then(function(s){
-            var sv=s.val(); nxDemo._schema=sv;
-            if(sv==='rec1') return;
-            nxDemo.root.once('value').then(function(all){
-              all=all.val()||{}; var updates={};
-              OMS_STORES.forEach(function(kk){
-                var vv=all[kk]; if(vv==null) return;
-                var arr=Array.isArray(vv)?vv:(typeof vv==='object'?Object.keys(vv).filter(function(x){return x.charAt(0)!=='_';}).map(function(x){return vv[x];}):null);
-                if(arr && arr.length && arr.every(function(x){return x&&typeof x==='object'&&x.id!=null;})){
-                  var m={}; arr.forEach(function(r,i){ if(r&&r.id!=null){ var c={}; for(var f in r) c[f]=r[f]; if(c._ord==null) c._ord=i; m[String(r.id)]=c; } });
-                  updates[kk]=m;
-                }
-              });
-              updates['_schema']='rec1';
-              try{ nxDemo.root.update(updates); nxDemo._schema='rec1'; }catch(_){}
-            }).catch(function(){});
-          }).catch(function(){});
-        }catch(_){}
         var done=false;
         function ok(){ if(done) return; done=true; nxDemo.on=true; try{ omsSetLive(true); }catch(_){ } try{ nxHomeStatus(); }catch(_){ } try{ nxDemoMarkUI(); }catch(_){ } resolve(true); }
         /* status only — do NOT gate connect on .info/connected (iOS Safari often never reports true even while data flows) */
@@ -20162,24 +20072,6 @@ if(typeof window!=='undefined' && window.NX_DEMO===true){ try{ (function(){
   };
   connGateRetry=function(){ connGateAuto(); };
   connGateManual=function(){ connGateAuto(); };   /* no manual LAN address in the cloud demo */
-
-  /* ===== DEMO: never show the blocking LAN-style connect-gate overlay =====
-     This demo syncs through Firebase in the background — there is no LAN Hub / address to enter,
-     so the "cgFail / connect / search / local" gate must never block the app (it was also what
-     surfaced raw i18n keys). Connect silently and keep retrying; the header Live pill shows status. */
-  function nxHideGate(){ try{ var g=document.getElementById('connGate'); if(g){ g.classList.remove('show'); g.style.display='none'; } }catch(_){ } }
-  connGateState=function(){ nxHideGate(); };                 /* no gate UI, ever */
-  window.connGateState=connGateState;
-  connGateShow=function(){ nxHideGate(); try{ connGateAuto(); }catch(_){ } };   /* start background connect, no overlay */
-  window.connGateShow=connGateShow;
-  connGateOpen=function(){ nxHideGate(); try{ connGateAuto(); }catch(_){ } };
-  window.connGateOpen=connGateOpen;
-  var _cgResolve=(typeof connGateResolveConnected==='function')?connGateResolveConnected:null;
-  connGateResolveConnected=function(){ try{ if(_cgResolve) _cgResolve(); }catch(_){ } nxHideGate(); };
-  window.connGateResolveConnected=connGateResolveConnected;
-  nxHideGate();
-  /* kick a background connect on load + keep it retrying quietly */
-  try{ if(typeof connGateAuto==='function') setTimeout(function(){ try{ connGateAuto(); }catch(_){ } }, 300); }catch(_){ }
 
   window.__NX_DEMO_ADAPTER__='1.0';
 })(); }catch(e){ console.error('NX demo adapter',e); } }
@@ -21245,11 +21137,7 @@ function peProjectExport(){ var TH=(LANG==='th'); var L=pePMProjects(); var p=L.
     if(!all) return;
     try{
       if(window.nxDemo) nxDemo.applying=true;
-      OMS_STORES.forEach(function(k){ if(all[k]!=null){ try{
-        var loc=(typeof window.nxCloudToLocal==='function')?window.nxCloudToLocal(all[k]):all[k];
-        _lsSet(k,JSON.stringify(loc));
-        if(window.nxDemo && typeof window.nxIsRecArray==='function' && window.nxIsRecArray(loc)) nxDemo._lastMap[k]=window.nxMapJson(window.nxArrToMap(loc));
-      }catch(_){} } });
+      OMS_STORES.forEach(function(k){ if(all[k]!=null){ try{ _lsSet(k,JSON.stringify(all[k])); }catch(_){} } });
     } finally { if(window.nxDemo) nxDemo.applying=false; }
     try{ omsRefreshFor(null); }catch(_){}
     try{ if(typeof nxHomeStatus==='function') nxHomeStatus(); }catch(_){}
