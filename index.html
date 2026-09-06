@@ -4534,13 +4534,19 @@ body:has(#overlay.show .modal.pebg-fs) .asst-launch{opacity:0;pointer-events:non
   /* HOME deck -> vertical list */
   #view-home .hm3-mod .hm3-sec,#view-home .hm3-sec{display:block!important;min-height:0!important;height:auto!important}
   #view-home .hm3-mod{min-height:auto!important;height:auto!important;padding:0!important;margin:0!important;justify-content:flex-start!important;overflow:visible!important}
-  #view-home .hm-dots,#view-home .hm3-sec p[data-i18n="hm3Hint"]{display:none!important}
-  #view-home .hm-carousel{display:block!important;min-height:0!important;height:auto!important;padding:0!important;grid-template-columns:1fr!important}
+  #view-home .hm3-sec p[data-i18n="hm3Hint"]{display:none!important}
+  #view-home .hm-carousel{display:block!important;position:relative!important;min-height:0!important;height:auto!important;padding:0 6px!important;grid-template-columns:1fr!important}
   #view-home #hmView,#view-home .hm-viewport{height:auto!important;min-height:0!important;max-height:none!important;overflow:visible!important;perspective:none!important;-webkit-perspective:none!important}
-  #view-home #hmTrack{display:flex!important;flex-direction:column!important;align-items:center!important;gap:12px!important;transform:none!important;height:auto!important;width:100%!important;transform-style:flat!important}
-  #view-home #hmTrack .big-card{position:relative!important;left:auto!important;top:auto!important;right:auto!important;transform:none!important;opacity:1!important;filter:none!important;visibility:visible!important;display:block!important;width:min(92vw,440px)!important;max-width:92vw!important;height:auto!important;min-height:160px!important;margin:0!important;pointer-events:auto!important}
-  #view-home #hmTrack .big-card .bc-face{transform:none!important;position:relative!important}
-  #view-home .hm-arrow{display:none!important}
+  #view-home #hmTrack{display:block!important;position:relative!important;transform:none!important;height:auto!important;width:100%!important;min-height:220px!important;transform-style:flat!important;text-align:center!important}
+  /* non-focused cards stay in the DOM (so hmCards/hmLayout keep working) but are hidden & zero-size */
+  #view-home #hmTrack .big-card{display:block!important;position:absolute!important;top:0!important;left:0!important;right:auto!important;width:0!important;height:0!important;min-height:0!important;margin:0!important;opacity:0!important;visibility:hidden!important;overflow:hidden!important;pointer-events:none!important;transform:none!important;filter:none!important}
+  #view-home #hmTrack .big-card.focus{position:relative!important;top:auto!important;left:auto!important;width:min(86vw,430px)!important;max-width:86vw!important;height:auto!important;min-height:210px!important;margin:0 auto!important;opacity:1!important;visibility:visible!important;overflow:visible!important;pointer-events:auto!important;display:inline-block!important}
+  #view-home #hmTrack .big-card.focus .bc-face{transform:none!important;position:relative!important}
+  /* visible slide arrows overlaid on the card */
+  #view-home .hm-arrow{display:flex!important;position:absolute!important;top:50%!important;transform:translateY(-50%)!important;z-index:9!important;width:40px!important;height:40px!important;border-radius:50%!important;background:#fff!important;color:#0891b2!important;box-shadow:0 6px 16px rgba(20,30,60,.20)!important;align-items:center!important;justify-content:center!important;opacity:1!important;border:1px solid rgba(8,145,178,.18)!important}
+  #view-home .hm-arrow.left{left:0!important}
+  #view-home .hm-arrow.right{right:0!important}
+  #view-home .hm-dots{display:flex!important;justify-content:center!important;gap:7px!important;margin:10px auto 0!important}
   #view-home .hm3-today{margin:8px auto 16px!important;max-width:96vw!important}
   /* PERFORMANCE — prevent iOS Safari WebContent crash */
   *,*::before,*::after{backdrop-filter:none!important;-webkit-backdrop-filter:none!important}
@@ -4625,9 +4631,28 @@ body #loginScreen .lg-card{position:relative!important;inset:auto!important;grid
 body #loginScreen .lg-card-in{margin:0 auto!important}
 
 /* the real layout owner is #loginScreen (grid) — force centered column */
-body #loginScreen{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;grid-template-columns:none!important;grid-template-rows:none!important;gap:0!important}
+body #loginScreen.show{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;grid-template-columns:none!important;grid-template-rows:none!important;gap:0!important}
 body #loginScreen>.lg-bg,body #loginScreen>.lg-grid:empty{display:none!important}
 body #loginScreen .lg-stage,body #loginScreen .lg-card{grid-column:auto!important;grid-row:auto!important;align-self:center!important;justify-self:center!important;max-width:100%!important}
+
+/* ---- login: ~20% smaller across all sizes ---- */
+#loginScreen .lg-card-in{width:min(86vw,300px)!important;padding:20px 18px 18px!important;border-radius:24px!important}
+#loginScreen .lg-logo{transform:scale(1.0)!important;margin:0 0 6px!important}
+#loginScreen .lg-title{font-size:17px!important}
+#loginScreen .lg-form-title{font-size:17px!important;margin:0 0 13px!important}
+#loginScreen .lg-setup{font-size:11px!important;padding:7px 9px!important;margin-bottom:11px!important}
+#loginScreen .lg-field{margin-bottom:10px!important}
+#loginScreen .lg-field label{font-size:12.5px!important}
+#loginScreen .lg-inwrap input,#loginScreen input.lg-in{font-size:16px!important;padding:11px 12px 11px 38px!important}  /* keep 16px to avoid iOS zoom */
+#loginScreen .lg-remember{font-size:13px!important;margin:2px 0 10px!important}
+#loginScreen .lg-card button[onclick*="doLogin"],#loginScreen .lg-submit{padding:12px!important;font-size:15px!important}
+@media (min-width:700px){
+  #loginScreen .lg-card-in{width:328px!important;padding:24px 22px 20px!important}
+  #loginScreen .lg-logo{transform:scale(1.12)!important}
+  #loginScreen .lg-title{font-size:19px!important}
+}
+
+body #loginScreen:not(.show){display:none!important}
 
 </style>
 </head>
