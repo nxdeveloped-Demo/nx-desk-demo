@@ -1,0 +1,3013 @@
+{
+ "nx_departments": [
+  {
+   "id": "dep1",
+   "name": "Design Engineer"
+  },
+  {
+   "id": "dep2",
+   "name": "Automation"
+  },
+  {
+   "id": "dep3",
+   "name": "Production"
+  },
+  {
+   "id": "dep4",
+   "name": "Store"
+  },
+  {
+   "id": "dep5",
+   "name": "Software Developer"
+  },
+  {
+   "id": "dep6",
+   "name": "Sales"
+  }
+ ],
+ "nx_employees": [
+  {
+   "id": "emp1",
+   "name": "Somchai Wong",
+   "age": "24",
+   "birth": "1988-01-01",
+   "gender": "F",
+   "citizenId": "1100000000000",
+   "contact": "080-000-0000",
+   "email": "somchai.w@nxoffice-demo.co.th",
+   "address": "1/1 Moo 1, Rayong",
+   "department": "Design Engineer",
+   "positionId": "pos_mgr",
+   "att": {
+    "totalDays": 22,
+    "workedDays": 18,
+    "absentDays": 0,
+    "otHours": 0,
+    "lateDays": 0
+   },
+   "benefit": {
+    "baseSalary": 55000,
+    "adjust": 0,
+    "leaveMaxYear": 10,
+    "bonus": 0,
+    "std": {
+     "responsibility": 2000,
+     "mobile": 500,
+     "lunchPerDay": 50
+    },
+    "extras": []
+   }
+  },
+  {
+   "id": "emp2",
+   "name": "Nattapong Srisai",
+   "age": "26",
+   "birth": "1989-02-02",
+   "gender": "M",
+   "citizenId": "1100000000137",
+   "contact": "081-013-0037",
+   "email": "nattapong.s@nxoffice-demo.co.th",
+   "address": "2/8 Moo 2, Rayong",
+   "department": "Automation",
+   "positionId": "pos_eng",
+   "att": {
+    "totalDays": 22,
+    "workedDays": 19,
+    "absentDays": 1,
+    "otHours": 4,
+    "lateDays": 1
+   },
+   "benefit": {
+    "baseSalary": 32800,
+    "adjust": 0,
+    "leaveMaxYear": 10,
+    "bonus": 5000,
+    "std": {
+     "responsibility": 2000,
+     "mobile": 0,
+     "lunchPerDay": 50
+    },
+    "extras": []
+   }
+  },
+  {
+   "id": "emp3",
+   "name": "Kanya Chai",
+   "age": "28",
+   "birth": "1990-03-03",
+   "gender": "M",
+   "citizenId": "1100000000274",
+   "contact": "082-026-0074",
+   "email": "kanya.c@nxoffice-demo.co.th",
+   "address": "3/15 Moo 3, Rayong",
+   "department": "Production",
+   "positionId": "pos_eng",
+   "att": {
+    "totalDays": 22,
+    "workedDays": 20,
+    "absentDays": 2,
+    "otHours": 8,
+    "lateDays": 0
+   },
+   "benefit": {
+    "baseSalary": 33600,
+    "adjust": 0,
+    "leaveMaxYear": 10,
+    "bonus": 10000,
+    "std": {
+     "responsibility": 2000,
+     "mobile": 0,
+     "lunchPerDay": 50
+    },
+    "extras": []
+   }
+  },
+  {
+   "id": "emp4",
+   "name": "Anan Rojana",
+   "age": "30",
+   "birth": "1991-04-04",
+   "gender": "F",
+   "citizenId": "1100000000411",
+   "contact": "083-039-0111",
+   "email": "anan.r@nxoffice-demo.co.th",
+   "address": "4/22 Moo 4, Rayong",
+   "department": "Store",
+   "positionId": "pos_tech",
+   "att": {
+    "totalDays": 22,
+    "workedDays": 21,
+    "absentDays": 0,
+    "otHours": 12,
+    "lateDays": 1
+   },
+   "benefit": {
+    "baseSalary": 26400,
+    "adjust": 0,
+    "leaveMaxYear": 10,
+    "bonus": 15000,
+    "std": {
+     "responsibility": 0,
+     "mobile": 0,
+     "lunchPerDay": 50
+    },
+    "extras": []
+   }
+  },
+  {
+   "id": "emp5",
+   "name": "Pimchanok Boonmee",
+   "age": "32",
+   "birth": "1992-05-05",
+   "gender": "M",
+   "citizenId": "1100000000548",
+   "contact": "084-052-0148",
+   "email": "pimchanok.b@nxoffice-demo.co.th",
+   "address": "5/29 Moo 5, Rayong",
+   "department": "Software Developer",
+   "positionId": "pos_tech",
+   "att": {
+    "totalDays": 22,
+    "workedDays": 22,
+    "absentDays": 1,
+    "otHours": 16,
+    "lateDays": 0
+   },
+   "benefit": {
+    "baseSalary": 27200,
+    "adjust": 0,
+    "leaveMaxYear": 10,
+    "bonus": 0,
+    "std": {
+     "responsibility": 0,
+     "mobile": 0,
+     "lunchPerDay": 50
+    },
+    "extras": []
+   }
+  },
+  {
+   "id": "emp6",
+   "name": "Weerachai Suksan",
+   "age": "34",
+   "birth": "1993-06-06",
+   "gender": "M",
+   "citizenId": "1100000000685",
+   "contact": "085-065-0185",
+   "email": "weerachai.s@nxoffice-demo.co.th",
+   "address": "6/36 Moo 6, Rayong",
+   "department": "Sales",
+   "positionId": "pos_tech",
+   "att": {
+    "totalDays": 22,
+    "workedDays": 18,
+    "absentDays": 2,
+    "otHours": 20,
+    "lateDays": 1
+   },
+   "benefit": {
+    "baseSalary": 24000,
+    "adjust": 0,
+    "leaveMaxYear": 10,
+    "bonus": 5000,
+    "std": {
+     "responsibility": 0,
+     "mobile": 0,
+     "lunchPerDay": 50
+    },
+    "extras": []
+   }
+  },
+  {
+   "id": "emp7",
+   "name": "Suda Intra",
+   "age": "36",
+   "birth": "1994-07-07",
+   "gender": "F",
+   "citizenId": "1100000000822",
+   "contact": "086-078-0222",
+   "email": "suda.i@nxoffice-demo.co.th",
+   "address": "7/43 Moo 7, Rayong",
+   "department": "Design Engineer",
+   "positionId": "pos_staff",
+   "att": {
+    "totalDays": 22,
+    "workedDays": 19,
+    "absentDays": 0,
+    "otHours": 0,
+    "lateDays": 0
+   },
+   "benefit": {
+    "baseSalary": 18800,
+    "adjust": 0,
+    "leaveMaxYear": 10,
+    "bonus": 10000,
+    "std": {
+     "responsibility": 0,
+     "mobile": 0,
+     "lunchPerDay": 50
+    },
+    "extras": []
+   }
+  },
+  {
+   "id": "emp8",
+   "name": "Thanawat Phong",
+   "age": "38",
+   "birth": "1995-08-08",
+   "gender": "M",
+   "citizenId": "1100000000959",
+   "contact": "087-091-0259",
+   "email": "thanawat.p@nxoffice-demo.co.th",
+   "address": "8/50 Moo 8, Rayong",
+   "department": "Automation",
+   "positionId": "pos_mgr",
+   "att": {
+    "totalDays": 22,
+    "workedDays": 20,
+    "absentDays": 1,
+    "otHours": 4,
+    "lateDays": 1
+   },
+   "benefit": {
+    "baseSalary": 56600,
+    "adjust": 0,
+    "leaveMaxYear": 10,
+    "bonus": 15000,
+    "std": {
+     "responsibility": 2000,
+     "mobile": 500,
+     "lunchPerDay": 50
+    },
+    "extras": []
+   }
+  },
+  {
+   "id": "emp9",
+   "name": "Malee Meesuk",
+   "age": "40",
+   "birth": "1996-09-09",
+   "gender": "M",
+   "citizenId": "1100000001096",
+   "contact": "088-104-0296",
+   "email": "malee.m@nxoffice-demo.co.th",
+   "address": "9/57 Moo 9, Rayong",
+   "department": "Production",
+   "positionId": "pos_mgr",
+   "att": {
+    "totalDays": 22,
+    "workedDays": 21,
+    "absentDays": 2,
+    "otHours": 8,
+    "lateDays": 0
+   },
+   "benefit": {
+    "baseSalary": 57400,
+    "adjust": 0,
+    "leaveMaxYear": 10,
+    "bonus": 0,
+    "std": {
+     "responsibility": 2000,
+     "mobile": 500,
+     "lunchPerDay": 50
+    },
+    "extras": []
+   }
+  },
+  {
+   "id": "emp10",
+   "name": "Chatchai Kaew",
+   "age": "42",
+   "birth": "1997-10-10",
+   "gender": "F",
+   "citizenId": "1100000001233",
+   "contact": "089-117-0333",
+   "email": "chatchai.k@nxoffice-demo.co.th",
+   "address": "10/64 Moo 1, Rayong",
+   "department": "Store",
+   "positionId": "pos_eng",
+   "att": {
+    "totalDays": 22,
+    "workedDays": 22,
+    "absentDays": 0,
+    "otHours": 12,
+    "lateDays": 1
+   },
+   "benefit": {
+    "baseSalary": 35200,
+    "adjust": 0,
+    "leaveMaxYear": 10,
+    "bonus": 5000,
+    "std": {
+     "responsibility": 2000,
+     "mobile": 0,
+     "lunchPerDay": 50
+    },
+    "extras": []
+   }
+  },
+  {
+   "id": "emp11",
+   "name": "Nareerat Thongdee",
+   "age": "44",
+   "birth": "1998-11-11",
+   "gender": "M",
+   "citizenId": "1100000001370",
+   "contact": "080-130-0370",
+   "email": "nareerat.t@nxoffice-demo.co.th",
+   "address": "11/71 Moo 2, Rayong",
+   "department": "Software Developer",
+   "positionId": "pos_eng",
+   "att": {
+    "totalDays": 22,
+    "workedDays": 18,
+    "absentDays": 1,
+    "otHours": 16,
+    "lateDays": 0
+   },
+   "benefit": {
+    "baseSalary": 32000,
+    "adjust": 0,
+    "leaveMaxYear": 10,
+    "bonus": 10000,
+    "std": {
+     "responsibility": 2000,
+     "mobile": 0,
+     "lunchPerDay": 50
+    },
+    "extras": []
+   }
+  },
+  {
+   "id": "emp12",
+   "name": "Prasit Saeng",
+   "age": "24",
+   "birth": "1999-12-12",
+   "gender": "M",
+   "citizenId": "1100000001507",
+   "contact": "081-143-0407",
+   "email": "prasit.s@nxoffice-demo.co.th",
+   "address": "12/78 Moo 3, Rayong",
+   "department": "Sales",
+   "positionId": "pos_tech",
+   "att": {
+    "totalDays": 22,
+    "workedDays": 19,
+    "absentDays": 2,
+    "otHours": 20,
+    "lateDays": 1
+   },
+   "benefit": {
+    "baseSalary": 24800,
+    "adjust": 0,
+    "leaveMaxYear": 10,
+    "bonus": 15000,
+    "std": {
+     "responsibility": 0,
+     "mobile": 0,
+     "lunchPerDay": 50
+    },
+    "extras": []
+   }
+  },
+  {
+   "id": "emp13",
+   "name": "Wanida Ubon",
+   "age": "26",
+   "birth": "1988-01-13",
+   "gender": "F",
+   "citizenId": "1100000001644",
+   "contact": "082-156-0444",
+   "email": "wanida.u@nxoffice-demo.co.th",
+   "address": "13/85 Moo 4, Rayong",
+   "department": "Design Engineer",
+   "positionId": "pos_tech",
+   "att": {
+    "totalDays": 22,
+    "workedDays": 20,
+    "absentDays": 0,
+    "otHours": 0,
+    "lateDays": 0
+   },
+   "benefit": {
+    "baseSalary": 25600,
+    "adjust": 0,
+    "leaveMaxYear": 10,
+    "bonus": 0,
+    "std": {
+     "responsibility": 0,
+     "mobile": 0,
+     "lunchPerDay": 50
+    },
+    "extras": []
+   }
+  },
+  {
+   "id": "emp14",
+   "name": "Krittapas Chaiya",
+   "age": "28",
+   "birth": "1989-02-14",
+   "gender": "M",
+   "citizenId": "1100000001781",
+   "contact": "083-169-0481",
+   "email": "krittapas.c@nxoffice-demo.co.th",
+   "address": "14/92 Moo 5, Rayong",
+   "department": "Automation",
+   "positionId": "pos_tech",
+   "att": {
+    "totalDays": 22,
+    "workedDays": 21,
+    "absentDays": 1,
+    "otHours": 4,
+    "lateDays": 1
+   },
+   "benefit": {
+    "baseSalary": 26400,
+    "adjust": 0,
+    "leaveMaxYear": 10,
+    "bonus": 5000,
+    "std": {
+     "responsibility": 0,
+     "mobile": 0,
+     "lunchPerDay": 50
+    },
+    "extras": []
+   }
+  },
+  {
+   "id": "emp15",
+   "name": "Siriporn Nims",
+   "age": "30",
+   "birth": "1990-03-15",
+   "gender": "M",
+   "citizenId": "1100000001918",
+   "contact": "084-182-0518",
+   "email": "siriporn.n@nxoffice-demo.co.th",
+   "address": "15/99 Moo 6, Rayong",
+   "department": "Production",
+   "positionId": "pos_staff",
+   "att": {
+    "totalDays": 22,
+    "workedDays": 22,
+    "absentDays": 2,
+    "otHours": 8,
+    "lateDays": 0
+   },
+   "benefit": {
+    "baseSalary": 21200,
+    "adjust": 0,
+    "leaveMaxYear": 10,
+    "bonus": 10000,
+    "std": {
+     "responsibility": 0,
+     "mobile": 0,
+     "lunchPerDay": 50
+    },
+    "extras": []
+   }
+  },
+  {
+   "id": "emp16",
+   "name": "Decha Rat",
+   "age": "32",
+   "birth": "1991-04-16",
+   "gender": "F",
+   "citizenId": "1100000002055",
+   "contact": "085-195-0555",
+   "email": "decha.r@nxoffice-demo.co.th",
+   "address": "16/7 Moo 7, Rayong",
+   "department": "Store",
+   "positionId": "pos_staff",
+   "att": {
+    "totalDays": 22,
+    "workedDays": 18,
+    "absentDays": 0,
+    "otHours": 12,
+    "lateDays": 1
+   },
+   "benefit": {
+    "baseSalary": 18000,
+    "adjust": 0,
+    "leaveMaxYear": 10,
+    "bonus": 15000,
+    "std": {
+     "responsibility": 0,
+     "mobile": 0,
+     "lunchPerDay": 50
+    },
+    "extras": []
+   }
+  },
+  {
+   "id": "emp17",
+   "name": "Ratchanok Klahan",
+   "age": "34",
+   "birth": "1992-05-17",
+   "gender": "M",
+   "citizenId": "1100000002192",
+   "contact": "086-208-0592",
+   "email": "ratchanok.k@nxoffice-demo.co.th",
+   "address": "17/14 Moo 8, Rayong",
+   "department": "Software Developer",
+   "positionId": "pos_mgr",
+   "att": {
+    "totalDays": 22,
+    "workedDays": 19,
+    "absentDays": 1,
+    "otHours": 16,
+    "lateDays": 0
+   },
+   "benefit": {
+    "baseSalary": 55800,
+    "adjust": 0,
+    "leaveMaxYear": 10,
+    "bonus": 0,
+    "std": {
+     "responsibility": 2000,
+     "mobile": 500,
+     "lunchPerDay": 50
+    },
+    "extras": []
+   }
+  },
+  {
+   "id": "emp18",
+   "name": "Panupong Sutthi",
+   "age": "36",
+   "birth": "1993-06-18",
+   "gender": "M",
+   "citizenId": "1100000002329",
+   "contact": "087-221-0629",
+   "email": "panupong.s@nxoffice-demo.co.th",
+   "address": "18/21 Moo 9, Rayong",
+   "department": "Sales",
+   "positionId": "pos_eng",
+   "att": {
+    "totalDays": 22,
+    "workedDays": 20,
+    "absentDays": 2,
+    "otHours": 20,
+    "lateDays": 1
+   },
+   "benefit": {
+    "baseSalary": 33600,
+    "adjust": 0,
+    "leaveMaxYear": 10,
+    "bonus": 5000,
+    "std": {
+     "responsibility": 2000,
+     "mobile": 0,
+     "lunchPerDay": 50
+    },
+    "extras": []
+   }
+  },
+  {
+   "id": "emp19",
+   "name": "Achara Wattana",
+   "age": "38",
+   "birth": "1994-07-19",
+   "gender": "F",
+   "citizenId": "1100000002466",
+   "contact": "088-234-0666",
+   "email": "achara.w@nxoffice-demo.co.th",
+   "address": "19/28 Moo 1, Rayong",
+   "department": "Design Engineer",
+   "positionId": "pos_eng",
+   "att": {
+    "totalDays": 22,
+    "workedDays": 21,
+    "absentDays": 0,
+    "otHours": 0,
+    "lateDays": 0
+   },
+   "benefit": {
+    "baseSalary": 34400,
+    "adjust": 0,
+    "leaveMaxYear": 10,
+    "bonus": 10000,
+    "std": {
+     "responsibility": 2000,
+     "mobile": 0,
+     "lunchPerDay": 50
+    },
+    "extras": []
+   }
+  },
+  {
+   "id": "emp20",
+   "name": "Kiattisak Prai",
+   "age": "40",
+   "birth": "1995-08-20",
+   "gender": "M",
+   "citizenId": "1100000002603",
+   "contact": "089-247-0703",
+   "email": "kiattisak.p@nxoffice-demo.co.th",
+   "address": "20/35 Moo 2, Rayong",
+   "department": "Automation",
+   "positionId": "pos_tech",
+   "att": {
+    "totalDays": 22,
+    "workedDays": 22,
+    "absentDays": 1,
+    "otHours": 4,
+    "lateDays": 1
+   },
+   "benefit": {
+    "baseSalary": 27200,
+    "adjust": 0,
+    "leaveMaxYear": 10,
+    "bonus": 15000,
+    "std": {
+     "responsibility": 0,
+     "mobile": 0,
+     "lunchPerDay": 50
+    },
+    "extras": []
+   }
+  }
+ ],
+ "nx_customers": [
+  {
+   "name": "Siam Electric Co., Ltd.",
+   "code": "C001"
+  },
+  {
+   "name": "Bangkok Automation PLC",
+   "code": "C002"
+  },
+  {
+   "name": "Thonburi Motors Co., Ltd.",
+   "code": "C003"
+  },
+  {
+   "name": "Chiang Mai Food Industry",
+   "code": "C004"
+  },
+  {
+   "name": "Eastern Seaboard Steel",
+   "code": "C005"
+  },
+  {
+   "name": "Global Appliance (Thailand)",
+   "code": "C006"
+  },
+  {
+   "name": "Rayong Precision Parts",
+   "code": "C007"
+  }
+ ],
+ "nx_wm_projects": [
+  {
+   "id": "wp1",
+   "name": "Auto Checker & Appearance MCB Machine",
+   "desc": "Vision + mechanical inspection cell for MCB units",
+   "color": "#0ea5e9",
+   "createdAt": "2026-01-01T08:30:00.000Z",
+   "completedAt": ""
+  },
+  {
+   "id": "wp2",
+   "name": "Vision Inspection System",
+   "desc": "5MP multi-camera inspection with reject sorting",
+   "color": "#8b5cf6",
+   "createdAt": "2026-02-02T08:30:00.000Z",
+   "completedAt": ""
+  },
+  {
+   "id": "wp3",
+   "name": "Robotic Arm Assembly Line",
+   "desc": "6-axis FANUC arm assembly & test line",
+   "color": "#16a34a",
+   "createdAt": "2026-03-03T08:30:00.000Z",
+   "completedAt": ""
+  },
+  {
+   "id": "wp4",
+   "name": "PCB Soldering Station",
+   "desc": "Hot-air solder head with Siemens PLC control",
+   "color": "#f59e0b",
+   "createdAt": "2026-04-04T08:30:00.000Z",
+   "completedAt": ""
+  },
+  {
+   "id": "wp5",
+   "name": "Torque Test Bench",
+   "desc": "0–50 Nm servo torque testing rig",
+   "color": "#ef4444",
+   "createdAt": "2026-05-05T08:30:00.000Z",
+   "completedAt": ""
+  },
+  {
+   "id": "wp6",
+   "name": "Conveyor Sorting System",
+   "desc": "PVC conveyor with proximity sort gates",
+   "color": "#06b6d4",
+   "createdAt": "2026-06-06T08:30:00.000Z",
+   "completedAt": ""
+  },
+  {
+   "id": "wp7",
+   "name": "Steel Coil Slitter",
+   "desc": "Hydraulic slitter for SS400 coil",
+   "color": "#ec4899",
+   "createdAt": "2026-07-07T08:30:00.000Z",
+   "completedAt": ""
+  },
+  {
+   "id": "wp8",
+   "name": "Packaging Automation Unit",
+   "desc": "Heat-seal + servo packaging cell",
+   "color": "#14b8a6",
+   "createdAt": "2026-08-08T08:30:00.000Z",
+   "completedAt": ""
+  },
+  {
+   "id": "wp9",
+   "name": "Laser Marking Cell",
+   "desc": "30W fiber laser marking with F-theta lens",
+   "color": "#6366f1",
+   "createdAt": "2026-01-09T08:30:00.000Z",
+   "completedAt": ""
+  },
+  {
+   "id": "wp10",
+   "name": "CNC Deburring Machine",
+   "desc": "High-speed spindle deburr & wash line",
+   "color": "#f97316",
+   "createdAt": "2026-02-10T08:30:00.000Z",
+   "completedAt": ""
+  }
+ ],
+ "nx_wm_tasks": [
+  {
+   "id": "wt001",
+   "title": "Mechanical design & BOM — Auto",
+   "desc": "Auto-generated demo task for Auto Checker & Appearance MCB Machine",
+   "projectId": "wp1",
+   "due": "2026-01-03",
+   "priority": "low",
+   "status": "done",
+   "progress": 100,
+   "assignees": [
+    "emp1",
+    "emp4"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-01-01T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    },
+    {
+     "at": "2026-02-02T14:00:00.000Z",
+     "by": "emp1",
+     "action": "Status → done"
+    }
+   ],
+   "createdAt": "2026-01-01T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt002",
+   "title": "Electrical wiring & panel — Auto",
+   "desc": "Auto-generated demo task for Auto Checker & Appearance MCB Machine",
+   "projectId": "wp1",
+   "due": "2026-02-09",
+   "priority": "med",
+   "status": "done",
+   "progress": 100,
+   "assignees": [
+    "emp2"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-01-02T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    },
+    {
+     "at": "2026-02-03T14:00:00.000Z",
+     "by": "emp2",
+     "action": "Status → done"
+    }
+   ],
+   "createdAt": "2026-01-02T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt003",
+   "title": "PLC / software program — Auto",
+   "desc": "Auto-generated demo task for Auto Checker & Appearance MCB Machine",
+   "projectId": "wp1",
+   "due": "2026-03-15",
+   "priority": "high",
+   "status": "doing",
+   "progress": 45,
+   "assignees": [
+    "emp3",
+    "emp6"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-01-03T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    },
+    {
+     "at": "2026-02-04T14:00:00.000Z",
+     "by": "emp3",
+     "action": "Status → doing"
+    }
+   ],
+   "createdAt": "2026-01-03T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt004",
+   "title": "Assembly & wiring — Auto",
+   "desc": "Auto-generated demo task for Auto Checker & Appearance MCB Machine",
+   "projectId": "wp1",
+   "due": "2026-04-21",
+   "priority": "urgent",
+   "status": "doing",
+   "progress": 45,
+   "assignees": [
+    "emp4"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-01-04T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    },
+    {
+     "at": "2026-02-05T14:00:00.000Z",
+     "by": "emp4",
+     "action": "Status → doing"
+    }
+   ],
+   "createdAt": "2026-01-04T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt005",
+   "title": "Electrical wiring & panel — Vision",
+   "desc": "Auto-generated demo task for Vision Inspection System",
+   "projectId": "wp2",
+   "due": "2026-02-03",
+   "priority": "med",
+   "status": "done",
+   "progress": 100,
+   "assignees": [
+    "emp3",
+    "emp6"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-02-01T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    },
+    {
+     "at": "2026-03-02T14:00:00.000Z",
+     "by": "emp3",
+     "action": "Status → done"
+    }
+   ],
+   "createdAt": "2026-02-01T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt006",
+   "title": "PLC / software program — Vision",
+   "desc": "Auto-generated demo task for Vision Inspection System",
+   "projectId": "wp2",
+   "due": "2026-03-09",
+   "priority": "high",
+   "status": "doing",
+   "progress": 45,
+   "assignees": [
+    "emp4"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-02-02T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    },
+    {
+     "at": "2026-03-03T14:00:00.000Z",
+     "by": "emp4",
+     "action": "Status → doing"
+    }
+   ],
+   "createdAt": "2026-02-02T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt007",
+   "title": "Assembly & wiring — Vision",
+   "desc": "Auto-generated demo task for Vision Inspection System",
+   "projectId": "wp2",
+   "due": "2026-04-15",
+   "priority": "urgent",
+   "status": "doing",
+   "progress": 45,
+   "assignees": [
+    "emp5",
+    "emp8"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-02-03T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    },
+    {
+     "at": "2026-03-04T14:00:00.000Z",
+     "by": "emp5",
+     "action": "Status → doing"
+    }
+   ],
+   "createdAt": "2026-02-03T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt008",
+   "title": "Vision / sensor calibration — Vision",
+   "desc": "Auto-generated demo task for Vision Inspection System",
+   "projectId": "wp2",
+   "due": "2026-05-21",
+   "priority": "low",
+   "status": "review",
+   "progress": 80,
+   "assignees": [
+    "emp6"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-02-04T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    },
+    {
+     "at": "2026-03-05T14:00:00.000Z",
+     "by": "emp6",
+     "action": "Status → review"
+    }
+   ],
+   "createdAt": "2026-02-04T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt009",
+   "title": "Trial run & debug — Vision",
+   "desc": "Auto-generated demo task for Vision Inspection System",
+   "projectId": "wp2",
+   "due": "2026-06-27",
+   "priority": "med",
+   "status": "todo",
+   "progress": 0,
+   "assignees": [
+    "emp7",
+    "emp10"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-02-05T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    }
+   ],
+   "createdAt": "2026-02-05T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt010",
+   "title": "PLC / software program — Robotic",
+   "desc": "Auto-generated demo task for Robotic Arm Assembly Line",
+   "projectId": "wp3",
+   "due": "2026-03-03",
+   "priority": "high",
+   "status": "doing",
+   "progress": 45,
+   "assignees": [
+    "emp5",
+    "emp8"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-03-01T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    },
+    {
+     "at": "2026-04-02T14:00:00.000Z",
+     "by": "emp5",
+     "action": "Status → doing"
+    }
+   ],
+   "createdAt": "2026-03-01T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt011",
+   "title": "Assembly & wiring — Robotic",
+   "desc": "Auto-generated demo task for Robotic Arm Assembly Line",
+   "projectId": "wp3",
+   "due": "2026-04-09",
+   "priority": "urgent",
+   "status": "doing",
+   "progress": 45,
+   "assignees": [
+    "emp6"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-03-02T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    },
+    {
+     "at": "2026-04-03T14:00:00.000Z",
+     "by": "emp6",
+     "action": "Status → doing"
+    }
+   ],
+   "createdAt": "2026-03-02T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt012",
+   "title": "Vision / sensor calibration — Robotic",
+   "desc": "Auto-generated demo task for Robotic Arm Assembly Line",
+   "projectId": "wp3",
+   "due": "2026-05-15",
+   "priority": "low",
+   "status": "review",
+   "progress": 80,
+   "assignees": [
+    "emp7",
+    "emp10"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-03-03T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    },
+    {
+     "at": "2026-04-04T14:00:00.000Z",
+     "by": "emp7",
+     "action": "Status → review"
+    }
+   ],
+   "createdAt": "2026-03-03T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt013",
+   "title": "Trial run & debug — Robotic",
+   "desc": "Auto-generated demo task for Robotic Arm Assembly Line",
+   "projectId": "wp3",
+   "due": "2026-06-21",
+   "priority": "med",
+   "status": "todo",
+   "progress": 0,
+   "assignees": [
+    "emp8"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-03-04T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    }
+   ],
+   "createdAt": "2026-03-04T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt014",
+   "title": "Customer FAT — Robotic",
+   "desc": "Auto-generated demo task for Robotic Arm Assembly Line",
+   "projectId": "wp3",
+   "due": "2026-07-27",
+   "priority": "high",
+   "status": "done",
+   "progress": 100,
+   "assignees": [
+    "emp9",
+    "emp12"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-03-05T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    },
+    {
+     "at": "2026-04-06T14:00:00.000Z",
+     "by": "emp9",
+     "action": "Status → done"
+    }
+   ],
+   "createdAt": "2026-03-05T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt015",
+   "title": "Documentation & handover — Robotic",
+   "desc": "Auto-generated demo task for Robotic Arm Assembly Line",
+   "projectId": "wp3",
+   "due": "2026-08-08",
+   "priority": "urgent",
+   "status": "done",
+   "progress": 100,
+   "assignees": [
+    "emp10"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-03-06T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    },
+    {
+     "at": "2026-04-07T14:00:00.000Z",
+     "by": "emp10",
+     "action": "Status → done"
+    }
+   ],
+   "createdAt": "2026-03-06T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt016",
+   "title": "Assembly & wiring — PCB",
+   "desc": "Auto-generated demo task for PCB Soldering Station",
+   "projectId": "wp4",
+   "due": "2026-04-03",
+   "priority": "urgent",
+   "status": "doing",
+   "progress": 45,
+   "assignees": [
+    "emp7",
+    "emp10"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-04-01T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    },
+    {
+     "at": "2026-05-02T14:00:00.000Z",
+     "by": "emp7",
+     "action": "Status → doing"
+    }
+   ],
+   "createdAt": "2026-04-01T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt017",
+   "title": "Vision / sensor calibration — PCB",
+   "desc": "Auto-generated demo task for PCB Soldering Station",
+   "projectId": "wp4",
+   "due": "2026-05-09",
+   "priority": "low",
+   "status": "review",
+   "progress": 80,
+   "assignees": [
+    "emp8"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-04-02T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    },
+    {
+     "at": "2026-05-03T14:00:00.000Z",
+     "by": "emp8",
+     "action": "Status → review"
+    }
+   ],
+   "createdAt": "2026-04-02T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt018",
+   "title": "Trial run & debug — PCB",
+   "desc": "Auto-generated demo task for PCB Soldering Station",
+   "projectId": "wp4",
+   "due": "2026-06-15",
+   "priority": "med",
+   "status": "todo",
+   "progress": 0,
+   "assignees": [
+    "emp9",
+    "emp12"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-04-03T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    }
+   ],
+   "createdAt": "2026-04-03T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt019",
+   "title": "Customer FAT — PCB",
+   "desc": "Auto-generated demo task for PCB Soldering Station",
+   "projectId": "wp4",
+   "due": "2026-07-21",
+   "priority": "high",
+   "status": "done",
+   "progress": 100,
+   "assignees": [
+    "emp10"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-04-04T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    },
+    {
+     "at": "2026-05-05T14:00:00.000Z",
+     "by": "emp10",
+     "action": "Status → done"
+    }
+   ],
+   "createdAt": "2026-04-04T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt020",
+   "title": "Vision / sensor calibration — Torque",
+   "desc": "Auto-generated demo task for Torque Test Bench",
+   "projectId": "wp5",
+   "due": "2026-05-03",
+   "priority": "low",
+   "status": "review",
+   "progress": 80,
+   "assignees": [
+    "emp9",
+    "emp12"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-05-01T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    },
+    {
+     "at": "2026-06-02T14:00:00.000Z",
+     "by": "emp9",
+     "action": "Status → review"
+    }
+   ],
+   "createdAt": "2026-05-01T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt021",
+   "title": "Trial run & debug — Torque",
+   "desc": "Auto-generated demo task for Torque Test Bench",
+   "projectId": "wp5",
+   "due": "2026-06-09",
+   "priority": "med",
+   "status": "todo",
+   "progress": 0,
+   "assignees": [
+    "emp10"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-05-02T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    }
+   ],
+   "createdAt": "2026-05-02T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt022",
+   "title": "Customer FAT — Torque",
+   "desc": "Auto-generated demo task for Torque Test Bench",
+   "projectId": "wp5",
+   "due": "2026-07-15",
+   "priority": "high",
+   "status": "done",
+   "progress": 100,
+   "assignees": [
+    "emp11",
+    "emp14"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-05-03T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    },
+    {
+     "at": "2026-06-04T14:00:00.000Z",
+     "by": "emp11",
+     "action": "Status → done"
+    }
+   ],
+   "createdAt": "2026-05-03T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt023",
+   "title": "Documentation & handover — Torque",
+   "desc": "Auto-generated demo task for Torque Test Bench",
+   "projectId": "wp5",
+   "due": "2026-08-21",
+   "priority": "urgent",
+   "status": "done",
+   "progress": 100,
+   "assignees": [
+    "emp12"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-05-04T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    },
+    {
+     "at": "2026-06-05T14:00:00.000Z",
+     "by": "emp12",
+     "action": "Status → done"
+    }
+   ],
+   "createdAt": "2026-05-04T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt024",
+   "title": "Mechanical design & BOM — Torque",
+   "desc": "Auto-generated demo task for Torque Test Bench",
+   "projectId": "wp5",
+   "due": "2026-09-27",
+   "priority": "low",
+   "status": "doing",
+   "progress": 45,
+   "assignees": [
+    "emp13",
+    "emp16"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-05-05T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    },
+    {
+     "at": "2026-06-06T14:00:00.000Z",
+     "by": "emp13",
+     "action": "Status → doing"
+    }
+   ],
+   "createdAt": "2026-05-05T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt025",
+   "title": "Trial run & debug — Conveyor",
+   "desc": "Auto-generated demo task for Conveyor Sorting System",
+   "projectId": "wp6",
+   "due": "2026-06-03",
+   "priority": "med",
+   "status": "todo",
+   "progress": 0,
+   "assignees": [
+    "emp11",
+    "emp14"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-06-01T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    }
+   ],
+   "createdAt": "2026-06-01T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt026",
+   "title": "Customer FAT — Conveyor",
+   "desc": "Auto-generated demo task for Conveyor Sorting System",
+   "projectId": "wp6",
+   "due": "2026-07-09",
+   "priority": "high",
+   "status": "done",
+   "progress": 100,
+   "assignees": [
+    "emp12"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-06-02T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    },
+    {
+     "at": "2026-07-03T14:00:00.000Z",
+     "by": "emp12",
+     "action": "Status → done"
+    }
+   ],
+   "createdAt": "2026-06-02T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt027",
+   "title": "Documentation & handover — Conveyor",
+   "desc": "Auto-generated demo task for Conveyor Sorting System",
+   "projectId": "wp6",
+   "due": "2026-08-15",
+   "priority": "urgent",
+   "status": "done",
+   "progress": 100,
+   "assignees": [
+    "emp13",
+    "emp16"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-06-03T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    },
+    {
+     "at": "2026-07-04T14:00:00.000Z",
+     "by": "emp13",
+     "action": "Status → done"
+    }
+   ],
+   "createdAt": "2026-06-03T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt028",
+   "title": "Mechanical design & BOM — Conveyor",
+   "desc": "Auto-generated demo task for Conveyor Sorting System",
+   "projectId": "wp6",
+   "due": "2026-09-21",
+   "priority": "low",
+   "status": "doing",
+   "progress": 45,
+   "assignees": [
+    "emp14"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-06-04T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    },
+    {
+     "at": "2026-07-05T14:00:00.000Z",
+     "by": "emp14",
+     "action": "Status → doing"
+    }
+   ],
+   "createdAt": "2026-06-04T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt029",
+   "title": "Electrical wiring & panel — Conveyor",
+   "desc": "Auto-generated demo task for Conveyor Sorting System",
+   "projectId": "wp6",
+   "due": "2026-10-27",
+   "priority": "med",
+   "status": "doing",
+   "progress": 45,
+   "assignees": [
+    "emp15",
+    "emp18"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-06-05T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    },
+    {
+     "at": "2026-07-06T14:00:00.000Z",
+     "by": "emp15",
+     "action": "Status → doing"
+    }
+   ],
+   "createdAt": "2026-06-05T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt030",
+   "title": "PLC / software program — Conveyor",
+   "desc": "Auto-generated demo task for Conveyor Sorting System",
+   "projectId": "wp6",
+   "due": "2026-11-08",
+   "priority": "high",
+   "status": "review",
+   "progress": 80,
+   "assignees": [
+    "emp16"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-06-06T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    },
+    {
+     "at": "2026-07-07T14:00:00.000Z",
+     "by": "emp16",
+     "action": "Status → review"
+    }
+   ],
+   "createdAt": "2026-06-06T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt031",
+   "title": "Customer FAT — Steel",
+   "desc": "Auto-generated demo task for Steel Coil Slitter",
+   "projectId": "wp7",
+   "due": "2026-07-03",
+   "priority": "high",
+   "status": "done",
+   "progress": 100,
+   "assignees": [
+    "emp13",
+    "emp16"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-07-01T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    },
+    {
+     "at": "2026-08-02T14:00:00.000Z",
+     "by": "emp13",
+     "action": "Status → done"
+    }
+   ],
+   "createdAt": "2026-07-01T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt032",
+   "title": "Documentation & handover — Steel",
+   "desc": "Auto-generated demo task for Steel Coil Slitter",
+   "projectId": "wp7",
+   "due": "2026-08-09",
+   "priority": "urgent",
+   "status": "done",
+   "progress": 100,
+   "assignees": [
+    "emp14"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-07-02T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    },
+    {
+     "at": "2026-08-03T14:00:00.000Z",
+     "by": "emp14",
+     "action": "Status → done"
+    }
+   ],
+   "createdAt": "2026-07-02T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt033",
+   "title": "Mechanical design & BOM — Steel",
+   "desc": "Auto-generated demo task for Steel Coil Slitter",
+   "projectId": "wp7",
+   "due": "2026-09-15",
+   "priority": "low",
+   "status": "doing",
+   "progress": 45,
+   "assignees": [
+    "emp15",
+    "emp18"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-07-03T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    },
+    {
+     "at": "2026-08-04T14:00:00.000Z",
+     "by": "emp15",
+     "action": "Status → doing"
+    }
+   ],
+   "createdAt": "2026-07-03T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt034",
+   "title": "Electrical wiring & panel — Steel",
+   "desc": "Auto-generated demo task for Steel Coil Slitter",
+   "projectId": "wp7",
+   "due": "2026-10-21",
+   "priority": "med",
+   "status": "doing",
+   "progress": 45,
+   "assignees": [
+    "emp16"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-07-04T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    },
+    {
+     "at": "2026-08-05T14:00:00.000Z",
+     "by": "emp16",
+     "action": "Status → doing"
+    }
+   ],
+   "createdAt": "2026-07-04T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt035",
+   "title": "Documentation & handover — Packaging",
+   "desc": "Auto-generated demo task for Packaging Automation Unit",
+   "projectId": "wp8",
+   "due": "2026-08-03",
+   "priority": "urgent",
+   "status": "done",
+   "progress": 100,
+   "assignees": [
+    "emp15",
+    "emp18"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-08-01T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    },
+    {
+     "at": "2026-09-02T14:00:00.000Z",
+     "by": "emp15",
+     "action": "Status → done"
+    }
+   ],
+   "createdAt": "2026-08-01T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt036",
+   "title": "Mechanical design & BOM — Packaging",
+   "desc": "Auto-generated demo task for Packaging Automation Unit",
+   "projectId": "wp8",
+   "due": "2026-09-09",
+   "priority": "low",
+   "status": "doing",
+   "progress": 45,
+   "assignees": [
+    "emp16"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-08-02T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    },
+    {
+     "at": "2026-09-03T14:00:00.000Z",
+     "by": "emp16",
+     "action": "Status → doing"
+    }
+   ],
+   "createdAt": "2026-08-02T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt037",
+   "title": "Electrical wiring & panel — Packaging",
+   "desc": "Auto-generated demo task for Packaging Automation Unit",
+   "projectId": "wp8",
+   "due": "2026-10-15",
+   "priority": "med",
+   "status": "doing",
+   "progress": 45,
+   "assignees": [
+    "emp17",
+    "emp20"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-08-03T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    },
+    {
+     "at": "2026-09-04T14:00:00.000Z",
+     "by": "emp17",
+     "action": "Status → doing"
+    }
+   ],
+   "createdAt": "2026-08-03T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt038",
+   "title": "PLC / software program — Packaging",
+   "desc": "Auto-generated demo task for Packaging Automation Unit",
+   "projectId": "wp8",
+   "due": "2026-11-21",
+   "priority": "high",
+   "status": "review",
+   "progress": 80,
+   "assignees": [
+    "emp18"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-08-04T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    },
+    {
+     "at": "2026-09-05T14:00:00.000Z",
+     "by": "emp18",
+     "action": "Status → review"
+    }
+   ],
+   "createdAt": "2026-08-04T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt039",
+   "title": "Assembly & wiring — Packaging",
+   "desc": "Auto-generated demo task for Packaging Automation Unit",
+   "projectId": "wp8",
+   "due": "2026-12-27",
+   "priority": "urgent",
+   "status": "todo",
+   "progress": 0,
+   "assignees": [
+    "emp19",
+    "emp2"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-08-05T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    }
+   ],
+   "createdAt": "2026-08-05T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt040",
+   "title": "Mechanical design & BOM — Laser",
+   "desc": "Auto-generated demo task for Laser Marking Cell",
+   "projectId": "wp9",
+   "due": "2026-09-03",
+   "priority": "low",
+   "status": "doing",
+   "progress": 45,
+   "assignees": [
+    "emp17",
+    "emp20"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-01-01T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    },
+    {
+     "at": "2026-02-02T14:00:00.000Z",
+     "by": "emp17",
+     "action": "Status → doing"
+    }
+   ],
+   "createdAt": "2026-01-01T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt041",
+   "title": "Electrical wiring & panel — Laser",
+   "desc": "Auto-generated demo task for Laser Marking Cell",
+   "projectId": "wp9",
+   "due": "2026-10-09",
+   "priority": "med",
+   "status": "doing",
+   "progress": 45,
+   "assignees": [
+    "emp18"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-01-02T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    },
+    {
+     "at": "2026-02-03T14:00:00.000Z",
+     "by": "emp18",
+     "action": "Status → doing"
+    }
+   ],
+   "createdAt": "2026-01-02T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt042",
+   "title": "PLC / software program — Laser",
+   "desc": "Auto-generated demo task for Laser Marking Cell",
+   "projectId": "wp9",
+   "due": "2026-11-15",
+   "priority": "high",
+   "status": "review",
+   "progress": 80,
+   "assignees": [
+    "emp19",
+    "emp2"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-01-03T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    },
+    {
+     "at": "2026-02-04T14:00:00.000Z",
+     "by": "emp19",
+     "action": "Status → review"
+    }
+   ],
+   "createdAt": "2026-01-03T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt043",
+   "title": "Assembly & wiring — Laser",
+   "desc": "Auto-generated demo task for Laser Marking Cell",
+   "projectId": "wp9",
+   "due": "2026-12-21",
+   "priority": "urgent",
+   "status": "todo",
+   "progress": 0,
+   "assignees": [
+    "emp20"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-01-04T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    }
+   ],
+   "createdAt": "2026-01-04T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt044",
+   "title": "Vision / sensor calibration — Laser",
+   "desc": "Auto-generated demo task for Laser Marking Cell",
+   "projectId": "wp9",
+   "due": "2026-01-27",
+   "priority": "low",
+   "status": "done",
+   "progress": 100,
+   "assignees": [
+    "emp1",
+    "emp4"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-01-05T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    },
+    {
+     "at": "2026-02-06T14:00:00.000Z",
+     "by": "emp1",
+     "action": "Status → done"
+    }
+   ],
+   "createdAt": "2026-01-05T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt045",
+   "title": "Trial run & debug — Laser",
+   "desc": "Auto-generated demo task for Laser Marking Cell",
+   "projectId": "wp9",
+   "due": "2026-02-08",
+   "priority": "med",
+   "status": "done",
+   "progress": 100,
+   "assignees": [
+    "emp2"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-01-06T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    },
+    {
+     "at": "2026-02-07T14:00:00.000Z",
+     "by": "emp2",
+     "action": "Status → done"
+    }
+   ],
+   "createdAt": "2026-01-06T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt046",
+   "title": "Electrical wiring & panel — CNC",
+   "desc": "Auto-generated demo task for CNC Deburring Machine",
+   "projectId": "wp10",
+   "due": "2026-10-03",
+   "priority": "med",
+   "status": "doing",
+   "progress": 45,
+   "assignees": [
+    "emp19",
+    "emp2"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-02-01T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    },
+    {
+     "at": "2026-03-02T14:00:00.000Z",
+     "by": "emp19",
+     "action": "Status → doing"
+    }
+   ],
+   "createdAt": "2026-02-01T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt047",
+   "title": "PLC / software program — CNC",
+   "desc": "Auto-generated demo task for CNC Deburring Machine",
+   "projectId": "wp10",
+   "due": "2026-11-09",
+   "priority": "high",
+   "status": "review",
+   "progress": 80,
+   "assignees": [
+    "emp20"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-02-02T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    },
+    {
+     "at": "2026-03-03T14:00:00.000Z",
+     "by": "emp20",
+     "action": "Status → review"
+    }
+   ],
+   "createdAt": "2026-02-02T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt048",
+   "title": "Assembly & wiring — CNC",
+   "desc": "Auto-generated demo task for CNC Deburring Machine",
+   "projectId": "wp10",
+   "due": "2026-12-15",
+   "priority": "urgent",
+   "status": "todo",
+   "progress": 0,
+   "assignees": [
+    "emp1",
+    "emp4"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-02-03T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    }
+   ],
+   "createdAt": "2026-02-03T10:00:00.000Z",
+   "createdBy": "developer"
+  },
+  {
+   "id": "wt049",
+   "title": "Vision / sensor calibration — CNC",
+   "desc": "Auto-generated demo task for CNC Deburring Machine",
+   "projectId": "wp10",
+   "due": "2026-01-21",
+   "priority": "low",
+   "status": "done",
+   "progress": 100,
+   "assignees": [
+    "emp2"
+   ],
+   "comments": [],
+   "atts": [],
+   "history": [
+    {
+     "at": "2026-02-04T10:00:00.000Z",
+     "by": "developer",
+     "action": "Created task"
+    },
+    {
+     "at": "2026-03-05T14:00:00.000Z",
+     "by": "emp2",
+     "action": "Status → done"
+    }
+   ],
+   "createdAt": "2026-02-04T10:00:00.000Z",
+   "createdBy": "developer"
+  }
+ ],
+ "nx_meetings": [
+  {
+   "id": "mt001",
+   "title": "Kickoff — Auto Checker",
+   "date": "2026-08-10",
+   "from": "10:00",
+   "to": "11:00",
+   "parts": [
+    "emp1",
+    "emp5",
+    "emp9"
+   ],
+   "projectId": "wp1",
+   "customer": "Siam Electric Co., Ltd.",
+   "custPerson": "Khun Somchai",
+   "link": "meet.google.com/demo-wp1",
+   "loc": "Meeting Room A",
+   "createdAt": "2026-08-01T09:00:00.000Z"
+  },
+  {
+   "id": "mt002",
+   "title": "Progress review — Auto Checker",
+   "date": "2026-09-10",
+   "from": "14:00",
+   "to": "15:30",
+   "parts": [
+    "emp1",
+    "emp5",
+    "emp9"
+   ],
+   "projectId": "wp1",
+   "customer": "Siam Electric Co., Ltd.",
+   "custPerson": "Khun Somchai",
+   "link": "meet.google.com/demo-wp1",
+   "loc": "Meeting Room A",
+   "createdAt": "2026-08-01T09:00:00.000Z"
+  },
+  {
+   "id": "mt003",
+   "title": "Kickoff — Vision Inspection",
+   "date": "2026-08-11",
+   "from": "10:00",
+   "to": "11:00",
+   "parts": [
+    "emp2",
+    "emp6",
+    "emp10"
+   ],
+   "projectId": "wp2",
+   "customer": "Siam Electric Co., Ltd.",
+   "custPerson": "Khun Nattapong",
+   "link": "meet.google.com/demo-wp2",
+   "loc": "Meeting Room B",
+   "createdAt": "2026-08-01T09:00:00.000Z"
+  },
+  {
+   "id": "mt004",
+   "title": "Progress review — Vision Inspection",
+   "date": "2026-09-11",
+   "from": "14:00",
+   "to": "15:30",
+   "parts": [
+    "emp2",
+    "emp6",
+    "emp10"
+   ],
+   "projectId": "wp2",
+   "customer": "Siam Electric Co., Ltd.",
+   "custPerson": "Khun Nattapong",
+   "link": "meet.google.com/demo-wp2",
+   "loc": "Meeting Room B",
+   "createdAt": "2026-08-01T09:00:00.000Z"
+  },
+  {
+   "id": "mt005",
+   "title": "Kickoff — Robotic Arm",
+   "date": "2026-08-12",
+   "from": "10:00",
+   "to": "11:00",
+   "parts": [
+    "emp3",
+    "emp7",
+    "emp11"
+   ],
+   "projectId": "wp3",
+   "customer": "Bangkok Automation PLC",
+   "custPerson": "Khun Kanya",
+   "link": "meet.google.com/demo-wp3",
+   "loc": "Online (Zoom)",
+   "createdAt": "2026-08-01T09:00:00.000Z"
+  },
+  {
+   "id": "mt006",
+   "title": "Progress review — Robotic Arm",
+   "date": "2026-09-12",
+   "from": "14:00",
+   "to": "15:30",
+   "parts": [
+    "emp3",
+    "emp7",
+    "emp11"
+   ],
+   "projectId": "wp3",
+   "customer": "Bangkok Automation PLC",
+   "custPerson": "Khun Kanya",
+   "link": "meet.google.com/demo-wp3",
+   "loc": "Online (Zoom)",
+   "createdAt": "2026-08-01T09:00:00.000Z"
+  },
+  {
+   "id": "mt007",
+   "title": "Kickoff — PCB Soldering",
+   "date": "2026-08-13",
+   "from": "10:00",
+   "to": "11:00",
+   "parts": [
+    "emp4",
+    "emp8",
+    "emp12"
+   ],
+   "projectId": "wp4",
+   "customer": "Bangkok Automation PLC",
+   "custPerson": "Khun Anan",
+   "link": "meet.google.com/demo-wp4",
+   "loc": "Customer Site",
+   "createdAt": "2026-08-01T09:00:00.000Z"
+  },
+  {
+   "id": "mt008",
+   "title": "Progress review — PCB Soldering",
+   "date": "2026-09-13",
+   "from": "14:00",
+   "to": "15:30",
+   "parts": [
+    "emp4",
+    "emp8",
+    "emp12"
+   ],
+   "projectId": "wp4",
+   "customer": "Bangkok Automation PLC",
+   "custPerson": "Khun Anan",
+   "link": "meet.google.com/demo-wp4",
+   "loc": "Customer Site",
+   "createdAt": "2026-08-01T09:00:00.000Z"
+  },
+  {
+   "id": "mt009",
+   "title": "Kickoff — Torque Test",
+   "date": "2026-08-14",
+   "from": "10:00",
+   "to": "11:00",
+   "parts": [
+    "emp5",
+    "emp9",
+    "emp13"
+   ],
+   "projectId": "wp5",
+   "customer": "Thonburi Motors Co., Ltd.",
+   "custPerson": "Khun Pimchanok",
+   "link": "meet.google.com/demo-wp5",
+   "loc": "Shop Floor",
+   "createdAt": "2026-08-01T09:00:00.000Z"
+  },
+  {
+   "id": "mt010",
+   "title": "Progress review — Torque Test",
+   "date": "2026-09-14",
+   "from": "14:00",
+   "to": "15:30",
+   "parts": [
+    "emp5",
+    "emp9",
+    "emp13"
+   ],
+   "projectId": "wp5",
+   "customer": "Thonburi Motors Co., Ltd.",
+   "custPerson": "Khun Pimchanok",
+   "link": "meet.google.com/demo-wp5",
+   "loc": "Shop Floor",
+   "createdAt": "2026-08-01T09:00:00.000Z"
+  },
+  {
+   "id": "mt011",
+   "title": "Kickoff — Conveyor Sorting",
+   "date": "2026-08-15",
+   "from": "10:00",
+   "to": "11:00",
+   "parts": [
+    "emp6",
+    "emp10",
+    "emp14"
+   ],
+   "projectId": "wp6",
+   "customer": "Chiang Mai Food Industry",
+   "custPerson": "Khun Weerachai",
+   "link": "meet.google.com/demo-wp6",
+   "loc": "Meeting Room A",
+   "createdAt": "2026-08-01T09:00:00.000Z"
+  },
+  {
+   "id": "mt012",
+   "title": "Progress review — Conveyor Sorting",
+   "date": "2026-09-15",
+   "from": "14:00",
+   "to": "15:30",
+   "parts": [
+    "emp6",
+    "emp10",
+    "emp14"
+   ],
+   "projectId": "wp6",
+   "customer": "Chiang Mai Food Industry",
+   "custPerson": "Khun Weerachai",
+   "link": "meet.google.com/demo-wp6",
+   "loc": "Meeting Room A",
+   "createdAt": "2026-08-01T09:00:00.000Z"
+  },
+  {
+   "id": "mt013",
+   "title": "Progress review — Steel Coil",
+   "date": "2026-09-18",
+   "from": "09:30",
+   "to": "10:30",
+   "parts": [
+    "emp7",
+    "emp11",
+    "emp15"
+   ],
+   "projectId": "wp7",
+   "customer": "Eastern Seaboard Steel",
+   "custPerson": "Khun Suda",
+   "link": "meet.google.com/demo-wp7",
+   "loc": "Meeting Room B",
+   "createdAt": "2026-08-01T09:00:00.000Z"
+  },
+  {
+   "id": "mt014",
+   "title": "Progress review — Packaging Automation",
+   "date": "2026-09-19",
+   "from": "09:30",
+   "to": "10:30",
+   "parts": [
+    "emp8",
+    "emp12",
+    "emp16"
+   ],
+   "projectId": "wp8",
+   "customer": "Global Appliance (Thailand)",
+   "custPerson": "Khun Thanawat",
+   "link": "meet.google.com/demo-wp8",
+   "loc": "Online (Zoom)",
+   "createdAt": "2026-08-01T09:00:00.000Z"
+  },
+  {
+   "id": "mt015",
+   "title": "Progress review — Laser Marking",
+   "date": "2026-09-20",
+   "from": "09:30",
+   "to": "10:30",
+   "parts": [
+    "emp9",
+    "emp13",
+    "emp17"
+   ],
+   "projectId": "wp9",
+   "customer": "Rayong Precision Parts",
+   "custPerson": "Khun Malee",
+   "link": "meet.google.com/demo-wp9",
+   "loc": "Customer Site",
+   "createdAt": "2026-08-01T09:00:00.000Z"
+  },
+  {
+   "id": "mt016",
+   "title": "Progress review — CNC Deburring",
+   "date": "2026-09-21",
+   "from": "09:30",
+   "to": "10:30",
+   "parts": [
+    "emp10",
+    "emp14",
+    "emp18"
+   ],
+   "projectId": "wp10",
+   "customer": "Rayong Precision Parts",
+   "custPerson": "Khun Chatchai",
+   "link": "meet.google.com/demo-wp10",
+   "loc": "Shop Floor",
+   "createdAt": "2026-08-01T09:00:00.000Z"
+  }
+ ],
+ "nx_docgroups": [
+  {
+   "id": "g1",
+   "name": "Contracts"
+  },
+  {
+   "id": "g2",
+   "name": "Technical Drawings"
+  },
+  {
+   "id": "g3",
+   "name": "Reports"
+  },
+  {
+   "id": "g4",
+   "name": "Presentations"
+  },
+  {
+   "id": "g5",
+   "name": "Manuals"
+  },
+  {
+   "id": "g6",
+   "name": "Photos"
+  },
+  {
+   "id": "g7",
+   "name": "Spreadsheets"
+  }
+ ],
+ "nx_documents": [
+  {
+   "id": "doc001",
+   "name": "Auto Checker & Appearance MCB Machine — Kickoff Deck.pptx",
+   "group": "g4",
+   "groupName": "Presentations",
+   "ext": "pptx",
+   "size": 1200000,
+   "uploadedAt": "2026-01-02T11:00:00.000Z",
+   "dataUrl": "data:application/vnd.openxmlformats-officedocument.presentationml.presentation;base64,QXV0byBDaGVja2VyICYgQXBwZWFyYW5jZSBNQ0IgTWFjaGluZSDigJQgS2lja29mZiBEZWNr"
+  },
+  {
+   "id": "doc002",
+   "name": "Vision Inspection System — Kickoff Deck.pptx",
+   "group": "g4",
+   "groupName": "Presentations",
+   "ext": "pptx",
+   "size": 1240000,
+   "uploadedAt": "2026-02-03T11:00:00.000Z",
+   "dataUrl": "data:application/vnd.openxmlformats-officedocument.presentationml.presentation;base64,VmlzaW9uIEluc3BlY3Rpb24gU3lzdGVtIOKAlCBLaWNrb2ZmIERlY2s="
+  },
+  {
+   "id": "doc003",
+   "name": "Robotic Arm Assembly Line — Kickoff Deck.pptx",
+   "group": "g4",
+   "groupName": "Presentations",
+   "ext": "pptx",
+   "size": 1280000,
+   "uploadedAt": "2026-03-04T11:00:00.000Z",
+   "dataUrl": "data:application/vnd.openxmlformats-officedocument.presentationml.presentation;base64,Um9ib3RpYyBBcm0gQXNzZW1ibHkgTGluZSDigJQgS2lja29mZiBEZWNr"
+  },
+  {
+   "id": "doc004",
+   "name": "PCB Soldering Station — Kickoff Deck.pptx",
+   "group": "g4",
+   "groupName": "Presentations",
+   "ext": "pptx",
+   "size": 1320000,
+   "uploadedAt": "2026-04-05T11:00:00.000Z",
+   "dataUrl": "data:application/vnd.openxmlformats-officedocument.presentationml.presentation;base64,UENCIFNvbGRlcmluZyBTdGF0aW9uIOKAlCBLaWNrb2ZmIERlY2s="
+  },
+  {
+   "id": "doc005",
+   "name": "Torque Test Bench — Kickoff Deck.pptx",
+   "group": "g4",
+   "groupName": "Presentations",
+   "ext": "pptx",
+   "size": 1360000,
+   "uploadedAt": "2026-05-06T11:00:00.000Z",
+   "dataUrl": "data:application/vnd.openxmlformats-officedocument.presentationml.presentation;base64,VG9ycXVlIFRlc3QgQmVuY2gg4oCUIEtpY2tvZmYgRGVjaw=="
+  },
+  {
+   "id": "doc006",
+   "name": "Conveyor Sorting System — Kickoff Deck.pptx",
+   "group": "g4",
+   "groupName": "Presentations",
+   "ext": "pptx",
+   "size": 1400000,
+   "uploadedAt": "2026-06-07T11:00:00.000Z",
+   "dataUrl": "data:application/vnd.openxmlformats-officedocument.presentationml.presentation;base64,Q29udmV5b3IgU29ydGluZyBTeXN0ZW0g4oCUIEtpY2tvZmYgRGVjaw=="
+  },
+  {
+   "id": "doc007",
+   "name": "Steel Coil Slitter — Kickoff Deck.pptx",
+   "group": "g4",
+   "groupName": "Presentations",
+   "ext": "pptx",
+   "size": 1440000,
+   "uploadedAt": "2026-07-08T11:00:00.000Z",
+   "dataUrl": "data:application/vnd.openxmlformats-officedocument.presentationml.presentation;base64,U3RlZWwgQ29pbCBTbGl0dGVyIOKAlCBLaWNrb2ZmIERlY2s="
+  },
+  {
+   "id": "doc008",
+   "name": "Packaging Automation Unit — Kickoff Deck.pptx",
+   "group": "g4",
+   "groupName": "Presentations",
+   "ext": "pptx",
+   "size": 1480000,
+   "uploadedAt": "2026-08-09T11:00:00.000Z",
+   "dataUrl": "data:application/vnd.openxmlformats-officedocument.presentationml.presentation;base64,UGFja2FnaW5nIEF1dG9tYXRpb24gVW5pdCDigJQgS2lja29mZiBEZWNr"
+  },
+  {
+   "id": "doc009",
+   "name": "Laser Marking Cell — Kickoff Deck.pptx",
+   "group": "g4",
+   "groupName": "Presentations",
+   "ext": "pptx",
+   "size": 1520000,
+   "uploadedAt": "2026-09-10T11:00:00.000Z",
+   "dataUrl": "data:application/vnd.openxmlformats-officedocument.presentationml.presentation;base64,TGFzZXIgTWFya2luZyBDZWxsIOKAlCBLaWNrb2ZmIERlY2s="
+  },
+  {
+   "id": "doc010",
+   "name": "CNC Deburring Machine — Kickoff Deck.pptx",
+   "group": "g4",
+   "groupName": "Presentations",
+   "ext": "pptx",
+   "size": 1560000,
+   "uploadedAt": "2026-01-11T11:00:00.000Z",
+   "dataUrl": "data:application/vnd.openxmlformats-officedocument.presentationml.presentation;base64,Q05DIERlYnVycmluZyBNYWNoaW5lIOKAlCBLaWNrb2ZmIERlY2s="
+  },
+  {
+   "id": "doc011",
+   "name": "Contract C001 - Auto.pdf",
+   "group": "g1",
+   "groupName": "Contracts",
+   "ext": "pdf",
+   "size": 180000,
+   "uploadedAt": "2026-01-01T11:00:00.000Z",
+   "dataUrl": "data:application/pdf;base64,JVBERi0xLjQKJSBDb250cmFjdCBDMDAxIC0gQXV0bwolJUVPRg=="
+  },
+  {
+   "id": "doc012",
+   "name": "Contract C002 - Vision.docx",
+   "group": "g1",
+   "groupName": "Contracts",
+   "ext": "docx",
+   "size": 189000,
+   "uploadedAt": "2026-02-02T11:00:00.000Z",
+   "dataUrl": "data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,Q29udHJhY3QgQzAwMiAtIFZpc2lvbg=="
+  },
+  {
+   "id": "doc013",
+   "name": "Contract C003 - Robotic.pdf",
+   "group": "g1",
+   "groupName": "Contracts",
+   "ext": "pdf",
+   "size": 198000,
+   "uploadedAt": "2026-03-03T11:00:00.000Z",
+   "dataUrl": "data:application/pdf;base64,JVBERi0xLjQKJSBDb250cmFjdCBDMDAzIC0gUm9ib3RpYwolJUVPRg=="
+  },
+  {
+   "id": "doc014",
+   "name": "Contract C004 - PCB.docx",
+   "group": "g1",
+   "groupName": "Contracts",
+   "ext": "docx",
+   "size": 207000,
+   "uploadedAt": "2026-04-04T11:00:00.000Z",
+   "dataUrl": "data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,Q29udHJhY3QgQzAwNCAtIFBDQg=="
+  },
+  {
+   "id": "doc015",
+   "name": "Contract C005 - Torque.pdf",
+   "group": "g1",
+   "groupName": "Contracts",
+   "ext": "pdf",
+   "size": 216000,
+   "uploadedAt": "2026-05-05T11:00:00.000Z",
+   "dataUrl": "data:application/pdf;base64,JVBERi0xLjQKJSBDb250cmFjdCBDMDA1IC0gVG9ycXVlCiUlRU9G"
+  },
+  {
+   "id": "doc016",
+   "name": "Contract C006 - Conveyor.docx",
+   "group": "g1",
+   "groupName": "Contracts",
+   "ext": "docx",
+   "size": 225000,
+   "uploadedAt": "2026-06-06T11:00:00.000Z",
+   "dataUrl": "data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,Q29udHJhY3QgQzAwNiAtIENvbnZleW9y"
+  },
+  {
+   "id": "doc017",
+   "name": "Contract C007 - Steel.pdf",
+   "group": "g1",
+   "groupName": "Contracts",
+   "ext": "pdf",
+   "size": 234000,
+   "uploadedAt": "2026-07-07T11:00:00.000Z",
+   "dataUrl": "data:application/pdf;base64,JVBERi0xLjQKJSBDb250cmFjdCBDMDA3IC0gU3RlZWwKJSVFT0Y="
+  },
+  {
+   "id": "doc018",
+   "name": "Contract C001 - Packaging.docx",
+   "group": "g1",
+   "groupName": "Contracts",
+   "ext": "docx",
+   "size": 243000,
+   "uploadedAt": "2026-08-08T11:00:00.000Z",
+   "dataUrl": "data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,Q29udHJhY3QgQzAwMSAtIFBhY2thZ2luZw=="
+  },
+  {
+   "id": "doc019",
+   "name": "Drawing GA-001 Auto.png",
+   "group": "g2",
+   "groupName": "Technical Drawings",
+   "ext": "png",
+   "size": 320000,
+   "uploadedAt": "2026-01-03T11:00:00.000Z",
+   "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
+  },
+  {
+   "id": "doc020",
+   "name": "Drawing GA-002 Vision.pdf",
+   "group": "g2",
+   "groupName": "Technical Drawings",
+   "ext": "pdf",
+   "size": 335000,
+   "uploadedAt": "2026-02-04T11:00:00.000Z",
+   "dataUrl": "data:application/pdf;base64,JVBERi0xLjQKJSBEcmF3aW5nIEdBLTAwMiBWaXNpb24KJSVFT0Y="
+  },
+  {
+   "id": "doc021",
+   "name": "Drawing GA-003 Robotic.pdf",
+   "group": "g2",
+   "groupName": "Technical Drawings",
+   "ext": "pdf",
+   "size": 350000,
+   "uploadedAt": "2026-03-05T11:00:00.000Z",
+   "dataUrl": "data:application/pdf;base64,JVBERi0xLjQKJSBEcmF3aW5nIEdBLTAwMyBSb2JvdGljCiUlRU9G"
+  },
+  {
+   "id": "doc022",
+   "name": "Drawing GA-004 PCB.png",
+   "group": "g2",
+   "groupName": "Technical Drawings",
+   "ext": "png",
+   "size": 365000,
+   "uploadedAt": "2026-04-06T11:00:00.000Z",
+   "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
+  },
+  {
+   "id": "doc023",
+   "name": "Drawing GA-005 Torque.pdf",
+   "group": "g2",
+   "groupName": "Technical Drawings",
+   "ext": "pdf",
+   "size": 380000,
+   "uploadedAt": "2026-05-07T11:00:00.000Z",
+   "dataUrl": "data:application/pdf;base64,JVBERi0xLjQKJSBEcmF3aW5nIEdBLTAwNSBUb3JxdWUKJSVFT0Y="
+  },
+  {
+   "id": "doc024",
+   "name": "Drawing GA-006 Conveyor.pdf",
+   "group": "g2",
+   "groupName": "Technical Drawings",
+   "ext": "pdf",
+   "size": 395000,
+   "uploadedAt": "2026-06-08T11:00:00.000Z",
+   "dataUrl": "data:application/pdf;base64,JVBERi0xLjQKJSBEcmF3aW5nIEdBLTAwNiBDb252ZXlvcgolJUVPRg=="
+  },
+  {
+   "id": "doc025",
+   "name": "Drawing GA-007 Steel.png",
+   "group": "g2",
+   "groupName": "Technical Drawings",
+   "ext": "png",
+   "size": 410000,
+   "uploadedAt": "2026-07-09T11:00:00.000Z",
+   "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
+  },
+  {
+   "id": "doc026",
+   "name": "Drawing GA-008 Packaging.pdf",
+   "group": "g2",
+   "groupName": "Technical Drawings",
+   "ext": "pdf",
+   "size": 425000,
+   "uploadedAt": "2026-08-10T11:00:00.000Z",
+   "dataUrl": "data:application/pdf;base64,JVBERi0xLjQKJSBEcmF3aW5nIEdBLTAwOCBQYWNrYWdpbmcKJSVFT0Y="
+  },
+  {
+   "id": "doc027",
+   "name": "Drawing GA-009 Laser.pdf",
+   "group": "g2",
+   "groupName": "Technical Drawings",
+   "ext": "pdf",
+   "size": 440000,
+   "uploadedAt": "2026-09-11T11:00:00.000Z",
+   "dataUrl": "data:application/pdf;base64,JVBERi0xLjQKJSBEcmF3aW5nIEdBLTAwOSBMYXNlcgolJUVPRg=="
+  },
+  {
+   "id": "doc028",
+   "name": "FAT Report Auto.docx",
+   "group": "g3",
+   "groupName": "Reports",
+   "ext": "docx",
+   "size": 210000,
+   "uploadedAt": "2026-01-05T11:00:00.000Z",
+   "dataUrl": "data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,RkFUIFJlcG9ydCBBdXRv"
+  },
+  {
+   "id": "doc029",
+   "name": "FAT Report Vision.pdf",
+   "group": "g3",
+   "groupName": "Reports",
+   "ext": "pdf",
+   "size": 222000,
+   "uploadedAt": "2026-02-06T11:00:00.000Z",
+   "dataUrl": "data:application/pdf;base64,JVBERi0xLjQKJSBGQVQgUmVwb3J0IFZpc2lvbgolJUVPRg=="
+  },
+  {
+   "id": "doc030",
+   "name": "FAT Report Robotic.docx",
+   "group": "g3",
+   "groupName": "Reports",
+   "ext": "docx",
+   "size": 234000,
+   "uploadedAt": "2026-03-07T11:00:00.000Z",
+   "dataUrl": "data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,RkFUIFJlcG9ydCBSb2JvdGlj"
+  },
+  {
+   "id": "doc031",
+   "name": "FAT Report PCB.pdf",
+   "group": "g3",
+   "groupName": "Reports",
+   "ext": "pdf",
+   "size": 246000,
+   "uploadedAt": "2026-04-08T11:00:00.000Z",
+   "dataUrl": "data:application/pdf;base64,JVBERi0xLjQKJSBGQVQgUmVwb3J0IFBDQgolJUVPRg=="
+  },
+  {
+   "id": "doc032",
+   "name": "FAT Report Torque.docx",
+   "group": "g3",
+   "groupName": "Reports",
+   "ext": "docx",
+   "size": 258000,
+   "uploadedAt": "2026-05-09T11:00:00.000Z",
+   "dataUrl": "data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,RkFUIFJlcG9ydCBUb3JxdWU="
+  },
+  {
+   "id": "doc033",
+   "name": "FAT Report Conveyor.pdf",
+   "group": "g3",
+   "groupName": "Reports",
+   "ext": "pdf",
+   "size": 270000,
+   "uploadedAt": "2026-06-10T11:00:00.000Z",
+   "dataUrl": "data:application/pdf;base64,JVBERi0xLjQKJSBGQVQgUmVwb3J0IENvbnZleW9yCiUlRU9G"
+  },
+  {
+   "id": "doc034",
+   "name": "FAT Report Steel.docx",
+   "group": "g3",
+   "groupName": "Reports",
+   "ext": "docx",
+   "size": 282000,
+   "uploadedAt": "2026-07-11T11:00:00.000Z",
+   "dataUrl": "data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,RkFUIFJlcG9ydCBTdGVlbA=="
+  },
+  {
+   "id": "doc035",
+   "name": "O&M Manual Auto.docx",
+   "group": "g5",
+   "groupName": "Manuals",
+   "ext": "docx",
+   "size": 540000,
+   "uploadedAt": "2026-01-07T11:00:00.000Z",
+   "dataUrl": "data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,TyZNIE1hbnVhbCBBdXRv"
+  },
+  {
+   "id": "doc036",
+   "name": "O&M Manual Vision.pdf",
+   "group": "g5",
+   "groupName": "Manuals",
+   "ext": "pdf",
+   "size": 570000,
+   "uploadedAt": "2026-02-08T11:00:00.000Z",
+   "dataUrl": "data:application/pdf;base64,JVBERi0xLjQKJSBPJk0gTWFudWFsIFZpc2lvbgolJUVPRg=="
+  },
+  {
+   "id": "doc037",
+   "name": "O&M Manual Robotic.docx",
+   "group": "g5",
+   "groupName": "Manuals",
+   "ext": "docx",
+   "size": 600000,
+   "uploadedAt": "2026-03-09T11:00:00.000Z",
+   "dataUrl": "data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,TyZNIE1hbnVhbCBSb2JvdGlj"
+  },
+  {
+   "id": "doc038",
+   "name": "O&M Manual PCB.pdf",
+   "group": "g5",
+   "groupName": "Manuals",
+   "ext": "pdf",
+   "size": 630000,
+   "uploadedAt": "2026-04-10T11:00:00.000Z",
+   "dataUrl": "data:application/pdf;base64,JVBERi0xLjQKJSBPJk0gTWFudWFsIFBDQgolJUVPRg=="
+  },
+  {
+   "id": "doc039",
+   "name": "O&M Manual Torque.docx",
+   "group": "g5",
+   "groupName": "Manuals",
+   "ext": "docx",
+   "size": 660000,
+   "uploadedAt": "2026-05-11T11:00:00.000Z",
+   "dataUrl": "data:application/vnd.openxmlformats-officedocument.wordprocessingml.document;base64,TyZNIE1hbnVhbCBUb3JxdWU="
+  },
+  {
+   "id": "doc040",
+   "name": "O&M Manual Conveyor.pdf",
+   "group": "g5",
+   "groupName": "Manuals",
+   "ext": "pdf",
+   "size": 690000,
+   "uploadedAt": "2026-06-12T11:00:00.000Z",
+   "dataUrl": "data:application/pdf;base64,JVBERi0xLjQKJSBPJk0gTWFudWFsIENvbnZleW9yCiUlRU9G"
+  },
+  {
+   "id": "doc041",
+   "name": "Site Photo Auto-01.png",
+   "group": "g6",
+   "groupName": "Photos",
+   "ext": "png",
+   "size": 860000,
+   "uploadedAt": "2026-01-09T11:00:00.000Z",
+   "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
+  },
+  {
+   "id": "doc042",
+   "name": "Site Photo Vision-02.jpg",
+   "group": "g6",
+   "groupName": "Photos",
+   "ext": "jpg",
+   "size": 900000,
+   "uploadedAt": "2026-02-10T11:00:00.000Z",
+   "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
+  },
+  {
+   "id": "doc043",
+   "name": "Site Photo Robotic-03.png",
+   "group": "g6",
+   "groupName": "Photos",
+   "ext": "png",
+   "size": 940000,
+   "uploadedAt": "2026-03-11T11:00:00.000Z",
+   "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
+  },
+  {
+   "id": "doc044",
+   "name": "Site Photo PCB-04.jpg",
+   "group": "g6",
+   "groupName": "Photos",
+   "ext": "jpg",
+   "size": 980000,
+   "uploadedAt": "2026-04-12T11:00:00.000Z",
+   "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
+  },
+  {
+   "id": "doc045",
+   "name": "Site Photo Torque-05.png",
+   "group": "g6",
+   "groupName": "Photos",
+   "ext": "png",
+   "size": 1020000,
+   "uploadedAt": "2026-05-13T11:00:00.000Z",
+   "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
+  },
+  {
+   "id": "doc046",
+   "name": "Site Photo Conveyor-06.jpg",
+   "group": "g6",
+   "groupName": "Photos",
+   "ext": "jpg",
+   "size": 1060000,
+   "uploadedAt": "2026-06-14T11:00:00.000Z",
+   "dataUrl": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg=="
+  },
+  {
+   "id": "doc047",
+   "name": "BOM Auto.xlsx",
+   "group": "g7",
+   "groupName": "Spreadsheets",
+   "ext": "xlsx",
+   "size": 95000,
+   "uploadedAt": "2026-01-11T11:00:00.000Z",
+   "dataUrl": "data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,Qk9NIEF1dG8="
+  },
+  {
+   "id": "doc048",
+   "name": "BOM Vision.csv",
+   "group": "g7",
+   "groupName": "Spreadsheets",
+   "ext": "csv",
+   "size": 103000,
+   "uploadedAt": "2026-02-12T11:00:00.000Z",
+   "dataUrl": "data:text/csv;base64,SXRlbSxRdHksVW5pdCBQcmljZSxUb3RhbApCYXNlIFBsYXRlLDQsMTUwMCw2MDAwClNlbnNvciw4LDM1MCwyODAwCg=="
+  },
+  {
+   "id": "doc049",
+   "name": "BOM Robotic.xlsx",
+   "group": "g7",
+   "groupName": "Spreadsheets",
+   "ext": "xlsx",
+   "size": 111000,
+   "uploadedAt": "2026-03-13T11:00:00.000Z",
+   "dataUrl": "data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,Qk9NIFJvYm90aWM="
+  },
+  {
+   "id": "doc050",
+   "name": "BOM PCB.csv",
+   "group": "g7",
+   "groupName": "Spreadsheets",
+   "ext": "csv",
+   "size": 119000,
+   "uploadedAt": "2026-04-14T11:00:00.000Z",
+   "dataUrl": "data:text/csv;base64,SXRlbSxRdHksVW5pdCBQcmljZSxUb3RhbApCYXNlIFBsYXRlLDQsMTUwMCw2MDAwClNlbnNvciw4LDM1MCwyODAwCg=="
+  }
+ ]
+}
