@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!--NXBUILD:ios-write-fix-20260907-0330-->
+<!--NXBUILD:desktop-submit-mobile-anytime-20260907-0500-->
 <!-- always fetch the latest build (the demo updates often) -->
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta http-equiv="Pragma" content="no-cache">
@@ -11,7 +11,7 @@
 /* FORCE LOGIN ON A NEW UPLOAD: bump NX_BUILD every deploy. If the stored build differs from this
    one, the saved login is cleared so the user must sign in again on the fresh version (even with
    "remember me" on). Same version keeps them logged in. */
-window.NX_BUILD='2026-09-07-0330';
+window.NX_BUILD='2026-09-07-0500';
 try{ if(localStorage.getItem('nx_build')!==window.NX_BUILD){ localStorage.removeItem('nx_session'); localStorage.setItem('nx_build',window.NX_BUILD); } }catch(e){}
 </script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
@@ -19986,14 +19986,44 @@ if(typeof window!=='undefined' && window.NX_DEMO===true){ try{ (function(){
   var nxDemo={ on:false, ready:false, applying:false, root:null, _push:{}, _primed:{}, _err:'', seedTimer:null };
   window.nxDemo=nxDemo;
 
-  /* --- outbound: mirror every synced store to the cloud on save --- */
+  /* --- device class: iPhone/iPad/Android/touch phones push on ANY write; desktop pushes only on submit --- */
+  var _nxMobile=(function(){
+    try{
+      var ua=navigator.userAgent||'';
+      if(/iPhone|iPad|iPod|Android|Mobile|Silk|Kindle|BlackBerry|Opera Mini|IEMobile/i.test(ua)) return true;
+      /* iPadOS 13+ reports as Mac; treat any touch device as mobile */
+      if((navigator.maxTouchPoints||0)>1 && /Macintosh/i.test(ua)) return true;
+      if(('ontouchstart' in window) && Math.min(screen.width,screen.height)<=820) return true;
+    }catch(_){}
+    return false;
+  })();
+  nxDemo.mobile=_nxMobile;
+
+  /* --- desktop "submit" gate: only push right after a genuine user gesture (click/tap/key/submit) ---
+     Desktop background re-saves (timers, realtime echoes, layout code) must NOT push and clobber the
+     phone's data; a real user submit does. Mobile ignores this gate and always pushes. */
+  nxDemo._act=0;
+  (function(){
+    function mark(){ nxDemo._act=Date.now(); }
+    try{
+      ['pointerdown','mousedown','touchstart','keydown','click','submit','change'].forEach(function(ev){
+        document.addEventListener(ev,mark,true);
+      });
+    }catch(_){}
+  })();
+  function _nxUserActive(){ return (Date.now()-nxDemo._act) < 6000; }  /* within 6s of a real user action */
+
+  /* --- outbound: mirror synced stores to the cloud --- */
   var _lanSet=localStorage.setItem;   /* the LAN wrapper; it never POSTs because omsC.on stays false in the demo */
   localStorage.setItem=function(k,v){
     _lanSet.call(localStorage,k,v);
-    if(nxDemo.root && !nxDemo.applying && OMS_STORES.indexOf(k)>=0){   /* push whenever the DB ref exists — Firebase queues offline writes & flushes on reconnect (fixes iOS Safari where .info/connected is unreliable) */
+    if(nxDemo.root && !nxDemo.applying && OMS_STORES.indexOf(k)>=0){
+      /* Desktop: push ONLY when this save follows a real user action (submit/input), so the desktop
+         stops continuously overwriting what the phone sends. Mobile: push on ANY write (a phone edit
+         is always user-driven, and iOS Safari may batch/suspend, so never gate it). */
+      if(!_nxMobile && !_nxUserActive()) return;
       /* iOS Safari suspends the realtime socket, so a write made on the phone may sit unsent.
-         Wake the socket before every write so it flushes, and retry once if it fails. This lets
-         ANY device (incl. iPhone) update the database, not just desktop. */
+         Wake the socket before every write so it flushes, and retry once if it fails. */
       try{ firebase.database().goOnline(); }catch(_){}
       try{
         nxDemo._push[k]=true;
