@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!--NXBUILD:coop-20260906-174634-->
+<!--NXBUILD:nogate-20260906-175923-->
 <!-- ===== NX Desk DEMO build: Firebase Realtime Database as the realtime channel ===== -->
 <script>window.NX_DEMO=true;</script>
 <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
@@ -20156,6 +20156,24 @@ if(typeof window!=='undefined' && window.NX_DEMO===true){ try{ (function(){
   };
   connGateRetry=function(){ connGateAuto(); };
   connGateManual=function(){ connGateAuto(); };   /* no manual LAN address in the cloud demo */
+
+  /* ===== DEMO: never show the blocking LAN-style connect-gate overlay =====
+     This demo syncs through Firebase in the background — there is no LAN Hub / address to enter,
+     so the "cgFail / connect / search / local" gate must never block the app (it was also what
+     surfaced raw i18n keys). Connect silently and keep retrying; the header Live pill shows status. */
+  function nxHideGate(){ try{ var g=document.getElementById('connGate'); if(g){ g.classList.remove('show'); g.style.display='none'; } }catch(_){ } }
+  connGateState=function(){ nxHideGate(); };                 /* no gate UI, ever */
+  window.connGateState=connGateState;
+  connGateShow=function(){ nxHideGate(); try{ connGateAuto(); }catch(_){ } };   /* start background connect, no overlay */
+  window.connGateShow=connGateShow;
+  connGateOpen=function(){ nxHideGate(); try{ connGateAuto(); }catch(_){ } };
+  window.connGateOpen=connGateOpen;
+  var _cgResolve=(typeof connGateResolveConnected==='function')?connGateResolveConnected:null;
+  connGateResolveConnected=function(){ try{ if(_cgResolve) _cgResolve(); }catch(_){ } nxHideGate(); };
+  window.connGateResolveConnected=connGateResolveConnected;
+  nxHideGate();
+  /* kick a background connect on load + keep it retrying quietly */
+  try{ if(typeof connGateAuto==='function') setTimeout(function(){ try{ connGateAuto(); }catch(_){ } }, 300); }catch(_){ }
 
   window.__NX_DEMO_ADAPTER__='1.0';
 })(); }catch(e){ console.error('NX demo adapter',e); } }
